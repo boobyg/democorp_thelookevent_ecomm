@@ -1,7 +1,7 @@
 - connection: thelook_redshift
 - persist_for: 1 hour            # cache all query results for one hour
 - template: liquid
-- label: The Look - Event
+- label: eCommerce with Event Data
 
 - include: "*.view.lookml"       # include all the views
 - include: "*.dashboard.lookml"  # include all the dashboards
