@@ -131,11 +131,11 @@
   label: '(6) Web Event Data'
   joins:
     - join: sessions
-      sql_on: ${events.session_id} =  ${sessions.id}
+      sql_on: ${events.session_id} =  ${sessions.session_id}
       relationship: many_to_one
 
     - join: session_facts
-      sql_on: ${sessions.id} = ${session_facts.session_id}
+      sql_on: ${sessions.session_id} = ${session_facts.session_id}
       relationship: one_to_one
       view_label: 'Sessions'
       
@@ -144,7 +144,7 @@
       relationship: many_to_one
 
     - join: countries
-      sql_on: ${classb.country} = ${countries.iso_3166_2}
+      sql_on: ${classb.country} = ${countries.country_code_2_letter}
       relationship: many_to_one
       view_label: 'Visitors'
 
@@ -179,7 +179,7 @@
     - join: countries
       required_joins: classb
       relationship: many_to_one
-      sql_on: ${classb.country = countries.iso_3166_2}
+      sql_on: ${classb.country = countries.country_code_2_letter}
       view_label: 'Visitors'
       
     - join: session_facts

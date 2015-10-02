@@ -1,5 +1,5 @@
 - view: products
-  sql_table_name: public.products
+  sql_table_name: thelook.products
   fields:
 
 ## DIMENSIONS ##
