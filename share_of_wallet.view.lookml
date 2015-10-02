@@ -3,7 +3,7 @@
   derived_table:
     sql: |
       SELECT *
-        FROM products p
+        FROM thelook.products p
         WHERE {% condition item_name %} p.item_name {% endcondition %}
         AND {% condition brand %} p.brand {% endcondition %}
   fields:

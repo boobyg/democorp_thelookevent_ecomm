@@ -66,6 +66,13 @@
     value_format: '$#,##0.00'
     sql: ${profit}
     drill_fields: detail*
+
+  - measure: total_profit_k
+    type: sum
+    hidden: true
+    value_format: '#.# "k"'
+    sql: ${profit}/1000
+    drill_fields: detail*
     
   - measure: count_percent_of_total
     label: Count (Percent of Total)

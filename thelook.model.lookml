@@ -10,8 +10,8 @@
 ########################################
 
 - explore: order_items
-  view: order_items
   label: '(1) Orders, Items and Users'
+  view: order_items
   joins:
     - join: orders
       relationship: many_to_one
