@@ -144,7 +144,6 @@
       relationship: many_to_one
 
     - join: countries
-#       required_joins: classb     I am not sure why this was using native columns instead of ${} - Changing
       sql_on: ${classb.country} = ${countries.iso_3166_2}
       relationship: many_to_one
       view_label: 'Visitors'
