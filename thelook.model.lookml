@@ -179,7 +179,7 @@
     - join: countries
       required_joins: classb
       relationship: many_to_one
-      sql_on: ${classb.country = countries.country_code_2_letter}
+      sql_on: ${classb.country} = ${countries.country_code_2_letter}
       view_label: 'Visitors'
       
     - join: session_facts
