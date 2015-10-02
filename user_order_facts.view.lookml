@@ -7,7 +7,7 @@
         , MIN(NULLIF(orders.created_at,0)) as first_order
         , MAX(NULLIF(orders.created_at,0)) as latest_order
         , COUNT(DISTINCT DATE_TRUNC('month', NULLIF(orders.created_at,0))) as number_of_distinct_months_with_orders
-      FROM thelook.orders
+      FROM thelook.orders AS orders
       GROUP BY user_id
     sortkeys: [user_id]
     distkey: user_id
