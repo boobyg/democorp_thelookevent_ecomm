@@ -1,6 +1,5 @@
-- connection: thelook_redshift
+- connection: event
 - persist_for: 1 hour            # cache all query results for one hour
-- template: liquid
 - label: eCommerce with Event Data
 
 - include: "*.view.lookml"       # include all the views
@@ -123,7 +122,51 @@
       sql_on: ${next_order_inventory_items.product_id} = ${next_order_products.id}
 
 
+########################################
+#########  Event Data Explores #########
+########################################
 
+
+- explore: events
+  label: '(6) Web Event Data'
+  joins:
+    - join: sessions
+      sql_on: ${events.session_id} =  ${sessions.id}
+      relationship: many_to_one
+
+    - join: session_facts
+      sql_on: ${sessions.id} = ${session_facts.session_id}
+      relationship: one_to_one
+      view_label: Sessions
+      
+    - join: classb
+      sql_on: ${events.classb} = ${classb.classb}
+      relationship: many_to_one
+
+    - join: countries
+#       required_joins: classb     I am not sure why this was using native columns instead of ${} - Changing
+      sql_on: ${classb.country} = ${countries.iso_3166_2}
+      relationship: many_to_one
+      view_label: Visitors
+
+    - join: products
+      sql_on: ${events.product_id} = ${products.id}
+      relationship: many_to_one
+      
+    - join: inventory_items
+      sql_on: ${products.id} =${inventory_items.product_id}
+      relationship: one_to_many
+
+    - join: users
+      sql_on: ${event.user_id} = ${users.id}
+      relationship: many_to_one
+
+    - join: user_order_facts
+      sql_on: ${users.id} = ${user_order_facts.user_id}
+      relationship: one_to_one
+      view_label: Users      
+      
+      
 ########################################
 #########  Other Dependencies ##########
 ########################################

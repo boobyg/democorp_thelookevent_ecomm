@@ -27,6 +27,7 @@
     type: tier
     tiers: [0,1,2,3,5,10]
     sql: ${lifetime_orders}
+    style: integer
     
   - dimension: repeat_customer
     description: 'Lifetime Count of Orders > 1'
