@@ -1,5 +1,5 @@
 - view: order_items
-  sql_table_name: public.order_items
+  sql_table_name: thelook.order_items
   fields:
 
 ## DIMENSIONS ##
