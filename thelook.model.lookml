@@ -47,88 +47,13 @@
       
 
 
-
-########################################
-#########  Advanced Extensions #########
-########################################
-
-
-
-- explore: affinity
-  label: '(2) Affinity Analysis'
-  always_filter: 
-    affinity.product_b_id: '-NULL'
-  joins:
-    - join: product_a
-      from: products
-      view_label: 'Product A Details'
-      relationship: many_to_one
-      sql_on: ${affinity.product_a_id} = ${product_a.id}
-      
-    - join: product_b
-      from: products
-      view_label: 'Product B Details'
-      relationship: many_to_one
-      sql_on: ${affinity.product_b_id} = ${product_b.id}  
-
-      
-- explore: orders_share_of_wallet
-  label: '(3) Share of Wallet Analysis'
-  hidden: false
-  extends: orders
-  joins:
-  - join: product_selected
-    type: cross
-    relationship: one_to_one
-  
-  - join: order_items
-    from: order_items_share_of_wallet
-    
-- explore: monthly_activity
-  label: '(4) Cohort Retention Analysis and LTV'
-  joins:
-  - join: users
-    sql_on: ${users.id} = ${monthly_activity.user_id}
-    relationship: many_to_one
-    
-  - join: user_order_facts
-    view_label: 'Users'
-    relationship: many_to_one
-    sql_on: ${user_order_facts.user_id} = ${users.id}
-    
-
-- explore: journey_mapping
-  label: '(5) Customer Journey Mapping'
-  extends: order_items
-  joins:
-    - join: next_order
-      from: orders
-      sql_on: ${subsequent_order_facts.next_order_id} = ${next_order.id}
-      relationship: many_to_one
-      
-    - join: next_order_items
-      from: order_items
-      sql_on: ${next_order.id} = ${next_order_items.order_id}
-      relationship: one_to_many
-      
-    - join: next_order_inventory_items
-      from: inventory_items
-      relationship: many_to_one
-      sql_on: ${next_order_items.inventory_item_id} = ${inventory_items.id}
-    
-    - join: next_order_products
-      from: products
-      relationship: many_to_one
-      sql_on: ${next_order_inventory_items.product_id} = ${next_order_products.id}
-
-
 ########################################
 #########  Event Data Explores #########
 ########################################
 
 
 - explore: events
-  label: '(6) Web Event Data'
+  label: '(2) Web Event Data'
   joins:
     - join: sessions
       sql_on: ${events.session_id} =  ${sessions.session_id}
@@ -167,7 +92,7 @@
       
       
 - explore: sessions
-  label: '(6) Web Session Data'
+  label: '(3) Web Session Data'
   joins: 
     - join: events
       sql_on: ${sessions.session_id} = ${events.session_id}
@@ -200,6 +125,79 @@
       relationship: many_to_one
       sql_on: ${user_order_facts} = ${users.id}
       view_label: 'Users' 
+
+########################################
+#########  Advanced Extensions #########
+########################################
+
+
+
+- explore: affinity
+  label: '(4) Affinity Analysis'
+  always_filter: 
+    affinity.product_b_id: '-NULL'
+  joins:
+    - join: product_a
+      from: products
+      view_label: 'Product A Details'
+      relationship: many_to_one
+      sql_on: ${affinity.product_a_id} = ${product_a.id}
+      
+    - join: product_b
+      from: products
+      view_label: 'Product B Details'
+      relationship: many_to_one
+      sql_on: ${affinity.product_b_id} = ${product_b.id}  
+
+      
+- explore: orders_share_of_wallet
+  label: '(5) Share of Wallet Analysis'
+  hidden: false
+  extends: orders
+  joins:
+  - join: product_selected
+    type: cross
+    relationship: one_to_one
+  
+  - join: order_items
+    from: order_items_share_of_wallet
+    
+- explore: monthly_activity
+  label: '(6) Cohort Retention Analysis and LTV'
+  joins:
+  - join: users
+    sql_on: ${users.id} = ${monthly_activity.user_id}
+    relationship: many_to_one
+    
+  - join: user_order_facts
+    view_label: 'Users'
+    relationship: many_to_one
+    sql_on: ${user_order_facts.user_id} = ${users.id}
+    
+
+- explore: journey_mapping
+  label: '(7) Customer Journey Mapping'
+  extends: order_items
+  joins:
+    - join: next_order
+      from: orders
+      sql_on: ${subsequent_order_facts.next_order_id} = ${next_order.id}
+      relationship: many_to_one
+      
+    - join: next_order_items
+      from: order_items
+      sql_on: ${next_order.id} = ${next_order_items.order_id}
+      relationship: one_to_many
+      
+    - join: next_order_inventory_items
+      from: inventory_items
+      relationship: many_to_one
+      sql_on: ${next_order_items.inventory_item_id} = ${inventory_items.id}
+    
+    - join: next_order_products
+      from: products
+      relationship: many_to_one
+      sql_on: ${next_order_inventory_items.product_id} = ${next_order_products.id}
       
 
       
