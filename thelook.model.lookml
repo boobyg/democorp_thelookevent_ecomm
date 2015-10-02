@@ -1,14 +1,13 @@
-- connection: thelook_redshift
+- connection: event
 - persist_for: 1 hour            # cache all query results for one hour
-- template: liquid
-- label: eCommerce with Event Data
+- label: 'eCommerce with Event Data'
 
 - include: "*.view.lookml"       # include all the views
 - include: "*.dashboard.lookml"  # include all the dashboards
 
 
 ########################################
-############## Base Explore ############
+############## Base Explores ###########
 ########################################
 
 - explore: order_items
@@ -46,7 +45,72 @@
       relationship: many_to_one
       type: full_outer
       sql_on: ${orders.id} = ${subsequent_order_facts.order_id}
+      
 
+- explore: sessions
+  joins: 
+    - join: events
+      sql_on: ${sessions.session_id} = ${events.session_id}
+      relationship: one_to_many
+      
+    - join: classb
+      relationship: many_to_one
+      sql_on: ${events.classb} = ${classb.classb}
+      
+    - join: countries
+      required_joins: classb
+      relationship: many_to_one
+      sql_on: classb.country = countries.iso_3166_2
+      view_label: Visitors
+      
+    - join: session_facts
+      view_label: Sessions
+      foreign_key: session_id
+    
+    - join: products
+      foreign_key: events.product_id
+    
+    - join: users
+      foreign_key: events.user_id
+    
+    - join: user_order_facts
+      foreign_key: users.id
+      view_label: Users   
+      
+#     - join: users_sales_facts
+#       foreign_key: users.id
+#       view_label: Users   
+      
+
+
+- explore: events
+  joins:
+    - join: sessions
+      foreign_key: session_id
+
+    - join: session_facts
+      foreign_key: session_id
+      view_label: Sessions
+      
+
+    - join: classb
+      foreign_key: classb
+
+    - join: countries
+      required_joins: classb
+      relationship: many_to_one
+      sql_on: classb.country = countries.iso_3166_2
+      view_label: Visitors
+
+    - join: products
+      foreign_key: product_id
+
+    - join: users
+      foreign_key: user_id
+
+    - join: user_order_facts
+      foreign_key: users.id
+      view_label: Users      
 
 
 ########################################
