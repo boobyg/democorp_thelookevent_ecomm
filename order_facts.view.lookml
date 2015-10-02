@@ -6,9 +6,9 @@
         , SUM(sale_price) AS order_amount
         , SUM(inventory_items.cost) AS order_cost
         , RANK() OVER (PARTITION BY orders.user_id ORDER BY orders.created_at) AS order_sequence_number
-      FROM order_items
-      LEFT JOIN orders ON orders.id = order_items.order_id
-      LEFT JOIN inventory_items ON order_items.inventory_item_id = inventory_items.id
+      FROM thelook.order_items AS order_items
+      LEFT JOIN thelook.orders AS orders ON orders.id = order_items.order_id
+      LEFT JOIN thelook.inventory_items AS inventory_items ON order_items.inventory_item_id = inventory_items.id
       GROUP BY orders.id, orders.user_id, orders.created_at
     sortkeys: [order_id]
     distkey: order_id

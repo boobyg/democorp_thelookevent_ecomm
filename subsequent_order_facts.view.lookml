@@ -11,8 +11,8 @@
             AS next_order_date
         ,min(foo.id) as next_order_id
       
-      FROM      orders 
-      LEFT JOIN orders as foo
+      FROM      thelook.orders orders
+      LEFT JOIN thelook.orders foo
       ON        orders.user_id = foo.user_id
       AND       orders.created_at < foo.created_at
       GROUP BY  1

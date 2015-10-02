@@ -13,14 +13,14 @@
               , COALESCE(data.total_purchase_amount, 0) as monthly_spend
               , row_number() over() AS key
             FROM 
-              users
+              thelook.users AS users
             
             LEFT JOIN 
               
               (
                 SELECT 
                   DISTINCT(date_trunc('month', orders.created_at)) as purchase_month
-                FROM orders  
+                FROM thelook.orders AS orders
               ) as month_list 
             ON month_list.purchase_month >= date_trunc ('month', users.created_at)  -- your dialect will vary
             
@@ -33,7 +33,7 @@
                     , COUNT(distinct o.id) AS monthly_purchases
                     , sum(oi.sale_price) AS total_purchase_amount
                     
-                FROM orders o
+                FROM thelook.orders o
                 LEFT JOIN order_items oi ON o.id = oi.order_id
                 GROUP BY 1,2
               ) as data

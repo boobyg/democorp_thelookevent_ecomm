@@ -1,5 +1,5 @@
 - view: inventory_items
-  sql_table_name: public.inventory_items
+  sql_table_name: thelook.inventory_items
   fields:
 
 ## DIMENSIONS ##

@@ -1,5 +1,5 @@
 - view: users
-  sql_table_name: public.users
+  sql_table_name: thelook.users
   fields:
 
 ## DIMENSIONS ##
