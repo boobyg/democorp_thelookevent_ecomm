@@ -10,5 +10,3 @@
   - dimension: country
     hidden: true
     sql: ${TABLE}.country
-
-

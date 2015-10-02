@@ -1,13 +1,12 @@
 - connection: event
 - persist_for: 1 hour            # cache all query results for one hour
-- label: eCommerce with Event Data
-
+- label: 'eCommerce with Event Data'
 - include: "*.view.lookml"       # include all the views
 - include: "*.dashboard.lookml"  # include all the dashboards
 
 
 ########################################
-############## Base Explore ############
+############## Base Explores ###########
 ########################################
 
 - explore: order_items
@@ -45,6 +44,7 @@
       relationship: many_to_one
       type: full_outer
       sql_on: ${orders.id} = ${subsequent_order_facts.order_id}
+      
 
 
 
@@ -166,6 +166,38 @@
       relationship: one_to_one
       view_label: Users      
       
+      
+- explore: sessions
+  joins: 
+    - join: events
+      sql_on: ${sessions.session_id} = ${events.session_id}
+      relationship: one_to_many
+      
+    - join: classb
+      relationship: many_to_one
+      sql_on: ${events.classb} = ${classb.classb}
+      
+    - join: countries
+      required_joins: classb
+      relationship: many_to_one
+      sql_on: classb.country = countries.iso_3166_2
+      view_label: Visitors
+      
+    - join: session_facts
+      view_label: Sessions
+      foreign_key: session_id
+    
+    - join: products
+      foreign_key: events.product_id
+    
+    - join: users
+      foreign_key: events.user_id
+    
+    - join: user_order_facts
+      foreign_key: users.id
+      view_label: Users   
+      
+
       
 ########################################
 #########  Other Dependencies ##########
