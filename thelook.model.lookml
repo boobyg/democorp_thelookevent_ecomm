@@ -11,6 +11,7 @@
 
 - explore: order_items
   label: '(1) Orders, Items and Users'
+  view: order_items
   joins:
     - join: orders
       relationship: many_to_one
@@ -174,29 +175,29 @@
     sql_on: ${user_order_facts.user_id} = ${users.id}
     
 
-# - explore: journey_mapping
-#   label: '(7) Customer Journey Mapping'
-#   extends: order_items
-#   joins:
-#     - join: next_order
-#       from: orders
-#       sql_on: ${subsequent_order_facts.next_order_id} = ${next_order.id}
-#       relationship: many_to_one
-#       
-#     - join: next_order_items
-#       from: order_items
-#       sql_on: ${next_order.id} = ${next_order_items.order_id}
-#       relationship: one_to_many
-#       
-#     - join: next_order_inventory_items
-#       from: inventory_items
-#       relationship: many_to_one
-#       sql_on: ${next_order_items.inventory_item_id} = ${inventory_items.id}
-#     
-#     - join: next_order_products
-#       from: products
-#       relationship: many_to_one
-#       sql_on: ${next_order_inventory_items.product_id} = ${next_order_products.id}
+- explore: journey_mapping
+  label: '(7) Customer Journey Mapping'
+  extends: order_items
+  joins:
+    - join: next_order
+      from: orders
+      sql_on: ${subsequent_order_facts.next_order_id} = ${next_order.id}
+      relationship: many_to_one
+      
+    - join: next_order_items
+      from: order_items
+      sql_on: ${next_order.id} = ${next_order_items.order_id}
+      relationship: one_to_many
+      
+    - join: next_order_inventory_items
+      from: inventory_items
+      relationship: many_to_one
+      sql_on: ${next_order_items.inventory_item_id} = ${inventory_items.id}
+    
+    - join: next_order_products
+      from: products
+      relationship: many_to_one
+      sql_on: ${next_order_inventory_items.product_id} = ${next_order_products.id}
       
 
       
