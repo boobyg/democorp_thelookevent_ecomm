@@ -167,6 +167,7 @@
       
       
 - explore: sessions
+  label: '(6) Web Session Data'
   joins: 
     - join: events
       sql_on: ${sessions.session_id} = ${events.session_id}
