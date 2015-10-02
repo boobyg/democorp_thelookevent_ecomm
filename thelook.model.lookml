@@ -137,7 +137,7 @@
     - join: session_facts
       sql_on: ${sessions.id} = ${session_facts.session_id}
       relationship: one_to_one
-      view_label: Sessions
+      view_label: 'Sessions'
       
     - join: classb
       sql_on: ${events.classb} = ${classb.classb}
@@ -147,7 +147,7 @@
 #       required_joins: classb     I am not sure why this was using native columns instead of ${} - Changing
       sql_on: ${classb.country} = ${countries.iso_3166_2}
       relationship: many_to_one
-      view_label: Visitors
+      view_label: 'Visitors'
 
     - join: products
       sql_on: ${events.product_id} = ${products.id}
@@ -164,7 +164,7 @@
     - join: user_order_facts
       sql_on: ${users.id} = ${user_order_facts.user_id}
       relationship: one_to_one
-      view_label: Users      
+      view_label: 'Users'    
       
       
 - explore: sessions
@@ -180,22 +180,26 @@
     - join: countries
       required_joins: classb
       relationship: many_to_one
-      sql_on: classb.country = countries.iso_3166_2
-      view_label: Visitors
+      sql_on: ${classb.country = countries.iso_3166_2}
+      view_label: 'Visitors'
       
     - join: session_facts
-      view_label: Sessions
-      foreign_key: session_id
+      relationship: many_to_one
+      view_label: 'Sessions'
+      sql_on: ${sessions.session_id} = ${session_facts.session_id}
     
     - join: products
-      foreign_key: events.product_id
+      relationship: many_to_one
+      sql_on: ${products.id} = ${events.product_id}
     
     - join: users
-      foreign_key: events.user_id
+      relationship: many_to_one
+      sql_on: ${users.id} = ${events.user_id}
     
     - join: user_order_facts
-      foreign_key: users.id
-      view_label: Users   
+      relationship: many_to_one
+      sql_on: ${user_order_facts} = ${users.id}
+      view_label: 'Users' 
       
 
       
