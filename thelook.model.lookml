@@ -82,7 +82,7 @@
       relationship: one_to_many
 
     - join: users
-      sql_on: ${event.user_id} = ${users.id}
+      sql_on: ${events.user_id} = ${users.id}
       relationship: many_to_one
 
     - join: user_order_facts
