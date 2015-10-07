@@ -1,6 +1,6 @@
 - view: events
   derived_table:
-    sql_trigger_value: SELECT GETDATE()
+    sql_trigger_value: SELECT current_Date
     sortkeys: [rtime]
     distkey: unique_session_id
     sql: |

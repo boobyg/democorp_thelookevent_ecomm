@@ -1,6 +1,6 @@
 - view: sessions
   derived_table:
-    sql_trigger_value: SELECT GETDATE()
+    sql_trigger_value: SELECT current_date
     distkey: user_id
     sortkeys: [session_start]
     sql: |
