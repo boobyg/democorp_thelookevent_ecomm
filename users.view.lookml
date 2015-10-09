@@ -33,7 +33,7 @@
   - dimension: email
     html: |
       {{ linked_value }}
-      <a href="/dashboards/the_look/4_user_lookup?email={{ value | encode_uri }}" target="_new">
+      <a href="/dashboards/thelook/4_user_lookup?email={{ value | encode_uri }}" target="_new">
       <img src="/images/qr-graph-line@2x.png" height=20 width=20></a>  
       
 
@@ -43,8 +43,8 @@
   - dimension: history
     sql: ${TABLE}.id
     html: |
-      <a href="/explore/the_look/order_items?fields=orders.detail*&f[users.id]={{ value }}">Orders</a>
-      | <a href="/explore/the_look/order_items?fields=order_items.detail*&f[users.id]={{ value }}">Items</a>
+      <a href="/explore/thelook/order_items?fields=orders.detail*&f[users.id]={{ value }}">Orders</a>
+      | <a href="/explore/thelook/order_items?fields=order_items.detail*&f[users.id]={{ value }}">Items</a>
   
   - dimension: first_name
     hidden: true
