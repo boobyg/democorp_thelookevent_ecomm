@@ -13,14 +13,14 @@
     sql: ${TABLE}.brand
     html: |
       {{ linked_value }}
-      <a href="/dashboards/the_look/2_brand_overview?brand={{ value | encode_uri }}" target="_new">
+      <a href="/dashboards/8?brand={{ value | encode_uri }}" target="_new">
       <img src="/images/qr-graph-line@2x.png" height=20 width=20></a>
       
   - dimension: category
     sql: ${TABLE}.category
     html: |
       {{ linked_value }}
-      <a href="/dashboards/the_look/3_category_lookup?category={{ value | encode_uri }}" target="_new">
+      <a href="/dashboards/thelook/3_category_lookup?category={{ value | encode_uri }}" target="_new">
       <img src="/images/qr-graph-line@2x.png" height=20 width=20></a>
       
   - dimension: department

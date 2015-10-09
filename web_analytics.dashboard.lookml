@@ -268,30 +268,6 @@
     width: 16
     height: 8  
 
-#   - name: add_a_unique_name_218
-#     title: Geolocation of visits
-#     type: looker_geo_choropleth
-#     base_view: log
-#     dimensions: [countries.country_code]
-#     measures: [log.request_count]
-#     filters:
-#       countries.country_code_3_letter: -NULL
-#     listen:
-#       days: log.request_date
-#       country: countries.country_name
-#     sorts: [log.request_count desc]
-#     limit: 500
-#     quantize_colors: false
-#     show_null_labels: false
-#     map: world
-#     map_projection: cylindricalStereographic
-#     show_antarctica: false
-#     colors: ['#ff0000']
-#     inner_border_color: '#ffffff'
-#     loading: false
-#     width: 16
-#     height: 8
-
   - name: add_a_unique_name_589
     title: Visitors in Top 20 Countries
     type: table
@@ -349,43 +325,6 @@
     y_axis_combined: false
     width: 12
     height: 8
-# 
-#   - name: add_a_unique_name_816
-#     title: Bounce Rate by Page (excluding login, logout)
-#     type: looker_column
-#     model: thelook
-#     explore: sessions
-#     dimensions: [events.2_level_url]
-#     measures: [events.bounce_rate, events.count]
-#     listen:
-#       visit_date: events.request_date
-#       browser: events.browser
-#     filters:
-#       events.full_page_url: -"/logout",-"/login"
-#     sorts: [events.count desc 0]
-#     limit: 10
-#     stacking: ''
-#     show_value_labels: false
-#     x_axis_gridlines: false
-#     y_axis_gridlines: true
-#     show_view_names: true
-#     show_y_axis_labels: true
-#     show_y_axis_ticks: true
-#     y_axis_tick_density: default
-#     y_axis_tick_density_custom: 5
-#     show_x_axis_label: true
-#     show_x_axis_ticks: true
-#     x_axis_scale: auto
-#     show_null_labels: false
-#     y_axis_orientation: [left, right]
-#     series_types:
-#       events.bounce_rate: line
-#     reference_lines: [{reference_type: line, line_value: median, range_start: max, range_end: min,
-#         margin_top: deviation, margin_value: mean, margin_bottom: deviation, label: Median BR%}]
-#     width: 12
-#     y_axis_min: ['.05']
-#     height: 8
-
 
   - name: add_a_unique_name_613
     title: Bounce Rate by Page, Cohorted by Landing Page
@@ -471,40 +410,6 @@
     width: 12
     height: 8
 
-#   - name: add_a_unique_name_187
-#     title: eCommerce Funnel
-#     type: looker_column
-#     model: thelook
-#     explore: events
-#     measures: [events.unique_visitors, events.browse_visitors,
-#       events.add_to_cart_visitors, events.login_visitors,
-#       events.checkout_visitors]
-#     listen:
-#       visit_date: events.request_date
-#       country: countries.country_name
-#       browser: events.browser
-#     sorts: [events.unique_visitors desc]
-#     limit: 500
-#     show_y_axis_labels: true
-#     show_y_axis_ticks: true
-#     y_axis_gridlines: true
-#     y_axis_combined: true
-#     show_value_labels: false
-#     show_view_names: false
-#     show_dropoff: true
-#     show_null_labels: false
-#     show_null_points: true
-#     stacking: ''
-#     x_axis_gridlines: false
-#     y_axis_tick_density: default
-#     y_axis_tick_density_custom: 5
-#     show_x_axis_label: true
-#     show_x_axis_ticks: true
-#     x_axis_scale: auto
-#     colors: ['#3a6f7f', '#4e94a9', '#62bad4', '#81c7dc', '#a0d5e5']
-#     width: 16
-#     height: 8
-
 
 
   - name: add_a_unique_name_996
@@ -544,9 +449,6 @@
     width: 12
     height: 8
     
-
-
-
   - name: add_a_unique_name_762
     title: Top Brands - Pageviews, Uniques, Session Duration
     type: table
@@ -566,25 +468,86 @@
     height: 8
 
 
+
+
+
+# #----------------------------
+# - dashboard: 2_brand_overview
+# #----------------------------
+#   title: "Brand Analytics, Web & Transactional"
+#   layout: tile
+#   tile_size: 50
+#   
+#   filters:
+#   
+#   - name: brand
+#     title: "Brand Name"
+#     type: field_filter
+#     explore: order_items
+#     field: products.brand
+#     default_value: Calvin Klein
+#     
+#   - name: date
+#     title: "Date"
+#     type: date_filter
+#     default_value: Last 90 Days
+#     
+#   elements:
+#   
+#   - name: total_orders
+#     type: single_value
+#     explore: order_items
+#     measures: [orders.count]
+#     listen:
+#       date: orders.created_date
+#       brand: products.brand
+#     width: 8
+#     height: 3
+#     font_size: small
+#     
+#   - name: total_customers
+#     type: single_value
+#     explore: order_items
+#     measures: [users.count]
+#     listen:
+#       date: orders.created_date
+#       brand: products.brand
+#     width: 8
+#     height: 3
+#     font_size: small
+#     
+#   - name: average_order_value
+#     type: single_value
+#     explore: order_items
+#     measures: [order_items.average_sale_price]
+#     listen:
+#       date: orders.created_date
+#       brand: products.brand
+#     width: 8
+#     height: 3
+#     font_size: small
 # 
 # 
-#   - name: add_a_unique_name_854
-#     title: Top Pages Viewed
-#     type: looker_bar
+#   - name: add_a_unique_name_272
+#     title: Brand Traffic by Source, OS
+#     type: looker_donut_multiples
 #     model: thelook
 #     explore: events
-#     dimensions: [events.full_page_url]
+#     dimensions: [users.traffic_source, events.os]
+#     pivots: [users.traffic_source]
 #     measures: [events.count]
 #     listen:
-#       visit_date: events.request_date
+#       date: events.request_date
+#       brand: products.brand
 #     filters:
-#       events.request_date: 14 days
-#     sorts: [events.count desc]
-#     limit: 10
-#     show_value_labels: false
+#       events.os: '"Windows","Mac OS X","Linux (other)"'
+# #       events.request_date: 90 days
+#       users.traffic_source: -NULL
+#     sorts: [events.count desc 1]
+#     limit: 20
 #     show_view_names: true
-#     show_null_labels: false
 #     stacking: ''
+#     show_value_labels: false
 #     x_axis_gridlines: false
 #     y_axis_gridlines: true
 #     show_y_axis_labels: true
@@ -594,30 +557,153 @@
 #     show_x_axis_label: true
 #     show_x_axis_ticks: true
 #     x_axis_scale: auto
-#     width: 16
-#     height: 6
-
-
-
-
-
-# 
-#   - name: add_a_unique_name_801
-#     title: Visits by Browser
-#     type: looker_pie
-#     explore: events
-#     listen:
-#       visit_date: events.request_date
-#       country: countries.country_name
-#     dimensions: [events.browser]
-#     measures: [events.unique_visitors]
-#     sorts: [events.unique_visitors desc]
-#     limit: 50
 #     show_null_labels: false
-# #     colors: ['#651F81', '#C488DD', '#FEAC47', '#8ED1ED']
-#     width: 8
+#     width: 12
+#     height: 6
+# 
+#   - name: add_a_unique_name_359
+#     title: Website Sessions by Transactional LTV
+#     type: looker_area
+#     model: thelook
+#     explore: events
+#     dimensions: [users_orders_facts.lifetime_number_of_orders_tier, sessions.start_hour]
+#     pivots: [users_orders_facts.lifetime_number_of_orders_tier]
+#     measures: [sessions.count]
+#     listen:
+#       brand: products.brand
+#     filters:
+#       sessions.start_date: 14 days
+#     sorts: [sessions.start_hour]
+#     limit: 500
+#     show_view_names: true
+#     stacking: normal
+#     show_value_labels: false
+#     x_axis_gridlines: false
+#     y_axis_gridlines: true
+#     show_y_axis_labels: true
+#     show_y_axis_ticks: true
+#     y_axis_tick_density: default
+#     y_axis_tick_density_custom: 5
+#     show_x_axis_label: true
+#     show_x_axis_ticks: true
+#     x_axis_scale: auto
+#     show_null_labels: false
+#     show_null_points: true
+#     series_labels:
+#       1: 1 Lifetime Purchase
+#       Undefined: Never Purchased
+#     point_style: none
+#     width: 12
+#     height: 6
+#     interpolation: linear
+# 
+#   - name: add_a_unique_name_349
+#     title: Top Product Categories - Cart vs Conversion
+#     type: looker_column
+#     model: thelook
+#     explore: events
+#     dimensions: [products.category]
+#     measures: [sessions.cart_to_checkout_conversion, sessions.count_with_add_to_cart]
+#     listen:
+#       date: events.request_date
+#       brand: products.brand 
+#     sorts: [sessions.count_with_add_to_cart desc]
+#     limit: 8
+#     y_axis_gridlines: false
+#     show_y_axis_labels: true
+#     show_y_axis_ticks: true
+#     y_axis_combined: false
+#     y_axis_orientation: [right, left]
+#     show_value_labels: true
+#     show_view_names: false
+#     show_null_labels: false
+#     colors: [black, '#62bad4']
+#     stacking: ''
+#     x_axis_gridlines: false
+#     y_axis_tick_density: default
+#     y_axis_tick_density_custom: 5
+#     show_x_axis_label: true
+#     x_axis_label_rotation: -45
+#     show_x_axis_ticks: true
+#     x_axis_scale: auto
+#     width: 12
+#     height: 12
+#     series_types:
+#       sessions.cart_to_checkout_conversion: line
+#     label_rotation: 0
+# 
+#   - name: add_a_unique_name_573
+#     title: Top Visitors and Transcation History
+#     type: table
+#     model: thelook
+#     explore: events
+#     dimensions: [users.name, users.history, users.state, users.traffic_source]
+#     measures: [sessions.count]
+#     listen:
+#       date: events.request_date
+#       brand: products.brand
+#     filters:
+#       users.name: -NULL
+#     sorts: [sessions.count desc]
+#     limit: 50
+#     width: 12
+#     height: 12
+#     
+#   - name: sales_over_time
+#     title: "Sales and Sale Price Trend"
+#     type: looker_line
+#     explore: order_items
+#     dimensions: [orders.created_date]
+#     measures: [order_items.total_sale_price, order_items.average_sale_price]
+#     listen:
+#       brand: products.brand
+#       date: orders.created_date
+#     limit: 500
+#     width: 24
+#     height: 6
+#     legend_align:
+#     stacking:
+#     x_axis_label:
+#     x_axis_datetime: yes
+#     x_axis_datetime_label:
+#     x_axis_label_rotation:
+#     y_axis_orientation: [left,right]
+# #     colors: [purple, gold]
+#     y_axis_combined: false
+#     y_axis_labels: ["Total Sale Amount","Average Selling Price"]
+#     y_axis_min:
+#     y_axis_max:
+#     hide_points: yes
+#     hide_legend: yes
+#   
+#   - name: sales_by_department_and_category
+#     title: "Sales by Department and Category"
+#     type: table
+#     explore: order_items
+#     dimensions: [products.category]
+#     pivots: [products.department]
+#     measures: [order_items.count, order_items.total_sale_price]
+#     listen:
+#       date: orders.created_date
+#       brand: products.brand
+#     sorts: [order_items.count desc]
+#     limit: 500
+#     width: 12
 #     height: 8
-
+#     
+#   - name: connoisseur
+#     title: "Top Purchasers of "
+#     type: table
+#     explore: order_items
+#     dimensions: [users.name, users.email, users.history]
+#     measures: [order_items.count, order_items.total_sale_price]
+#     listen:
+#       date: orders.created_date
+#       brand: products.brand
+#     sorts: [order_items.count desc]
+#     limit: 15
+#     width: 12
+#     height: 8
 
  
 

@@ -200,7 +200,7 @@
     limit: 500
 
 #----------------------------
-- dashboard: 2_brand_overview
+- dashboard: 2_brand_overview_comm
 #----------------------------
   title: "2) Brand Overview"
   layout: grid
