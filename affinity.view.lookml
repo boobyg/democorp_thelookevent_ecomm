@@ -82,11 +82,11 @@
     sortkeys: [prod_id, user_id, order_id]
     sql: |
           SELECT u.id as user_id, p.id as prod_id, o.id as order_id
-            FROM order_items oi
-            LEFT JOIN inventory_items ii ON oi.inventory_item_id = ii.id
-            LEFT JOIN orders o ON oi.order_id = o.id
-            LEFT JOIN products p ON ii.product_id = p.id
-            LEFT JOIN users u ON o.user_id = u.id
+            FROM thelook.order_items oi
+            LEFT JOIN thelook.inventory_items ii ON oi.inventory_item_id = ii.id
+            LEFT JOIN thelook.orders o ON oi.order_id = o.id
+            LEFT JOIN thelook.products p ON ii.product_id = p.id
+            LEFT JOIN thelook.users u ON o.user_id = u.id
             GROUP BY 1,2,3
 
   fields:
@@ -115,10 +115,10 @@
     sortkeys: prod_id
     sql: |
             SELECT p.id as prod_id, COUNT(*) as prod_freq
-            FROM order_items oi
-            LEFT JOIN inventory_items ON oi.inventory_item_id = inventory_items.id
-            LEFT JOIN orders o ON oi.order_id = o.id
-            LEFT JOIN products p ON inventory_items.product_id = p.id
+            FROM thelook.order_items oi
+            LEFT JOIN thelook.inventory_items ON oi.inventory_item_id = inventory_items.id
+            LEFT JOIN thelook.orders o ON oi.order_id = o.id
+            LEFT JOIN thelook.products p ON inventory_items.product_id = p.id
             GROUP BY p.id
    
 
