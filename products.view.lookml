@@ -13,7 +13,7 @@
     sql: ${TABLE}.brand
     html: |
       {{ linked_value }}
-      <a href="/dashboards/8?brand={{ value | encode_uri }}" target="_new">
+      <a href="/dashboards/8?Brand%20Name={{ value | encode_uri }}" target="_new">
       <img src="/images/qr-graph-line@2x.png" height=20 width=20></a>
       
   - dimension: category
