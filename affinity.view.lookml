@@ -64,16 +64,18 @@
     value_format: '0.00%'    
 
   - measure: avg_user_affinity
+    label: 'Affinity Score (by User)'
     description: Percentage of users that bought both products weighted by how many times each product sold individually
     type: average
-    sql: ${user_affinity}
-    value_format: '0.00%'
+    sql: 100.0 * ${user_affinity}
+    value_format: '0.00'
     
   - measure: avg_order_affinity
+    label: 'Affinity Score (by Order)'
     description: Percentage of orders that contained both products weighted by how many times each product sold individually
     type: average
-    sql: ${order_affinity}
-    value_format: '0.00%'    
+    sql: 100.0 * ${order_affinity}
+    value_format: '0.00'    
 #############################################
 - view: user_order_product   #Table that aggregates the products purchased by user and order id
   derived_table:
