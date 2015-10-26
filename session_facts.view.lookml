@@ -7,8 +7,8 @@
             unique_session_id
           , MIN(rtime) as session_start
           , MAX(rtime) as session_end
-          , RANK() OVER (PARTITION BY user_id, ip ORDER BY MIN(rtime)) AS session_sequence_for_user
-          , RANK() OVER (PARTITION BY user_id, ip ORDER BY MIN(rtime) desc) AS inverse_session_sequence_for_user
+          , RANK() OVER (PARTITION BY user_id ORDER BY MIN(rtime)) AS session_sequence_for_user
+          , RANK() OVER (PARTITION BY user_id ORDER BY MIN(rtime) desc) AS inverse_session_sequence_for_user
           , count(1) as number_of_events_in_session
           , MAX(
                 CASE
