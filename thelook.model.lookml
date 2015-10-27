@@ -155,9 +155,9 @@
   hidden: false
   extends: orders
   joins:
-  - join: product_selected
-    type: cross
-    relationship: one_to_one
+#   - join: product_selected
+#     type: cross
+#     relationship: one_to_one
   
   - join: order_items
     from: order_items_share_of_wallet
