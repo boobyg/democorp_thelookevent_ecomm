@@ -3,11 +3,14 @@
     sql: |
       SELECT
         orders.user_id as user_id
-        , COUNT(*) as lifetime_orders
+        , COUNT(DISTINCT orders.id) as lifetime_orders
+        , SUM(oi.sale_price) AS lifetime_revenue
         , MIN(NULLIF(orders.created_at,0)) as first_order
         , MAX(NULLIF(orders.created_at,0)) as latest_order
         , COUNT(DISTINCT DATE_TRUNC('month', NULLIF(orders.created_at,0))) as number_of_distinct_months_with_orders
       FROM thelook.orders AS orders
+      INNER JOIN thelook.order_items oi
+      ON orders.id = oi.order_id
       GROUP BY user_id
     sortkeys: [user_id]
     distkey: user_id
@@ -28,6 +31,17 @@
     tiers: [0,1,2,3,5,10]
     sql: ${lifetime_orders}
     style: integer
+  
+  - dimension: lifetime_revenue
+    type: number
+    sql: ${TABLE}.lifetime_revenue
+  
+  - dimension: lifetime_revenue_tier
+    type: tier
+    tiers: [0, 25, 50, 100, 200, 500, 1000]
+    sql: ${lifetime_revenue}
+    style: integer
+    
     
   - dimension: repeat_customer
     description: 'Lifetime Count of Orders > 1'
@@ -57,4 +71,8 @@
   - dimension: distinct_months_with_orders
     type: int
     sql: ${TABLE}.number_of_distinct_months_with_orders
+    
+  - measure: average_lifetime_revenue
+    type: avg
+    sql: ${lifetime_revenue}
     
