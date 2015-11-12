@@ -33,7 +33,7 @@
   fields:
     - measure: count
       type: count
-      drill_fields: [user_id, session_sequence_by_user, start_time, session_facts.session_duration, session_facts.farthest_funnel_step_of_session, events.count]
+      drill_fields: [session_id, user_id, users.name, start_time, session_facts.session_duration, session_facts.number_of_events_in_session, session_facts.farthest_funnel_step_of_session, events.count]
 
     
     - dimension: user_event_sequence

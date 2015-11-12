@@ -123,7 +123,7 @@
     
     - join: user_order_facts
       relationship: many_to_one
-      sql_on: ${user_order_facts} = ${users.id}
+      sql_on: ${user_order_facts.user_id} = ${users.id}
       view_label: 'Users' 
 
 ########################################
