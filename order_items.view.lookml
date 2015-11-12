@@ -43,6 +43,23 @@
     type: tier
     sql: ${item_gross_margin_percentage}
     tiers: [0,10,20,30,40,50,60,70,80,90]
+    
+    
+  - filter: item_name
+    suggest_dimension: products.item_name
+    
+  - filter: brand
+    suggest_dimension: products.brand  
+    
+  - dimension: comparison
+    sql: |
+        CASE
+          WHEN {% condition item_name %} products.item_name {% endcondition %}
+          THEN '(1) '||${products.item_name}
+          WHEN  {% condition brand %} products.brand {% endcondition %}
+          THEN '(2) Rest of '||${products.brand}
+          ELSE '(3) Rest of Population'
+        END      
 
 ## MEASURES ##
 

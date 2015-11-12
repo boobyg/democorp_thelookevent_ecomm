@@ -10,7 +10,7 @@
         , lag.user_id AS user_id
         , lag.ip_address AS ip_address
         , ROW_NUMBER () OVER (ORDER BY lag.e_tstamp) AS unique_session_id
-        , RANK() OVER(PARTITION BY lag.user_id, lag.ip_address ORDER BY lag.e_tstamp) AS session_sequence
+        , RANK() OVER(PARTITION BY COALESCE(lag.user_id, lag.ip_address) ORDER BY lag.e_tstamp) AS session_sequence
         , COALESCE(
               LEAD(lag.e_tstamp) OVER (PARTITION BY lag.user_id, lag.ip_address ORDER BY lag.e_tstamp)
             , '3000-01-01') AS next_session_start

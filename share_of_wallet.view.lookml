@@ -1,32 +1,3 @@
-# Join in a single product o all rows.
-- view: product_selected
-  derived_table:
-    sql: |
-      SELECT *
-        FROM thelook.products p
-        WHERE {% condition item_name %} p.item_name {% endcondition %}
-        AND {% condition brand %} p.brand {% endcondition %}
-  fields:
-   
-  - dimension: item_name
-    suggest_dimension: products.item_name
-    
-  - dimension: brand
-    suggest_dimension: products.brand
-    
-  - dimension: category
-    suggest_dimension: products.category
-    
-  - dimension: comparison
-    sql: |
-        CASE
-          WHEN ${products.item_name} = ${product_selected.item_name} 
-          THEN '(1) '||${products.item_name}
-          WHEN ${product_selected.brand} = ${products.brand}
-          THEN '(2) Rest of '||${products.brand}
-          ELSE '(3) Rest of Population'
-        END
-
 - view: order_items_share_of_wallet
   extends: order_items
   fields:
@@ -39,13 +10,13 @@
     type: sum
     sql: ${sale_price}
     filters:
-      product_selected.comparison: '(1)%'
+      order_items.comparison: '(1)%'
 
   - measure: total_sale_price_this_brand
     type: sum
     sql: ${sale_price}
     filters:
-      product_selected.comparison: '(2)%,(1)%'
+      order_items.comparison: '(2)%,(1)%'
     
   - measure: share_of_wallet_within_brand
     type: number
