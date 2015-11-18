@@ -51,15 +51,25 @@
   - filter: brand
     suggest_dimension: products.brand  
     
-  - dimension: comparison
+  - dimension: item_comparison
+    description: 'Compare a selected item vs. other items in the brand vs. all other brands'
     sql: |
         CASE
-          WHEN {% condition item_name %} products.item_name {% endcondition %}
-          THEN '(1) '||${products.item_name}
-          WHEN  {% condition brand %} products.brand {% endcondition %}
-          THEN '(2) Rest of '||${products.brand}
-          ELSE '(3) Rest of Population'
-        END      
+        WHEN {% condition item_name %} products.item_name {% endcondition %}
+        THEN '(1) '||${products.item_name}
+        WHEN  {% condition brand %} products.brand {% endcondition %}
+        THEN '(2) Rest of '||${products.brand}
+        ELSE '(3) Rest of Population'
+        END
+  
+  - dimension: brand_comparison
+    description: 'Compare a selected brand vs. all other brands'
+    sql: |
+        CASE
+        WHEN  {% condition brand %} products.brand {% endcondition %}
+        THEN '(1) Rest of '||${products.brand}
+        ELSE '(2) Rest of Population'
+        END
 
 ## MEASURES ##
 
