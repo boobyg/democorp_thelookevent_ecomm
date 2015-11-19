@@ -11,7 +11,7 @@
 
   - dimension_group: created
     type: time
-    timeframes: [time, hour, date, week, month, year, hour_of_day, day_of_week, month_num, raw]
+    timeframes: [time, hour, date, week, month, year, hour_of_day, day_of_week, month_num, raw, week_of_year]
     sql: ${TABLE}.created_at
     
   - dimension: months_since_signup
@@ -28,9 +28,6 @@
 
   - dimension: status
     sql: ${TABLE}.status
-
-  - dimension: traffic_source
-    sql: ${TABLE}.traffic_source
 
   - dimension: user_id
     type: int

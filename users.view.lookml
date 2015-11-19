@@ -38,7 +38,11 @@
       
 
   - dimension: gender
-    sql: ${TABLE}.gender
+    sql: |
+      CASE
+      WHEN ${TABLE}.gender = 'm' THEN 'Male'
+      WHEN ${TABLE}.gender = 'f' THEN 'Female'
+      END
   
   - dimension: history
     sql: ${TABLE}.id
