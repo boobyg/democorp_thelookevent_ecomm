@@ -56,6 +56,7 @@
     type: number
     value_format: '#.#\%'
     sql: 100.0 * ${count_with_repeat_purchase_within_30d} / nullif(${orders.count},0)
+    drill_fields: [products.brand, orders.count, count_with_repeat_purchase_within_30d]
 
     
   - dimension: next_order_date_raw
