@@ -1,6 +1,6 @@
 - view: session_facts
   derived_table:
-    sql_trigger_value: SELECT current_date
+    sql_trigger_value: DATE(CONVERT_TIMEZONE('UTC', 'America/Los_Angeles', GETDATE()))
     sortkeys: [unique_session_id]
     sql: |
       SELECT
@@ -107,4 +107,3 @@
 
   - dimension: farthest_funnel_step_of_session
     sql: ${TABLE}.farthest_funnel_step
-
