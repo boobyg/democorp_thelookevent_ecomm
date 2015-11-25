@@ -184,7 +184,7 @@
       Jasmine: MOD(${id},24) = 0
   
   sets:
-    detail: [SUPER*, first_name, portrait]
+    detail: [SUPER*, portrait]
 
 - view: kitten_orders
   extends: orders
