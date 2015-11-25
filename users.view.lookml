@@ -120,7 +120,7 @@
       <img height=120 width=120 src="http://placekitten.com/g/{{ value }}/{{ value }}">
 
   - dimension: kitten_name
-    sql: CONCAT(${first_name},' ', ${TABLE}.last_name)
+    sql: CONCAT(${kitten_first_name},' ', ${TABLE}.last_name)
 
   - dimension: kitten_first_name
     sql_case:
