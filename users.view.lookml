@@ -120,7 +120,7 @@
       <img height=120 width=120 src="http://placekitten.com/g/{{ value }}/{{ value }}">
 
   - dimension: kitten_name
-    sql: CONCAT(${kitten_first_name},' ', ${TABLE}.last_name)
+    sql: ${kitten_first_name} || ' ' || ${TABLE}.last_name
 
   - dimension: kitten_first_name
     sql_case:
@@ -150,6 +150,6 @@
       Jasmine: MOD(${id},24) = 0
   
   sets:
-    detail: [SUPER*, kitten_name, kitten_portrait]
+    detail: [SUPER*, kitten_first_name, kitten_portrait]
       
     
