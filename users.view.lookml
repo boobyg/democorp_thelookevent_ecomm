@@ -117,7 +117,7 @@
     sql: GREATEST(MOD(${id}*97,867),MOD(${id}*31,881),MOD(${id}*72,893))
     type: int
     html: |
-      <img height=120 width=120 src="http://placekitten.com/g/{{ value }}/{{ value }}">
+      <img height=80 width=80 src="http://placekitten.com/g/{{ value }}/{{ value }}">
 
   - dimension: kitten_name
     sql: ${kitten_first_name} || ' ' || ${TABLE}.last_name
