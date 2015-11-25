@@ -35,7 +35,7 @@
       {{ linked_value }}
       <a href="/dashboards/thelook/4_user_lookup?email={{ value | encode_uri }}" target="_new">
       <img src="/images/qr-graph-line@2x.png" height=20 width=20></a>  
-      
+
 
   - dimension: gender
     sql: |
@@ -100,6 +100,33 @@
       - orders.count
       - order_items.count
     
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 # kittens for certain demos
 
 - explore: kitten_order_items
