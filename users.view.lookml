@@ -105,24 +105,31 @@
 - explore: kitten_order_items
   label: 'Order Items (Kittens)'
   hidden: true
-  extends: order_items 
+  extends: order_items
   joins:
     - join: users
+      view_label: 'Kittens'
       from: kitten_users
+    
+    - join: orders
+      from: kitten_orders
 
 - view: kitten_users
   extends: users
   fields:
-  - dimension: kitten_portrait
+  - dimension: portrait
+    label: 'Kitten Portrait'
     sql: GREATEST(MOD(${id}*97,867),MOD(${id}*31,881),MOD(${id}*72,893))
     type: int
     html: |
       <img height=80 width=80 src="http://placekitten.com/g/{{ value }}/{{ value }}">
 
-  - dimension: kitten_name
-    sql: ${kitten_first_name} || ' ' || ${TABLE}.last_name
+  - dimension: name
+    label: 'Kitten Name'
+    sql: ${first_name} || ' ' || ${TABLE}.last_name
 
-  - dimension: kitten_first_name
+  - dimension: first_name
+    label: 'Kitten First Name'
     sql_case:
       Bella: MOD(${id},24) = 23
       Bandit: MOD(${id},24) = 22
@@ -150,6 +157,11 @@
       Jasmine: MOD(${id},24) = 0
   
   sets:
-    detail: [SUPER*, kitten_first_name, kitten_portrait]
+    detail: [SUPER*, first_name, portrait]
+
+- view: kitten_orders
+  extends: orders
+  sets:
+    detail: [SUPER*, users.portrait]
       
     
