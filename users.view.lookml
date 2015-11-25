@@ -103,7 +103,7 @@
 # kittens for certain demos
 
 - explore: kitten_order_items
-  label: 'Order Items' 
+  label: 'Order Items (Kittens)'
   hidden: true
   extends: order_items 
   joins:
