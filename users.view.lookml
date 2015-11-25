@@ -113,7 +113,7 @@
 - view: kitten_users
   extends: users
   fields:
-  - dimension: portrait
+  - dimension: kitten_portrait
     sql: GREATEST(MOD(${id}*97,867),MOD(${id}*31,881),MOD(${id}*72,893))
     type: int
     html: |
@@ -122,7 +122,7 @@
   - dimension: kitten_name
     sql: CONCAT(${first_name},' ', ${TABLE}.last_name)
 
-  - dimension: first_name
+  - dimension: kitten_first_name
     sql_case:
       Bella: MOD(${id},24) = 23
       Bandit: MOD(${id},24) = 22
