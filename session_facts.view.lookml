@@ -1,6 +1,6 @@
 - view: session_facts
   derived_table:
-    sql_trigger_value: DATE(CONVERT_TIMEZONE('UTC', 'America/Los_Angeles', GETDATE()))
+    sql_trigger_value: SELECT DATE(CONVERT_TIMEZONE('UTC', 'America/Los_Angeles', GETDATE()))
     sortkeys: [unique_session_id]
     sql: |
       SELECT

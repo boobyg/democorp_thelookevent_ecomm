@@ -1,6 +1,6 @@
 - view: monthly_activity
   derived_table:
-    sql_trigger_value: DATE(CONVERT_TIMEZONE('UTC', 'America/Los_Angeles', GETDATE()))
+    sql_trigger_value: SELECT DATE(CONVERT_TIMEZONE('UTC', 'America/Los_Angeles', GETDATE()))
     sortkeys: [signup_month]
     distkey: user_id
     sql: |

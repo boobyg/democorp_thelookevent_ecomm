@@ -1,7 +1,7 @@
 - view: subsequent_order_facts
   derived_table:
     sortkeys: [id]
-    sql_trigger_value: DATE(CONVERT_TIMEZONE('UTC', 'America/Los_Angeles', GETDATE()))
+    sql_trigger_value: SELECT DATE(CONVERT_TIMEZONE('UTC', 'America/Los_Angeles', GETDATE()))
     sql: |
       SELECT
         orders.id
