@@ -72,6 +72,7 @@
     sql: ${TABLE}.zip
     
   - dimension: image_file
+    hidden: true
     sql: ('http://www.looker.com/_content/docs/99-hidden/images/'||${gender}||'.jpg') 
     
   - dimension: user_image
