@@ -66,6 +66,13 @@
   - dimension: zip
     type: zipcode
     sql: ${TABLE}.zip
+    
+  - dimension: image_file
+    sql: ('http://www.looker.com/_content/docs/99-hidden/images/'||${gender}||'.jpg') 
+    
+  - dimension: user_image
+    sql: ${image_file}
+    html: <img src="{{ value }}" width="100" height="100"/>  
 
 ## MEASURES ##
 

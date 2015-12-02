@@ -43,6 +43,8 @@
 
   - dimension: sku
     sql: ${TABLE}.sku
+    
+  
 
 ## MEASURES ##
 
