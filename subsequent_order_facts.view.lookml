@@ -1,7 +1,7 @@
 - view: subsequent_order_facts
   derived_table:
     sortkeys: [id]
-    sql_trigger_value: select current_date
+    sql_trigger_value: SELECT DATE(CONVERT_TIMEZONE('UTC', 'America/Los_Angeles', GETDATE()))
     sql: |
       SELECT
         orders.id
@@ -74,4 +74,3 @@
       - number_subsequent_orders
       - next_order_date
       - next_order_id
-

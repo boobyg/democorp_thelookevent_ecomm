@@ -1,6 +1,6 @@
 - view: events
   derived_table:
-    sql_trigger_value: SELECT current_Date
+    sql_trigger_value: SELECT DATE(CONVERT_TIMEZONE('UTC', 'America/Los_Angeles', GETDATE()))
     sortkeys: [rtime]
     distkey: unique_session_id
     sql: |

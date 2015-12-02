@@ -35,7 +35,7 @@
       {{ linked_value }}
       <a href="/dashboards/thelook/4_user_lookup?email={{ value | encode_uri }}" target="_new">
       <img src="/images/qr-graph-line@2x.png" height=20 width=20></a>  
-      
+
 
   - dimension: gender
     sql: |
@@ -70,6 +70,14 @@
   - dimension: zip
     type: zipcode
     sql: ${TABLE}.zip
+    
+  - dimension: image_file
+    hidden: true
+    sql: ('http://www.looker.com/_content/docs/99-hidden/images/'||${gender}||'.jpg') 
+    
+  - dimension: user_image
+    sql: ${image_file}
+    html: <img src="{{ value }}" width="100" height="100"/>  
 
 ## MEASURES ##
 
@@ -100,4 +108,95 @@
       - orders.count
       - order_items.count
     
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# kittens for certain demos
+
+- explore: kitten_order_items
+  label: 'Order Items (Kittens)'
+  hidden: true
+  extends: order_items
+  joins:
+    - join: users
+      view_label: 'Kittens'
+      from: kitten_users
+    
+    - join: orders
+      from: kitten_orders
+
+- view: kitten_users
+  extends: users
+  fields:
+  - dimension: portrait
+    label: 'Kitten Portrait'
+    sql: GREATEST(MOD(${id}*97,867),MOD(${id}*31,881),MOD(${id}*72,893))
+    type: int
+    html: |
+      <img height=80 width=80 src="http://placekitten.com/g/{{ value }}/{{ value }}">
+
+  - dimension: name
+    label: 'Kitten Name'
+    sql: ${first_name} || ' ' || ${TABLE}.last_name
+
+  - dimension: first_name
+    label: 'Kitten First Name'
+    sql_case:
+      Bella: MOD(${id},24) = 23
+      Bandit: MOD(${id},24) = 22
+      Tigger: MOD(${id},24) = 21
+      Boots: MOD(${id},24) = 20
+      Chloe: MOD(${id},24) = 19
+      Maggie: MOD(${id},24) = 18
+      Pumpkin: MOD(${id},24) = 17
+      Oliver: MOD(${id},24) = 16
+      Sammy: MOD(${id},24) = 15
+      Shadow: MOD(${id},24) = 14
+      Sassy: MOD(${id},24) = 13
+      Kitty: MOD(${id},24) = 12
+      Snowball: MOD(${id},24) = 11
+      Snickers: MOD(${id},24) = 10
+      Socks: MOD(${id},24) = 9
+      Gizmo: MOD(${id},24) = 8
+      Jake: MOD(${id},24) = 7
+      Lily: MOD(${id},24) = 6
+      Charlie: MOD(${id},24) = 5
+      Peanut: MOD(${id},24) = 4
+      Zoe: MOD(${id},24) = 3
+      Felix: MOD(${id},24) = 2
+      Mimi: MOD(${id},24) = 1
+      Jasmine: MOD(${id},24) = 0
+  
+  sets:
+    detail: [SUPER*, portrait]
+
+- view: kitten_orders
+  extends: orders
+  sets:
+    detail: [SUPER*, users.portrait]
+      
     
