@@ -157,22 +157,22 @@
   joins:
   - join: order_items
     from: order_items_share_of_wallet
-    
-- explore: monthly_activity
-  label: '(6) Cohort Retention Analysis and LTV'
-  joins:
-  - join: users
-    sql_on: ${users.id} = ${monthly_activity.user_id}
-    relationship: many_to_one
-    
-  - join: user_order_facts
-    view_label: 'Users'
-    relationship: many_to_one
-    sql_on: ${user_order_facts.user_id} = ${users.id}
+#     
+# - explore: monthly_activity
+#   label: '(6) Cohort Retention Analysis and LTV'
+#   joins:
+#   - join: users
+#     sql_on: ${users.id} = ${monthly_activity.user_id}
+#     relationship: many_to_one
+#     
+#   - join: user_order_facts
+#     view_label: 'Users'
+#     relationship: many_to_one
+#     sql_on: ${user_order_facts.user_id} = ${users.id}
     
 
 - explore: journey_mapping
-  label: '(7) Customer Journey Mapping'
+  label: '(6) Customer Journey Mapping'
   extends: order_items
   joins:
     - join: next_order
