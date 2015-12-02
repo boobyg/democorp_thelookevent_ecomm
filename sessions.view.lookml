@@ -1,6 +1,6 @@
 - view: sessions
   derived_table:
-    sql_trigger_value: SELECT current_date
+    sql_trigger_value: SELECT DATE(CONVERT_TIMEZONE('UTC', 'America/Los_Angeles', GETDATE()))
     distkey: user_id
     sortkeys: [session_start]
     sql: |
@@ -33,7 +33,7 @@
   fields:
     - measure: count
       type: count
-      drill_fields: [user_id, session_sequence_by_user, start_time, session_facts.session_duration, session_facts.farthest_funnel_step_of_session, events.count]
+      drill_fields: [session_id, user_id, users.name, start_time, session_facts.session_duration, session_facts.farthest_funnel_step_of_session, events.count]
 
     
     - dimension: user_event_sequence

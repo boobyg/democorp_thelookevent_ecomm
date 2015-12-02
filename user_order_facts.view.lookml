@@ -25,6 +25,11 @@
   - dimension: lifetime_orders
     type: number
     sql: ${TABLE}.lifetime_orders
+    
+  - measure: average_lifetime_orders
+    type: average
+    value_format: '#.##'
+    sql: ${lifetime_orders}
 
   - dimension: lifetime_orders_tier
     type: tier

@@ -1,7 +1,7 @@
 - view: subsequent_order_facts
   derived_table:
     sortkeys: [id]
-    sql_trigger_value: select current_date
+    sql_trigger_value: SELECT DATE(CONVERT_TIMEZONE('UTC', 'America/Los_Angeles', GETDATE()))
     sql: |
       SELECT
         orders.id
@@ -56,6 +56,7 @@
     type: number
     value_format: '#.#\%'
     sql: 100.0 * ${count_with_repeat_purchase_within_30d} / nullif(${orders.count},0)
+    drill_fields: [products.brand, orders.count, count_with_repeat_purchase_within_30d]
 
     
   - dimension: next_order_date_raw
@@ -73,4 +74,3 @@
       - number_subsequent_orders
       - next_order_date
       - next_order_id
-
