@@ -121,6 +121,11 @@
       relationship: many_to_one
       sql_on: ${users.id} = ${events.user_id}
     
+    - join: user_session_facts
+      relationship: many_to_one
+      sql_on: ${sessions.user_id} = ${user_session_facts.user_id}
+      view_label: 'Users' 
+    
     - join: user_order_facts
       relationship: many_to_one
       sql_on: ${user_order_facts.user_id} = ${users.id}

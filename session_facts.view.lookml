@@ -50,7 +50,6 @@
     timeframes: [time, date]
     sql: ${TABLE}.session_start  
 
-    
   - dimension: days_since_first_session
     type: number
     sql: DATEDIFF('day', ${events.first_session_raw}, ${TABLE}.session_start)
@@ -94,7 +93,21 @@
     type: int
     description: 'For a given user, what order did the sessions take place in? 1=First, 2=Second, etc'
     sql: ${TABLE}.session_sequence_for_user
-
+  
+  - dimension: is_first_session
+    type: yesno
+    sql: ${session_sequence_for_user} = 1
+  
+  - measure: count_first_sessions
+    type: count
+    filter: 
+      is_first_session: yes
+  
+  - measure: percent_first_sessions
+    type: number
+    sql: 100*(${count_first_sessions}::float/NULLIF(${sessions.count},0))
+    value_format: '0.00\%'
+    
   - dimension: inverse_session_sequence_for_user
     type: int
     description: 'For a given user, what order did the sessions take place in? 1=Last, 2=Second-to-Last, etc'
@@ -104,6 +117,10 @@
     type: int
     sql: ${TABLE}.number_of_events_in_session
 
-
   - dimension: farthest_funnel_step_of_session
     sql: ${TABLE}.farthest_funnel_step
+  
+  - dimension: is_purchasing_session
+    type: yesno
+    sql: ${farthest_funnel_step_of_session} = '4 - Checkout'
+  
