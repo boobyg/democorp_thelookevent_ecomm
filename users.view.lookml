@@ -44,6 +44,10 @@
       WHEN ${TABLE}.gender = 'f' THEN 'Female'
       END
   
+  - dimension: gender_short
+    hidden: true
+    sql: ${TABLE}.gender
+  
   - dimension: history
     sql: ${TABLE}.id
     html: |
@@ -73,7 +77,7 @@
     
   - dimension: image_file
     hidden: true
-    sql: ('http://www.looker.com/_content/docs/99-hidden/images/'||${gender}||'.jpg') 
+    sql: ('http://www.looker.com/_content/docs/99-hidden/images/'||${gender_short}||'.jpg') 
     
   - dimension: user_image
     sql: ${image_file}
