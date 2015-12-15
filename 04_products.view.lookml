@@ -12,7 +12,7 @@
       ,product_retail_price AS retail_price
       ,product_department   AS department
       
-      FROM inventory_items LIMIT 10
+      FROM inventory_items 
 
   fields:
 
