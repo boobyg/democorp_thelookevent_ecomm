@@ -44,7 +44,7 @@
   
   - dimension: user_image
     sql: ${image_file}
-    html: <img src="{{ value }}" width="100" height="100"/>  
+    html: <img src="{{ value }}" width="220" height="220"/>  
 
   - dimension: email
     html: |
