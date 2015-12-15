@@ -40,7 +40,7 @@
     sql: ${TABLE}.gender
     
   - dimension: gender_short
-    sql: left(${gender},1)
+    sql: lower(left(${gender},1))
   
   - dimension: user_image
     sql: ${image_file}

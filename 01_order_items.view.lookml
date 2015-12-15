@@ -30,6 +30,7 @@
   - measure: order_count
     view_label: 'Orders'
     type: count_distinct
+    drill_fields: detail*
     sql: ${order_id}
     
   - measure: first_purchase_count
@@ -210,9 +211,9 @@
   sets:
     detail:
       - id
-      - orders.id
+      - order_id
       - status
-      - created_time
+      - created_date
       - sale_price
       - products.brand
       - products.item_name
