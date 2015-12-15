@@ -1,5 +1,5 @@
-# kittens for certain demos
-
+# # kittens for certain demos
+# 
 - explore: kitten_order_items
   label: 'Order Items (Kittens)'
   hidden: true
@@ -9,9 +9,6 @@
       view_label: 'Kittens'
       from: kitten_users
     
-    - join: orders
-      from: kitten_orders
-
 - view: kitten_users
   extends: users
   fields:
@@ -57,7 +54,7 @@
   sets:
     detail: [SUPER*, portrait]
 
-- view: kitten_orders
-  extends: orders
+- view: kitten_order_items
+  extends: order_items
   sets:
     detail: [SUPER*, users.portrait]

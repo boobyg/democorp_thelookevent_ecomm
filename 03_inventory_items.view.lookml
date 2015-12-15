@@ -1,5 +1,5 @@
 - view: inventory_items
-  sql_table_name: thelook.inventory_items
+  sql_table_name: inventory_items
   fields:
 
 ## DIMENSIONS ##
@@ -50,6 +50,10 @@
     sql: ${days_since_arrival}
     style: integer
     tiers: [0,5,10,20,40,80,160,360]
+    
+  - dimension: product_distribution_center_id
+    hidden: true
+    sql: ${TABLE}.product_distribution_center_id
 
 ## MEASURES ## 
 

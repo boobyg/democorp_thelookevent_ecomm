@@ -1,13 +1,35 @@
 - view: products
-  sql_table_name: thelook.products
-  fields:
+  derived_table:
+    sortkeys: [id]
+    distkey: id
+    sql_trigger_value: SELECT current_date
+    sql: |
+      SELECT DISTINCT
+       product_id           AS id
+      ,product_category     AS category
+      ,product_name         AS item_name
+      ,product_brand        AS brand
+      ,product_retail_price AS retail_price
+      ,product_department   AS department
+      
+      FROM inventory_items LIMIT 10
 
-## DIMENSIONS ##
+  fields:
 
   - dimension: id
     primary_key: true
     type: int
     sql: ${TABLE}.id
+
+  - dimension: category
+    sql: ${TABLE}.category
+    html: |
+      {{ linked_value }}
+      <a href="/dashboards/thelook/3_category_lookup?category={{ value | encode_uri }}" target="_new">
+      <img src="/images/qr-graph-line@2x.png" height=20 width=20></a>
+
+  - dimension: item_name
+    sql: ${TABLE}.item_name
 
   - dimension: brand
     sql: ${TABLE}.brand
@@ -15,36 +37,16 @@
       {{ linked_value }}
       <a href="/dashboards/8?Brand%20Name={{ value | encode_uri }}" target="_new">
       <img src="/images/qr-graph-line@2x.png" height=20 width=20></a>
-      
-  - dimension: category
-    sql: ${TABLE}.category
-    html: |
-      {{ linked_value }}
-      <a href="/dashboards/thelook/3_category_lookup?category={{ value | encode_uri }}" target="_new">
-      <img src="/images/qr-graph-line@2x.png" height=20 width=20></a>
-      
-  - dimension: department
-    sql: ${TABLE}.department
-
-  - dimension: item_name
-    sql: ${TABLE}.item_name
-    html: |
-      {{ linked_value }}
-      <a href="/dashboards/2?item_name={{ value | encode_uri }}" target="_new">
-      <img src="/images/qr-graph-line@2x.png" height=20 width=20></a>    
-
-  - dimension: rank
-    type: int
-    sql: ${TABLE}.rank
 
   - dimension: retail_price
     type: number
     sql: ${TABLE}.retail_price
 
+  - dimension: department
+    sql: ${TABLE}.department
+
   - dimension: sku
     sql: ${TABLE}.sku
-    
-  
 
 ## MEASURES ##
 
@@ -77,7 +79,8 @@
       - department_name
       - detail2*
       - -department_count   # don't show because it will always be 1
- 
+
+
   sets:
     detail:
       - id
