@@ -4,7 +4,14 @@
     distkey: product_a_id
     sortkeys: [product_a_id, product_b_id]
     sql: |
-      SELECT product_a_id, product_b_id, joint_user_freq, joint_order_freq, top1.prod_freq as product_a_freq, top2.prod_freq as product_b_freq
+      SELECT 
+        product_a_id
+        , product_b_id
+        , joint_user_freq
+        , joint_order_freq
+        , top1.prod_freq as product_a_freq
+        , top2.prod_freq as product_b_freq
+      
       FROM (
         SELECT up1.prod_id as product_a_id, up2.prod_id as product_b_id, COUNT(*) as joint_user_freq
         FROM ${user_order_product.SQL_TABLE_NAME} up1
@@ -87,12 +94,11 @@
     distkey: prod_id
     sortkeys: [prod_id, user_id, order_id]
     sql: |
-          SELECT u.id as user_id, p.id as prod_id, o.id as order_id
-            FROM thelook.order_items oi
-            LEFT JOIN thelook.inventory_items ii ON oi.inventory_item_id = ii.id
-            LEFT JOIN thelook.orders o ON oi.order_id = o.id
-            LEFT JOIN thelook.products p ON ii.product_id = p.id
-            LEFT JOIN thelook.users u ON o.user_id = u.id
+          SELECT oi.user_id as user_id, p.id as prod_id, oi.order_id as order_id
+            FROM order_items oi
+            LEFT JOIN inventory_items ii ON oi.inventory_item_id = ii.id
+            LEFT JOIN ${products.SQL_TABLE_NAME} p ON ii.product_id = p.id
+            
             GROUP BY 1,2,3
 
   fields:
@@ -121,10 +127,9 @@
     sortkeys: prod_id
     sql: |
             SELECT p.id as prod_id, COUNT(*) as prod_freq
-            FROM thelook.order_items oi
-            LEFT JOIN thelook.inventory_items ON oi.inventory_item_id = inventory_items.id
-            LEFT JOIN thelook.orders o ON oi.order_id = o.id
-            LEFT JOIN thelook.products p ON inventory_items.product_id = p.id
+            FROM order_items oi
+            LEFT JOIN inventory_items ON oi.inventory_item_id = inventory_items.id
+            LEFT JOIN ${products.SQL_TABLE_NAME} p ON inventory_items.product_id = p.id
             GROUP BY p.id
    
 
