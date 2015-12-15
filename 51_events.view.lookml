@@ -1,57 +1,5 @@
 - view: events
   sql_table_name: events
-#   derived_table:
-#     sql_trigger_value: SELECT DATE(CONVERT_TIMEZONE('UTC', 'America/Los_Angeles', GETDATE()))
-#     sortkeys: [rtime]
-#     distkey: unique_session_id
-#     sql: |
-#       SELECT
-#             ROW_NUMBER() OVER (ORDER BY log.rtime) AS event_id
-#           , log.product_id AS raw_product_id 
-#           , CASE
-#              WHEN dir1 = '/checkout' 
-#              THEN LAG(log.product_id) IGNORE NULLS OVER (PARTITION BY log.user_id, log.ip ORDER BY log.rtime)
-#              ELSE log.product_id
-#              END as product_id
-#           , log.useragent
-#           , log.size  
-#           , log.status  
-#           , log.uri 
-#           , log.identd  
-#           , log.ip  
-#           , log.user_id 
-#           , log.classb  
-#           , log.os  
-#           , log.browser 
-#           , log.referer 
-#           , log.protocol
-#           , log.dir3
-#           , log.dir2
-#           , log.dir1  
-#           , log.method
-#           , log.rtime 
-#           , sessions.unique_session_id
-#           , RANK() OVER (PARTITION BY unique_session_id ORDER BY log.rtime) AS event_sequence_within_session
-#           , RANK() OVER (PARTITION BY unique_session_id ORDER BY log.rtime desc) AS inverse_event_sequence_within_session
-#           , FIRST_VALUE (dir1)  OVER (PARTITION BY unique_session_id ORDER BY rtime ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING) AS session_landing_page_category
-#           , LAST_VALUE  (dir1)  OVER (PARTITION BY unique_session_id ORDER BY rtime ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING) AS session_exit_page_category
-#           , FIRST_VALUE (uri)   OVER (PARTITION BY unique_session_id ORDER BY rtime ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING) AS session_landing_page
-#           , LAST_VALUE  (uri)   OVER (PARTITION BY unique_session_id ORDER BY rtime ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING) AS session_exit_page
-#           , MIN(rtime) OVER (PARTITION BY log.user_id, log.ip) AS user_first_session
-#           , MIN(rtime) OVER (PARTITION BY log.user_id) AS user_first_session_test
-# 
-# 
-#       FROM logs.log AS log
-#       LEFT JOIN ${sessions.SQL_TABLE_NAME} AS sessions
-#         ON log.user_id = sessions.user_id
-#         AND log.ip = sessions.ip_address
-#         AND log.rtime >= sessions.session_start
-#         AND log.rtime < sessions.next_session_start
-#       WHERE 
-#         ((log.rtime) >= (DATEADD(day,-29, DATE_TRUNC('day',GETDATE()) ))  AND (log.rtime) < (DATEADD(day,30, DATEADD(day,-29, DATE_TRUNC('day',GETDATE()) ) )))
-#         
-#         
-#      
   fields:
 
   - dimension: event_id
@@ -64,16 +12,6 @@
     hidden: true
     sql: ${TABLE}.session_id
 
-#   - dimension_group: first_session
-#     type: time
-#     view_label: Visitors
-#     timeframes: [time, date, week]
-#     sql: ${TABLE}.user_first_session_test
-    
-#   - dimension: first_session_raw
-#     hidden: true
-#     sql: ${TABLE}.user_first_session_test
-
   - dimension: ip
     label: 'IP Address'
     view_label: Visitors  
@@ -82,12 +20,10 @@
   - dimension: user_id
     sql: ${TABLE}.user_id
     
-    
   - dimension_group: event
     type: time
     timeframes: [time, date, hour, time_of_day, hour_of_day, week, day_of_week_index, day_of_week]
     sql: ${TABLE}.created_at
-
   
   - dimension: sequence_number
     type: int
@@ -98,28 +34,23 @@
     type: yesno
     description: 'Yes indicates this was the entry point / landing page of the session'
     sql: ${sequence_number} = 1
-# 
-#   - dimension: inverse_event_sequence_within_session
-#     type: int
-#     description: 'Within a given session, what order did the events take place in? 1=Last, 2=Second-to-Last, etc'
-#     sql: ${TABLE}.inverse_event_sequence_within_session
-# 
-  - dimension: sequence_number
-    type: number
-    sql: ${TABLE}.sequence_number
+
+  - dimension: utm_source
+    type: string
+    label: 'UTM Source'
+    sql: ${TABLE}.trafficsource
   
     dimension: is_exit_event
     description: 'Yes indicates this was the exit point / bounce page of the session'
     type: yesno
     sql: ${sequence_number} = ${sessions.number_of_events_in_session}
     
-#     
   - measure: count_bounces
     type: count
     description: 'Count of events where those events were the bounce page for the session'
     filters:
       is_exit_event: 'Yes'
-#       
+  
   - measure: bounce_rate
     type: number
     value_format: '#.00%'
@@ -127,39 +58,21 @@
     sql: ${count_bounces}*1.0 / nullif(${count}*1.0,0)
 
   - dimension: full_page_url
-    view_label: Webpages
+#     view_label: Webpages
     sql: ${TABLE}.uri
+    
+  - dimension: viewed_product_id
+    type: int
+    sql: |
+      CASE
+      WHEN ${event_type} = 'Product' THEN right(uri,len(uri)-9)
+      END
     
   - dimension: event_type
     sql: ${TABLE}.event_type
-    
-# 
-#   - dimension: 1_level_url
-#     label: '1 Level URL'
-#     view_label: Webpages
-#     sql: ${TABLE}.dir1
-#     
-#   - dimension: 2_level_url
-#     label: '2 Level URL'
-#     view_label: Webpages
-#     sql: |
-#       CASE
-#       WHEN LENGTH(${dir2}) <> 0 THEN ${dir2}
-#       ELSE ${dir1}
-#       END
-# 
-#   - dimension: 3_level_url
-#     label: '3 Level URL'
-#     view_label: Webpages
-#     sql: |
-#       CASE
-#       WHEN LENGTH(${dir3}) <> 0 THEN ${dir3}
-#       WHEN LENGTH(${dir2}) <> 0 THEN ${dir2}
-#       ELSE ${dir1}
-#       END
-    
+
   - dimension: funnel_step
-    view_label: Webpages
+#     view_label: Webpages
     description: 'Login -> Browse -> Add to Cart -> Checkout'
     sql: |
       CASE
@@ -176,6 +89,17 @@
     view_label: Visitors
     sql: ${ip}
 
+  - dimension: location
+    type: location
+    view_label: Visitors
+    sql_latitude: ${TABLE}.latitue
+    sql_longitude: ${TABLE}.longitude
+
+  - dimension: approx_location
+    type: location
+    view_label: Visitors
+    sql_latitude: round(${TABLE}.latitue,1)
+    sql_longitude: round(${TABLE}.longitude,1)
       
 #   - measure: all_visitors
 #     type: count_distinct
@@ -281,6 +205,15 @@
     decimals: 3
     drill_fields: [request_date, unique_ips]
 
+
+  sets:
+    simple_page_info:
+      - full_page_url
+      - event_type
+      - funnel_step
+      - event_id
+
+    
 
 #   - measure: requests_per_visitor
 #     type: number

@@ -63,6 +63,23 @@
     - join: sessions
       sql_on: ${events.session_id} =  ${sessions.session_id}
       relationship: many_to_one
+
+    - join: session_landing_page
+      from: events
+      sql_on: ${sessions.landing_event_id} = ${session_landing_page.event_id}
+      fields: [simple_page_info*]
+      relationship: one_to_one
+
+    - join: session_bounce_page
+      from: events
+      sql_on: ${sessions.bounce_event_id} = ${session_bounce_page.event_id}
+      fields: [simple_page_info*]
+      relationship: many_to_one
+      
+    - join: product_viewed
+      from: products
+      sql_on: ${events.viewed_product_id} = ${product_viewed.id}
+      relationship: many_to_one
 # 
 #     - join: session_facts
 #       sql_on: ${sessions.session_id} = ${session_facts.session_id}
@@ -102,6 +119,23 @@
     - join: events
       sql_on: ${sessions.session_id} = ${events.session_id}
       relationship: one_to_many
+
+    - join: product_viewed
+      from: products
+      sql_on: ${events.viewed_product_id} = ${product_viewed.id}
+      relationship: many_to_one
+      
+    - join: session_landing_page
+      from: events
+      sql_on: ${sessions.landing_event_id} = ${session_landing_page.event_id}
+      fields: [simple_page_info*]
+      relationship: one_to_one
+
+    - join: session_bounce_page
+      from: events
+      sql_on: ${sessions.bounce_event_id} = ${session_bounce_page.event_id}
+      fields: [simple_page_info*]
+      relationship: one_to_one
       
 #     - join: classb
 #       relationship: many_to_one
@@ -160,10 +194,20 @@
       sql_on: ${affinity.product_b_id} = ${product_b.id}  
 
       
-- explore: orders_share_of_wallet
+- explore: orders_with_share_of_wallet_application
   label: '(5) Share of Wallet Analysis'
-  hidden: false
   extends: order_items
+  view: order_items
+#   view_label: 'Order Items'
+  joins: 
+    - join: order_items_share_of_wallet
+      view_label: 'Share of Wallet'
+  
+#   hidden: false
+#   extends: order_items
+#   from: order_items
+#   view_label: 'Order Items'
+#   view: order_items_share_of_wallet
 #   joins:
 #   - join: order_items
 #     from: order_items_share_of_wallet

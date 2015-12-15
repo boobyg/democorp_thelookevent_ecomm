@@ -78,14 +78,14 @@
     decimals: 2
     sql: |
       CASE
-      WHEN ${status} = 'Processing' THEN datediff('day',${order_items.created_raw},GETDATE())*1.0
-      WHEN ${status} in ('Shipped', 'Delivered') THEN datediff('day',${order_items.created_raw},${order_items.shipped_raw})*1.0
+      WHEN ${status} = 'Processing' THEN datediff('day',${created_raw},GETDATE())*1.0
+      WHEN ${status} in ('Shipped', 'Delivered') THEN datediff('day',${created_raw},${shipped_raw})*1.0
       END
   
   - dimension: shipping_time
     type: number
     decimals: 2
-    sql: datediff('day',${order_items.shipped_raw},${order_items.delivered_raw})*1.0
+    sql: datediff('day',${shipped_raw},${delivered_raw})*1.0
     
   - measure: average_days_to_process
     type: average
@@ -156,7 +156,7 @@
   - dimension: days_until_next_order
     type: number
     view_label: 'Repeat Purchase Facts'
-    sql: datediff(${repeat_purchase_facts.next_order_raw}, ${order_items.created_raw})
+    sql: datediff(${repeat_purchase_facts.next_order_raw}, ${created_raw})
     
   - dimension: repeat_orders_within_30d
     type: yesno
@@ -173,39 +173,39 @@
     view_label: 'Repeat Purchase Facts'
     type: number
     value_format: '#.#\%'
-    sql: 100.0 * ${count_with_repeat_purchase_within_30d} / nullif(${order_items.count},0)
+    sql: 100.0 * ${count_with_repeat_purchase_within_30d} / nullif(${count},0)
     drill_fields: [products.brand, order_count, count_with_repeat_purchase_within_30d]
 
 
 
-
-########## Comparison for Share of Wallet ########## 
-
-  - filter: item_name
-    suggest_dimension: products.item_name
-    
-  - filter: brand
-    suggest_dimension: products.brand  
-    
-  - dimension: item_comparison
-    description: 'Compare a selected item vs. other items in the brand vs. all other brands'
-    sql: |
-        CASE
-        WHEN {% condition item_name %} products.item_name {% endcondition %}
-        THEN '(1) '||${products.item_name}
-        WHEN  {% condition brand %} products.brand {% endcondition %}
-        THEN '(2) Rest of '||${products.brand}
-        ELSE '(3) Rest of Population'
-        END
-  
-  - dimension: brand_comparison
-    description: 'Compare a selected brand vs. all other brands'
-    sql: |
-        CASE
-        WHEN  {% condition brand %} products.brand {% endcondition %}
-        THEN '(1) Rest of '||${products.brand}
-        ELSE '(2) Rest of Population'
-        END
+# 
+# ########## Comparison for Share of Wallet ########## 
+# 
+#   - filter: item_name
+#     suggest_dimension: products.item_name
+#     
+#   - filter: brand
+#     suggest_dimension: products.brand  
+#     
+#   - dimension: item_comparison
+#     description: 'Compare a selected item vs. other items in the brand vs. all other brands'
+#     sql: |
+#         CASE
+#         WHEN {% condition item_name %} products.item_name {% endcondition %}
+#         THEN '(1) '||${products.item_name}
+#         WHEN  {% condition brand %} products.brand {% endcondition %}
+#         THEN '(2) Rest of '||${products.brand}
+#         ELSE '(3) Rest of Population'
+#         END
+#   
+#   - dimension: brand_comparison
+#     description: 'Compare a selected brand vs. all other brands'
+#     sql: |
+#         CASE
+#         WHEN  {% condition brand %} products.brand {% endcondition %}
+#         THEN '(1) Rest of '||${products.brand}
+#         ELSE '(2) Rest of Population'
+#         END
 
   sets:
     detail:

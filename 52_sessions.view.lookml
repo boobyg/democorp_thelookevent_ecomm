@@ -13,6 +13,8 @@
       ,sum(case when event_type = 'Cart' then 1 end) as cart_events
       ,sum(case when event_type = 'Purchase' then 1 end) as purchase_events
       ,max(user_id) as session_user_id
+      ,min(id) as landing_event_id
+      ,max(id) as bounce_event_id
       
       from events
       group by session_id
@@ -34,9 +36,15 @@
   - dimension: session_user_id
     sql: ${TABLE}.session_user_id
 
+  - dimension: landing_event_id
+    sql: ${TABLE}.landing_event_id
+    
+  - dimension: bounce_event_id
+    sql: ${TABLE}.bounce_event_id
+
   - dimension_group: session_start
     type: time
-    timeframes: [time, date, week, month]
+    timeframes: [time, date, week, month, hour_of_day, day_of_week]
     sql: ${TABLE}.session_start
 
   - dimension_group: session_end

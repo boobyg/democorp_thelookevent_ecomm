@@ -23,10 +23,6 @@
     type: int
     hidden: true
     sql: ${TABLE}.product_id
-    
-  - dimension: is_sold
-    type: yesno
-    sql: ${order_items.created_raw} is not null
 
   - dimension_group: sold
     type: time
