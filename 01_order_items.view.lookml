@@ -72,16 +72,30 @@
 
   - dimension: status
     sql: ${TABLE}.status
-  
-  - dimension: days_to_ship
+
+  - dimension: days_to_process
     type: number
     decimals: 2
-    sql: datediff(${order_items.delivered_raw}, ${order_items.shipped_raw})*1.0
+    sql: |
+      CASE
+      WHEN ${status} = 'Processing' THEN datediff('day',${order_items.created_raw},GETDATE())*1.0
+      WHEN ${status} in ('Shipped', 'Delivered') THEN datediff('day',${order_items.created_raw},${order_items.shipped_raw})*1.0
+      END
+  
+  - dimension: shipping_time
+    type: number
+    decimals: 2
+    sql: datediff('day',${order_items.shipped_raw},${order_items.delivered_raw})*1.0
     
-  - measure: average_days_to_ship
+  - measure: average_days_to_process
     type: average
     decimals: 4
-    sql: ${days_to_ship}
+    sql: ${days_to_process}
+ 
+  - measure: average_shipping_time
+    type: average
+    decimals: 4
+    sql: ${shipping_time}
 
 ########## Financial Information ########## 
 
