@@ -47,27 +47,27 @@
     hidden: true
     sql: ${TABLE}.next_order_date
 
-  - dimension: days_until_next_order
-    type: number
-    sql: datediff('day',${order_items.created_raw}, ${next_order_raw})
+#   - dimension: days_until_next_order
+#     type: number
+#     sql: datediff('day',${order_items.created_raw}, ${next_order_raw})
     
 
 #### Repeat Purchase Rate ####
-
-  - dimension: repeat_orders_within_30d
-    type: yesno
-    sql: ${days_until_next_order} <= 30
-    
-  - measure: count_with_repeat_purchase_within_30d
-    type: count
-    filters:
-      repeat_orders_within_30d: 'Yes'
-      
-  - measure: 30_day_repeat_purchase_rate
-    type: number
-    value_format: '#.##\%'
-    sql: 100.0 * ${count_with_repeat_purchase_within_30d} / nullif(${order_items.order_count},0)
-    drill_fields: [products.brand, orders.count, count_with_repeat_purchase_within_30d]
+# 
+#   - dimension: repeat_orders_within_30d
+#     type: yesno
+#     sql: ${days_until_next_order} <= 30
+#     
+#   - measure: count_with_repeat_purchase_within_30d
+#     type: count
+#     filters:
+#       repeat_orders_within_30d: 'Yes'
+#       
+#   - measure: 30_day_repeat_purchase_rate
+#     type: number
+#     value_format: '#.##\%'
+#     sql: 100.0 * ${count_with_repeat_purchase_within_30d} / nullif(${order_items.order_count},0)
+#     drill_fields: [products.brand, orders.count, count_with_repeat_purchase_within_30d]
 
     
 

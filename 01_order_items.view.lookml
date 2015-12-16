@@ -157,7 +157,7 @@
   - dimension: days_until_next_order
     type: number
     view_label: 'Repeat Purchase Facts'
-    sql: datediff(${repeat_purchase_facts.next_order_raw}, ${created_raw})
+    sql: datediff('day',${created_raw},${repeat_purchase_facts.next_order_raw})
     
   - dimension: repeat_orders_within_30d
     type: yesno
