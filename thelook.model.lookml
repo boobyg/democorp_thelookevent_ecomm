@@ -22,7 +22,6 @@
       relationship: many_to_one
       sql_on: ${order_facts.order_id} = ${order_items.order_id}
 
-
     - join: inventory_items
       type: full_outer             #Left Join only brings in items that have been sold as order_item
       relationship: one_to_many    
