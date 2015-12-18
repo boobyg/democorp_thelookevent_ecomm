@@ -49,7 +49,7 @@
   - dimension: email
     html: |
       {{ linked_value }}
-      <a href="/dashboards/31?email={{ value | encode_uri }}" target="_new">
+      <a href="/dashboards/31?Email={{ value | encode_uri }}" target="_new">
       <img src="/images/qr-graph-line@2x.png" height=20 width=20></a>  
 
   - dimension: image_file

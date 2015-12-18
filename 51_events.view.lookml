@@ -98,7 +98,7 @@
   - dimension: approx_location
     type: location
     view_label: Visitors
-    sql_latitude: round(${TABLE}.latitue,1)
+    sql_latitude: round(${TABLE}.latitude,1)
     sql_longitude: round(${TABLE}.longitude,1)
       
 #   - measure: all_visitors
