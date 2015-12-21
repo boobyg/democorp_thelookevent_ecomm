@@ -16,7 +16,7 @@
 
   - dimension_group: created
     type: time
-    timeframes: [time, date, week, month]
+    timeframes: [time, date, week, month, raw]
     sql: ${TABLE}.created_at
 
   - dimension: product_id
@@ -26,13 +26,17 @@
 
   - dimension_group: sold
     type: time
-    timeframes: [time, date, week, month, yesno]
+    timeframes: [time, date, week, month, raw]
     sql: ${TABLE}.sold_at
+    
+  - dimension: is_sold
+    type: yesno
+    sql: ${sold_raw} is not null
 
   - dimension: days_in_inventory
     description: days between created and sold date
     type: number
-    sql: DATEDIFF('day', ${created_date}, ${sold_date})
+    sql: DATEDIFF('day', ${created_raw}, coalesce(${sold_raw},CURRENT_DATE))
 
   - dimension: days_in_inventory_tier
     type: tier
@@ -61,7 +65,7 @@
     type: count
     drill_fields: detail*
     filters:
-      sold: Yes
+      is_sold: 'Yes'
 
   - measure: sold_percent
     type: number
