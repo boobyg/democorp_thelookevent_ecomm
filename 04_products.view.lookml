@@ -15,7 +15,7 @@
       <img src="/images/qr-graph-line@2x.png" height=20 width=20></a>
 
   - dimension: item_name
-    sql: ${TABLE}.item_name
+    sql: ${TABLE}.name
 
   - dimension: brand
     sql: ${TABLE}.brand
@@ -33,6 +33,10 @@
 
   - dimension: sku
     sql: ${TABLE}.sku
+
+  - dimension: distribution_center_id
+    type: int
+    sql: ${TABLE}.distribution_center_id
 
 ## MEASURES ##
 
