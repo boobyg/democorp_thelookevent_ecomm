@@ -4,6 +4,7 @@
     distkey: id
     sql_trigger_value: SELECT current_date
     sql: |
+      
       SELECT 1 as id, 'Memphis' as name, 35.1174 as latitude, -89.9711 as longitude UNION ALL
       SELECT 2 as id, 'Chicago' as name, 41.8369 as latitude, -87.6847 as longitude UNION ALL
       SELECT 3 as id, 'Houston' as name, 29.7604 as latitude, -95.3698 as longitude UNION ALL

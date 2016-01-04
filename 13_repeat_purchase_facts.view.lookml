@@ -4,6 +4,7 @@
     sql_trigger_value: SELECT DATE(CONVERT_TIMEZONE('UTC', 'America/Los_Angeles', GETDATE()))
     sql: |
       SELECT
+      
          order_items.order_id 
         ,COUNT(distinct foo.id) AS number_subsequent_orders
         ,MIN(foo.created_at)    AS next_order_date

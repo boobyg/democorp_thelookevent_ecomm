@@ -1,7 +1,8 @@
 - view: order_facts
   derived_table:
     sql: |
-      SELECT order_items.order_id AS order_id
+      SELECT 
+          order_items.order_id AS order_id
         , COUNT(*) AS items_in_order
         , SUM(sale_price) AS order_amount
         , SUM(inventory_items.cost) AS order_cost
