@@ -1,18 +1,5 @@
 - view: products
-  derived_table:
-    sortkeys: [id]
-    distkey: id
-    sql_trigger_value: SELECT current_date
-    sql: |
-      SELECT DISTINCT
-       product_id           AS id
-      ,product_category     AS category
-      ,product_name         AS item_name
-      ,product_brand        AS brand
-      ,product_retail_price AS retail_price
-      ,product_department   AS department
-      
-      FROM inventory_items 
+  sql_table_name: thelook.products
 
   fields:
 

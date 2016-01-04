@@ -1,7 +1,8 @@
 - view: user_session_facts
   derived_table:
     sql: |
-      select user_id
+      select 
+              user_id
             , count(*) as count_sessions
             , count(case when session_facts.farthest_funnel_step = '4 - Checkout' then session_facts.unique_session_id end) as count_purchasing_sessions
             , max(case when session_facts.farthest_funnel_step = '4 - Checkout' then sessions.session_start else null end) as latest_purchasing_session

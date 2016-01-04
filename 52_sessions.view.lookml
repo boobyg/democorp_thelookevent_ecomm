@@ -3,20 +3,20 @@
     indexes: [session_id]
     sql_trigger_value: select curdate()
     sql: |
-      select
-      session_id
-      ,min(created_at) as session_start
-      ,max(created_at) as session_end
-      ,count(*) as number_of_events_in_session
-      ,sum(case when event_type in ('Category','Brand') then 1 end) as browse_events
-      ,sum(case when event_type = 'Product' then 1 end) as product_events
-      ,sum(case when event_type = 'Cart' then 1 end) as cart_events
-      ,sum(case when event_type = 'Purchase' then 1 end) as purchase_events
-      ,max(user_id) as session_user_id
-      ,min(id) as landing_event_id
-      ,max(id) as bounce_event_id
+      SELECT
+        session_id
+        ,min(created_at) as session_start
+        ,max(created_at) as session_end
+        ,count(*) as number_of_events_in_session
+        ,sum(case when event_type in ('Category','Brand') then 1 end) as browse_events
+        ,sum(case when event_type = 'Product' then 1 end) as product_events
+        ,sum(case when event_type = 'Cart' then 1 end) as cart_events
+        ,sum(case when event_type = 'Purchase' then 1 end) as purchase_events
+        ,max(user_id) as session_user_id
+        ,min(id) as landing_event_id
+        ,max(id) as bounce_event_id
       
-      from events
+      FROM events
       group by session_id
       
 
