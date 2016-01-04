@@ -8,17 +8,17 @@
     sql: ${TABLE}.id
 
   - dimension: category
-    sql: ${TABLE}.category
-    html: |
-      {{ linked_value }}
-      <a href="/dashboards/thelook/3_category_lookup?category={{ value | encode_uri }}" target="_new">
-      <img src="/images/qr-graph-line@2x.png" height=20 width=20></a>
+    sql: trim(${TABLE}.category)
+#     html: |
+#       {{ linked_value }}
+#       <a href="/dashboards/thelook/3_category_lookup?category={{ value | encode_uri }}" target="_new">
+#       <img src="/images/qr-graph-line@2x.png" height=20 width=20></a>
 
   - dimension: item_name
-    sql: ${TABLE}.name
+    sql: trim(${TABLE}.name)
 
   - dimension: brand
-    sql: ${TABLE}.brand
+    sql: trim(${TABLE}.brand)
     html: |
       {{ linked_value }}
       <a href="/dashboards/8?Brand%20Name={{ value | encode_uri }}" target="_new">
@@ -29,7 +29,7 @@
     sql: ${TABLE}.retail_price
 
   - dimension: department
-    sql: ${TABLE}.department
+    sql: trim(${TABLE}.department)
 
   - dimension: sku
     sql: ${TABLE}.sku
