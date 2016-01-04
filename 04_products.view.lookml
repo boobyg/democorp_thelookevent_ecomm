@@ -1,6 +1,5 @@
 - view: products
-  sql_table_name: thelook.products
-
+  sql_table_name: products
   fields:
 
   - dimension: id
