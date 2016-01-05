@@ -1,7 +1,7 @@
 - view: sessions
   derived_table:
     indexes: [session_id]
-    sql_trigger_value: select curdate()
+    sql_trigger_value: select max(created_at) from events
     sql: |
       SELECT
         session_id

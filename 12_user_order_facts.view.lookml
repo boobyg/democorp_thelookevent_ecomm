@@ -12,7 +12,7 @@
       GROUP BY user_id
     sortkeys: [user_id]
     distkey: user_id
-    sql_trigger_value: SELECT MAX(id) FROM orders
+    sql_trigger_value: SELECT MAX(created_at) FROM order_items
 
   fields:
   
