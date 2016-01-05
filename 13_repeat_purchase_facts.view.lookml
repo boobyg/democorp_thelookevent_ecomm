@@ -1,7 +1,7 @@
 - view: repeat_purchase_facts
   derived_table:
     sortkeys: [order_id]
-    sql_trigger_value: SELECT DATE(CONVERT_TIMEZONE('UTC', 'America/Los_Angeles', GETDATE()))
+    sql_trigger_value: SELECT max(created_at) from order_items
     sql: |
       SELECT
       
