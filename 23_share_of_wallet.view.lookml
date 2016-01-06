@@ -58,7 +58,7 @@
       
   - measure: total_sale_price_brand_v2
     type: sum
-    hidden: true
+#     hidden: true
     sql: ${order_items.sale_price}
     filters:
       order_items_share_of_wallet.brand_comparison: '(1)%'
