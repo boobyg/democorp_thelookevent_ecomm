@@ -173,7 +173,7 @@
   - measure: 30_day_repeat_purchase_rate
     view_label: 'Repeat Purchase Facts'
     type: number
-    value_format: '#.#\%'
+    value_format: '#.0\%'
     sql: 100.0 * ${count_with_repeat_purchase_within_30d} / nullif(${count},0)
     drill_fields: [products.brand, order_count, count_with_repeat_purchase_within_30d]
 
