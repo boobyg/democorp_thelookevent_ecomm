@@ -214,8 +214,10 @@
       - session_start_time
       - session_end_time
       - number_of_events_in_session
-      - purchase_events
-      - cart_events
+      - duration
+      - number_of_purchase_events_in_session
+      - number_of_cart_events_in_session
+
 
 
 
