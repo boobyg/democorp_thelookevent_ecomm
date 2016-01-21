@@ -81,6 +81,7 @@
     type: count
     filters:
       is_bounce_session: 'Yes'
+    drill_fields: detail*
       
   - measure: percent_bounce_sessions
     type: number
@@ -130,11 +131,13 @@
     type: count
     filters:
       includes_cart: 'Yes'
+    drill_fields: detail*
       
   - measure: count_with_purchase
     type: count
     filters:
       includes_purchase: 'Yes'
+    drill_fields: detail*
       
 
 
@@ -158,6 +161,7 @@
     view_label: 'Funnel View'
     label: '(1) All Sessions'
     type: count
+    drill_fields: detail*
     
   - measure: count_browse_or_later
     view_label: 'Funnel View'
@@ -166,6 +170,7 @@
     filters:
         furthest_funnel_step: |
           '(2) Browse','(3) View Product','(4) Add to Cart','(5) Purchase'
+    drill_fields: detail*
 
     
   - measure: count_product_or_later
@@ -175,6 +180,7 @@
     filters:
         furthest_funnel_step: |
           '(3) View Product','(4) Add to Cart','(5) Purchase'
+    drill_fields: detail*
 
     
   - measure: count_cart_or_later
@@ -184,6 +190,7 @@
     filters:
         furthest_funnel_step: |
           '(4) Add to Cart','(5) Purchase'
+    drill_fields: detail*
           
     
   - measure: count_purchase
@@ -192,7 +199,8 @@
     type: count
     filters:
         furthest_funnel_step: |
-         '(5) Purchase'          
+         '(5) Purchase'        
+    drill_fields: detail*  
 
   - measure: cart_to_checkout_conversion
     view_label: 'Funnel View'
