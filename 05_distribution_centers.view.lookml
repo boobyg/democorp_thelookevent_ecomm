@@ -2,7 +2,7 @@
   derived_table:
     sortkeys: [id]
     distkey: id
-    sql_trigger_value: SELECT current_date
+    sql_trigger_value: SELECT DATE(CONVERT_TIMEZONE('UTC', 'America/Los_Angeles', GETDATE()))
     sql: |
       
       SELECT 1 as id, 'Memphis' as name, 35.1174 as latitude, -89.9711 as longitude UNION ALL
@@ -28,4 +28,3 @@
     
   - dimension: name
     
-
