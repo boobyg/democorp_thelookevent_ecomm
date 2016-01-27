@@ -6,20 +6,20 @@
 
   - dimension: id
     primary_key: true
-    type: int
+    type: number
     sql: ${TABLE}.id
 
   - dimension: inventory_item_id
-    type: int
+    type: number
     hidden: true
     sql: ${TABLE}.inventory_item_id
 
   - dimension: order_id
-    type: int
+    type: number
     sql: ${TABLE}.order_id
   
   - dimension: user_id
-    type: int
+    type: number
     hidden: true
     sql: ${TABLE}.user_id
 

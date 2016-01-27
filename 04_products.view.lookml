@@ -4,7 +4,7 @@
 
   - dimension: id
     primary_key: true
-    type: int
+    type: number
     sql: ${TABLE}.id
 
   - dimension: category
@@ -35,7 +35,7 @@
     sql: ${TABLE}.sku
 
   - dimension: distribution_center_id
-    type: int
+    type: number
     sql: ${TABLE}.distribution_center_id
 
 ## MEASURES ##

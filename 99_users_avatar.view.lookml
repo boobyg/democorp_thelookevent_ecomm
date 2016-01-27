@@ -15,7 +15,7 @@
   - dimension: portrait
     label: 'Kitten Portrait'
     sql: GREATEST(MOD(${id}*97,867),MOD(${id}*31,881),MOD(${id}*72,893))
-    type: int
+    type: number
     html: |
       <img height=80 width=80 src="http://placekitten.com/g/{{ value }}/{{ value }}">
 

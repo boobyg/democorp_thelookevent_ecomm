@@ -66,7 +66,7 @@
     sql: ${lifetime_orders}
 
   - dimension: distinct_months_with_orders
-    type: int
+    type: number
     sql: ${TABLE}.number_of_distinct_months_with_orders
 
 ##### Lifetime Behavior - Revenue ######  

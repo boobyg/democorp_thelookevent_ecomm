@@ -23,7 +23,7 @@
     sql_longitude: ${TABLE}.longitude
     
   - dimension: id
-    type: int
+    type: number
     primary_key: true
     
   - dimension: name

@@ -3,12 +3,12 @@
   fields:
 
   - dimension: event_id
-    type: int
+    type: number
     primary_key: true
     sql: ${TABLE}.id
     
   - dimension: session_id
-    type: int
+    type: number
     hidden: true
     sql: ${TABLE}.session_id
 
@@ -26,7 +26,7 @@
     sql: ${TABLE}.created_at
   
   - dimension: sequence_number
-    type: int
+    type: number
     description: 'Within a given session, what order did the events take place in? 1=First, 2=Second, etc'
     sql: ${TABLE}.sequence_number
     
@@ -61,7 +61,7 @@
     sql: ${TABLE}.uri
     
   - dimension: viewed_product_id
-    type: int
+    type: number
     sql: |
       CASE
       WHEN ${event_type} = 'Product' THEN right(uri,len(uri)-9)

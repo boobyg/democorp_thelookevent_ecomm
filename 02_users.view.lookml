@@ -6,7 +6,7 @@
 
   - dimension: id
     primary_key: true
-    type: int
+    type: number
     sql: ${TABLE}.id
 
   - dimension: first_name
@@ -21,14 +21,8 @@
     sql: ${first_name} || ' ' || ${last_name}
 
   - dimension: age
-    type: int
+    type: number
     sql: ${TABLE}.age
-
-  - measure: average_age
-    type: average
-    decimals: 2
-    sql: ${age}
-    drill_fields: detail*  
   
   - dimension: age_tier
     type: tier
@@ -40,7 +34,7 @@
     sql: ${TABLE}.gender
     
   - dimension: gender_short
-    sql: lower(left(${gender},1))
+    sql: LOWER(LEFT(${gender},1))
   
   - dimension: user_image
     sql: ${image_file}
@@ -104,13 +98,18 @@
     type: count
     drill_fields: detail*
 
-
   - measure: count_percent_of_total
     label: Count (Percent of Total)
     type: percent_of_total
     decimals: 1
     sql: ${count}
     drill_fields: detail*
+
+  - measure: average_age
+    type: average
+    decimals: 2
+    sql: ${age}
+    drill_fields: detail*  
   
   sets: 
     detail:

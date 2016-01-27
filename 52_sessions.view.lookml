@@ -282,7 +282,7 @@
 #       sql: ${user_id} ||'-'|| ${session_sequence_by_user}
 #   
 #     - dimension: session_id
-#       type: int
+#       type: number
 #       primary_key: true
 #       sql: ${TABLE}.unique_session_id
 # 

@@ -21,11 +21,11 @@
     sql: ${TABLE}.user_id
 
   - dimension: total_session_count
-    type: int
+    type: number
     sql: ${TABLE}.count_sessions
 
   - dimension: purchasing_session_count
-    type: int
+    type: number
     sql: ${TABLE}.count_purchasing_sessions
   
   - dimension: is_loyal_customer
@@ -48,4 +48,3 @@
       - user_id
       - count_sessions
       - count_purchasing_sessions
-
