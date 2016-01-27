@@ -5,19 +5,18 @@
     sql: |
       SELECT
         session_id
-        ,min(created_at) as session_start
-        ,max(created_at) as session_end
-        ,count(*) as number_of_events_in_session
-        ,sum(case when event_type in ('Category','Brand') then 1 end) as browse_events
-        ,sum(case when event_type = 'Product' then 1 end) as product_events
-        ,sum(case when event_type = 'Cart' then 1 end) as cart_events
-        ,sum(case when event_type = 'Purchase' then 1 end) as purchase_events
-        ,max(user_id) as session_user_id
-        ,min(id) as landing_event_id
-        ,max(id) as bounce_event_id
-      
+        , MIN(created_at) AS session_start
+        , MAX(created_at) AS session_end
+        , COUNT(*) AS number_of_events_in_session
+        , SUM(CASE WHEN event_type IN ('Category','Brand') THEN 1 END) AS browse_events
+        , SUM(CASE WHEN event_type = 'Product' THEN 1 END) AS product_events
+        , SUM(CASE WHEN event_type = 'Cart' THEN 1 END) AS cart_events
+        , SUM(CASE WHEN event_type = 'Purchase' THEN 1 end) AS purchase_events
+        , MAX(user_id) AS session_user_id
+        , MIN(id) AS landing_event_id
+        , MAX(id) AS bounce_event_id
       FROM events
-      group by session_id
+      GROUP BY session_id
       
 
   fields:
