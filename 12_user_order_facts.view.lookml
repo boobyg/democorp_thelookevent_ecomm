@@ -2,12 +2,12 @@
   derived_table:
     sql: |
       SELECT
-          user_id
-        , COUNT(DISTINCT order_id) as lifetime_orders
+        user_id
+        , COUNT(DISTINCT order_id) AS lifetime_orders
         , SUM(sale_price) AS lifetime_revenue
-        , MIN( NULLIF(created_at,0)) as first_order
-        , MAX( NULLIF(created_at,0)) as latest_order
-        , COUNT( DISTINCT DATE_TRUNC('month', NULLIF(created_at,0))) as number_of_distinct_months_with_orders
+        , MIN(NULLIF(created_at,0)) AS first_order
+        , MAX(NULLIF(created_at,0)) AS latest_order
+        , COUNT(DISTINCT DATE_TRUNC('month', NULLIF(created_at,0))) AS number_of_distinct_months_with_orders
       FROM order_items
       GROUP BY user_id
     sortkeys: [user_id]
@@ -66,7 +66,7 @@
     sql: ${lifetime_orders}
 
   - dimension: distinct_months_with_orders
-    type: int
+    type: number
     sql: ${TABLE}.number_of_distinct_months_with_orders
 
 ##### Lifetime Behavior - Revenue ######  

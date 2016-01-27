@@ -5,16 +5,16 @@
     sql_trigger_value: SELECT DATE(CONVERT_TIMEZONE('UTC', 'America/Los_Angeles', GETDATE()))
     sql: |
       
-      SELECT 1 as id, 'Memphis' as name, 35.1174 as latitude, -89.9711 as longitude UNION ALL
-      SELECT 2 as id, 'Chicago' as name, 41.8369 as latitude, -87.6847 as longitude UNION ALL
-      SELECT 3 as id, 'Houston' as name, 29.7604 as latitude, -95.3698 as longitude UNION ALL
-      SELECT 4 as id, 'Los Angeles' as name, 34.0500 as latitude, -118.250 as longitude UNION ALL
-      SELECT 5 as id, 'New Orleans' as name, 29.9500 as latitude, -90.0667 as longitude UNION ALL
-      SELECT 6 as id, 'Port Authority of New York/New Jersey' as name, 40.6340 as latitude, -73.7834 as longitude UNION ALL
-      SELECT 7 as id, 'Philadelphia' as name, 39.9500 as latitude, -75.1667 as longitude UNION ALL
-      SELECT 8 as id, 'Mobile' as name, 30.6944 as latitude, -88.0431 as longitude UNION ALL
-      SELECT 9 as id, 'Charleston' as name, 32.7833 as latitude, -79.9333 as longitude UNION ALL
-      SELECT 10 as id, 'Savannah' as name, 32.0167 as latitude, -81.1167 as longitude
+      SELECT 1 AS id, 'Memphis' AS name, 35.1174 AS latitude, -89.9711 AS longitude UNION ALL
+      SELECT 2 AS id, 'Chicago' AS name, 41.8369 AS latitude, -87.6847 AS longitude UNION ALL
+      SELECT 3 AS id, 'Houston' AS name, 29.7604 AS latitude, -95.3698 AS longitude UNION ALL
+      SELECT 4 AS id, 'Los Angeles' AS name, 34.0500 AS latitude, -118.250 AS longitude UNION ALL
+      SELECT 5 AS id, 'New Orleans' AS name, 29.9500 AS latitude, -90.0667 AS longitude UNION ALL
+      SELECT 6 AS id, 'Port Authority of New York/New Jersey' AS name, 40.6340 AS latitude, -73.7834 AS longitude UNION ALL
+      SELECT 7 AS id, 'Philadelphia' AS name, 39.9500 AS latitude, -75.1667 AS longitude UNION ALL
+      SELECT 8 AS id, 'Mobile' AS name, 30.6944 AS latitude, -88.0431 AS longitude UNION ALL
+      SELECT 9 AS id, 'Charleston' AS name, 32.7833 AS latitude, -79.9333 AS longitude UNION ALL
+      SELECT 10 AS id, 'Savannah' AS name, 32.0167 AS latitude, -81.1167 AS longitude
 
   fields:
   - dimension: location
@@ -23,7 +23,7 @@
     sql_longitude: ${TABLE}.longitude
     
   - dimension: id
-    type: int
+    type: number
     primary_key: true
     
   - dimension: name

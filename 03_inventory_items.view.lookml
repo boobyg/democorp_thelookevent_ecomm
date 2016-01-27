@@ -6,7 +6,7 @@
 
   - dimension: id
     primary_key: true
-    type: int
+    type: number
     sql: ${TABLE}.id
 
   - dimension: cost
@@ -20,7 +20,7 @@
     sql: ${TABLE}.created_at
 
   - dimension: product_id
-    type: int
+    type: number
     hidden: true
     sql: ${TABLE}.product_id
 
