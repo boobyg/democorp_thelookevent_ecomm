@@ -66,7 +66,7 @@
   - dimension: months_since_signup
     view_label: 'Orders'
     type: number
-    sql: datediff('month',${users.created_raw},${created_raw})
+    sql: DATEDIFF('month',${users.created_raw},${created_raw})
     
 
 ########## Logistics ##
@@ -79,8 +79,8 @@
     decimals: 2
     sql: |
       CASE
-      WHEN ${status} = 'Processing' THEN datediff('day',${created_raw},GETDATE())*1.0
-      WHEN ${status} in ('Shipped', 'Delivered') THEN datediff('day',${created_raw},${shipped_raw})*1.0
+        WHEN ${status} = 'Processing' THEN DATEDIFF('day',${created_raw},GETDATE())*1.0
+        WHEN ${status} IN ('Shipped', 'Delivered') THEN DATEDIFF('day',${created_raw},${shipped_raw})*1.0
       END
   
   - dimension: shipping_time
@@ -150,14 +150,12 @@
     sql: 100.0 * ${total_gross_margin}/${total_sale_price}
 
 
-
-
 ########## Repeat Purchase Facts ########## 
 
   - dimension: days_until_next_order
     type: number
     view_label: 'Repeat Purchase Facts'
-    sql: datediff('day',${created_raw},${repeat_purchase_facts.next_order_raw})
+    sql: DATEDIFF('day',${created_raw},${repeat_purchase_facts.next_order_raw})
     
   - dimension: repeat_orders_within_30d
     type: yesno
@@ -174,39 +172,10 @@
     view_label: 'Repeat Purchase Facts'
     type: number
     value_format: '#.0\%'
-    sql: 100.0 * ${count_with_repeat_purchase_within_30d} / nullif(${count},0)
+    sql: 100.0 * ${count_with_repeat_purchase_within_30d} / NULLIF(${count},0)
     drill_fields: [products.brand, order_count, count_with_repeat_purchase_within_30d]
 
-
-
-# 
-# ########## Comparison for Share of Wallet ########## 
-# 
-#   - filter: item_name
-#     suggest_dimension: products.item_name
-#     
-#   - filter: brand
-#     suggest_dimension: products.brand  
-#     
-#   - dimension: item_comparison
-#     description: 'Compare a selected item vs. other items in the brand vs. all other brands'
-#     sql: |
-#         CASE
-#         WHEN {% condition item_name %} products.item_name {% endcondition %}
-#         THEN '(1) '||${products.item_name}
-#         WHEN  {% condition brand %} products.brand {% endcondition %}
-#         THEN '(2) Rest of '||${products.brand}
-#         ELSE '(3) Rest of Population'
-#         END
-#   
-#   - dimension: brand_comparison
-#     description: 'Compare a selected brand vs. all other brands'
-#     sql: |
-#         CASE
-#         WHEN  {% condition brand %} products.brand {% endcondition %}
-#         THEN '(1) Rest of '||${products.brand}
-#         ELSE '(2) Rest of Population'
-#         END
+########## Sets ########## 
 
   sets:
     detail:
