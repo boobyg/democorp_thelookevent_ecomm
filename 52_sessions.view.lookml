@@ -240,7 +240,7 @@
 
 # - view: sessions_old
 #   derived_table:
-#     sql_trigger_value: SELECT DATE(CONVERT_TIMEZONE('UTC', 'America/Los_Angeles', GETDATE()))
+#     sql_trigger_value: SELECT DATE(CONVERT_TIMEZONE('UTC', 'America/Chicago', GETDATE()))
 #     distkey: user_id
 #     sortkeys: [session_start]
 #     sql: |
