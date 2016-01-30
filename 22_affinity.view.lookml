@@ -1,6 +1,6 @@
 - view: affinity      
   derived_table:
-    sql_trigger_value: SELECT DATE(CONVERT_TIMEZONE('UTC', 'America/Los_Angeles', GETDATE()))
+    sql_trigger_value: SELECT DATE(CONVERT_TIMEZONE('UTC', 'America/Chicago', GETDATE()))
     distkey: product_a_id
     sortkeys: [product_a_id, product_b_id]
     sql: |
@@ -109,7 +109,7 @@
 #############################################
 - view: user_order_product   #Table that aggregates the products purchased by user and order id
   derived_table:
-    sql_trigger_value: SELECT DATE(CONVERT_TIMEZONE('UTC', 'America/Los_Angeles', GETDATE()))
+    sql_trigger_value: SELECT DATE(CONVERT_TIMEZONE('UTC', 'America/Chicago', GETDATE()))
     distkey: prod_id
     sortkeys: [prod_id, user_id, order_id]
     sql: |
@@ -145,7 +145,7 @@
 #################################################
 - view: total_order_product    #Table to count the total times a product id has been purchased
   derived_table:
-    sql_trigger_value: SELECT DATE(CONVERT_TIMEZONE('UTC', 'America/Los_Angeles', GETDATE()))
+    sql_trigger_value: SELECT DATE(CONVERT_TIMEZONE('UTC', 'America/Chicago', GETDATE()))
     distkey: prod_id
     sortkeys: prod_id
     sql: |

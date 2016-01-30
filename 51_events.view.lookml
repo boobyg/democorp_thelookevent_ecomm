@@ -64,7 +64,7 @@
     type: number
     sql: |
       CASE
-      WHEN ${event_type} = 'Product' THEN right(uri,len(uri)-9)
+        WHEN ${event_type} = 'Product' THEN right(uri,len(uri)-9)
       END
     
   - dimension: event_type
@@ -74,11 +74,11 @@
     description: 'Login -> Browse -> Add to Cart -> Checkout'
     sql: |
       CASE
-      WHEN ${event_type} in ('Login', 'Home')     THEN '(1) Land'
-      WHEN ${event_type} in ('Category', 'Brand') THEN '(2) Browse Inventory'
-      WHEN ${event_type} = 'Product'              THEN '(3) View Product'
-      WHEN ${event_type} = 'Cart'                 THEN '(4) Add Item to Cart'
-      WHEN ${event_type} = 'Purchase'             THEN '(5) Prucase'
+        WHEN ${event_type} IN ('Login', 'Home') THEN '(1) Land'
+        WHEN ${event_type} IN ('Category', 'Brand') THEN '(2) Browse Inventory'
+        WHEN ${event_type} = 'Product' THEN '(3) View Product'
+        WHEN ${event_type} = 'Cart' THEN '(4) Add Item to Cart'
+        WHEN ${event_type} = 'Purchase' THEN '(5) Prucase'
       END
 
   - measure: unique_visitors
@@ -127,6 +127,7 @@
     label: 'Count (MM)'
     type: number
     decimals: 1
+    hidden: true
     sql: ${count}/1000000.0
     drill_fields: simple_page_info*
     value_format: '#.## "M"'
@@ -138,12 +139,14 @@
     sql: count (distinct ${ip}) / 1000000.0
     description: 'Uniqueness determined by IP Address and User Login'
     decimals: 3
+    hidden: true
     drill_fields: visitors*
 
   - measure: unique_visitors_k
     label: 'Unique Visitors (k)'
     view_label: Visitors    
     type: number
+    hidden: true
     description: 'Uniqueness determined by IP Address and User Login'
     sql: count (distinct ${ip}) / 1000.0
     decimals: 3
