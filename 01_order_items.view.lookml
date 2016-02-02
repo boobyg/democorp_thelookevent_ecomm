@@ -147,7 +147,7 @@
   - measure: total_gross_margin_percentage
     type: number
     value_format: '#.0\%'
-    sql: 100.0 * ${total_gross_margin}/${total_sale_price}
+    sql: 100.0 * ${total_gross_margin}/ NULLIF(${total_sale_price},0)
   
   - measure: average_spend_per_user
     type: number
