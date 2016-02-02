@@ -78,7 +78,7 @@
         WHEN ${event_type} IN ('Category', 'Brand') THEN '(2) Browse Inventory'
         WHEN ${event_type} = 'Product' THEN '(3) View Product'
         WHEN ${event_type} = 'Cart' THEN '(4) Add Item to Cart'
-        WHEN ${event_type} = 'Purchase' THEN '(5) Prucase'
+        WHEN ${event_type} = 'Purchase' THEN '(5) Purchase'
       END
 
   - measure: unique_visitors
