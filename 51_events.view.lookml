@@ -53,7 +53,7 @@
   
   - measure: bounce_rate
     type: number
-    value_format: '#.00%'
+    value_format_name: percent_2
     description: 'Percent of events where those events were the bounce page for the session, out of all events'
     sql: ${count_bounces}*1.0 / nullif(${count}*1.0,0)
 
@@ -126,11 +126,10 @@
   - measure: count_m
     label: 'Count (MM)'
     type: number
-    decimals: 1
     hidden: true
     sql: ${count}/1000000.0
     drill_fields: simple_page_info*
-    value_format: '#.## "M"'
+    value_format: '#.### "M"'
     
   - measure: unique_visitors_m
     label: 'Unique Visitors (MM)'
@@ -138,7 +137,7 @@
     type: number
     sql: count (distinct ${ip}) / 1000000.0
     description: 'Uniqueness determined by IP Address and User Login'
-    decimals: 3
+    value_format: '#.### "M"'
     hidden: true
     drill_fields: visitors*
 
@@ -149,7 +148,7 @@
     hidden: true
     description: 'Uniqueness determined by IP Address and User Login'
     sql: count (distinct ${ip}) / 1000.0
-    decimals: 3
+    value_format: '#.### "k"'
     drill_fields: visitors*
 
 

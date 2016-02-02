@@ -59,7 +59,7 @@
   - measure: average_duration
     label: 'Average Duration (sec)'
     type: average
-    decimals: 1
+    value_format_name: decimal_2
     sql: ${duration}
   
   - dimension: duration_seconds_tier
@@ -84,7 +84,7 @@
       
   - measure: percent_bounce_sessions
     type: number
-    value_format: '#.#\%'
+    value_format_name: percent_2
     sql: 100.0 * ${count_bounce_sessions} / nullif(${count},0)
     
   
@@ -204,13 +204,13 @@
   - measure: cart_to_checkout_conversion
     view_label: 'Funnel View'
     type: number
-    value_format: '#.#\%'
+    value_format_name: percent_2
     sql: 100.0 * ${count_purchase} / nullif(${count_cart_or_later},0)
 
   - measure: overall_conversion
     view_label: 'Funnel View'
     type: number
-    value_format: '#.#\%'
+    value_format_name: percent_2
     sql: 100.0 * ${count_purchase} / nullif(${count},0)
 
 

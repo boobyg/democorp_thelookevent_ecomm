@@ -76,7 +76,6 @@
 
   - dimension: days_to_process
     type: number
-    decimals: 2
     sql: |
       CASE
         WHEN ${status} = 'Processing' THEN DATEDIFF('day',${created_raw},GETDATE())*1.0
@@ -85,34 +84,33 @@
   
   - dimension: shipping_time
     type: number
-    decimals: 2
     sql: datediff('day',${shipped_raw},${delivered_raw})*1.0
     
   - measure: average_days_to_process
     type: average
-    decimals: 4
+    value_format_name: decimal_4
     sql: ${days_to_process}
  
   - measure: average_shipping_time
     type: average
-    decimals: 4
+    value_format_name: decimal_4
     sql: ${shipping_time}
 
 ########## Financial Information ########## 
 
   - dimension: sale_price
     type: number
-    value_format: '$#,##0.00'
+    value_format_name: usd
     sql: ${TABLE}.sale_price
   
   - dimension: gross_margin
     type: number
-    value_format: '$#,##0.00'
+    value_format_name: usd
     sql: ${sale_price} - ${inventory_items.cost}
 
   - dimension: item_gross_margin_percentage
     type: number
-    value_format: '#.0\%'
+    value_format_name: percent_2
     sql: 100.0 * ${gross_margin}/NULLIF(${sale_price},0)
 
   - dimension: item_gross_margin_percentage_tier
@@ -122,36 +120,36 @@
 
   - measure: total_sale_price
     type: sum
-    value_format: '$#,##0.00'
+    value_format_name: usd
     sql: ${sale_price}
     drill_fields: detail*
   
   - measure: total_gross_margin
     type: sum
-    value_format: '$#,##0.00'
+    value_format_name: usd
     sql: ${gross_margin}
     drill_fields: detail*
   
   - measure: average_sale_price
     type: average
-    value_format: '$#,##0.00'
+    value_format_name: usd
     sql: ${sale_price}
     drill_fields: detail*
   
   - measure: average_gross_margin
     type: average
-    value_format: '$#,##0.00'
+    value_format_name: usd
     sql: ${gross_margin}
     drill_fields: detail*
   
   - measure: total_gross_margin_percentage
     type: number
-    value_format: '#.0\%'
+    value_format_name: percent_2
     sql: 100.0 * ${total_gross_margin}/ NULLIF(${total_sale_price},0)
   
   - measure: average_spend_per_user
     type: number
-    value_format: '$#,##0.00'
+    value_format_name: usd
     sql: 1.0 * ${total_sale_price} / NULLIF(${users.count},0)
 
 
@@ -176,7 +174,7 @@
   - measure: 30_day_repeat_purchase_rate
     view_label: 'Repeat Purchase Facts'
     type: number
-    value_format: '#.0\%'
+    value_format_name: percent_1
     sql: 100.0 * ${count_with_repeat_purchase_within_30d} / NULLIF(${count},0)
     drill_fields: [products.brand, order_count, count_with_repeat_purchase_within_30d]
 

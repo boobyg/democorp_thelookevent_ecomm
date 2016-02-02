@@ -99,15 +99,15 @@
     drill_fields: detail*
 
   - measure: count_percent_of_total
-    label: Count (Percent of Total)
+    label: 'Count (Percent of Total)'
     type: percent_of_total
-    decimals: 1
+    value_format_name: percent_1
     sql: ${count}
     drill_fields: detail*
 
   - measure: average_age
     type: average
-    decimals: 2
+    value_format_name: decimal_2
     sql: ${age}
     drill_fields: detail*  
   

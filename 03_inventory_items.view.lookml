@@ -11,7 +11,7 @@
 
   - dimension: cost
     type: number
-    value_format: '$#,##0.00'
+    value_format_name: usd
     sql: ${TABLE}.cost
 
   - dimension_group: created
@@ -69,17 +69,17 @@
 
   - measure: sold_percent
     type: number
-    value_format: '#.0\%'
+    value_format_name: percent_2
     sql: 100.0 * ${sold_count}/NULLIF(${count},0)
     
   - measure: total_cost
     type: sum
-    value_format: '$#,##0.00'
+    value_format_name: usd
     sql: ${cost}
 
   - measure: average_cost
     type: average
-    value_format: '$#,##0.00'
+    value_format_name: usd
     sql: ${cost}
 
   - measure: count
