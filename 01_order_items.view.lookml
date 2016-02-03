@@ -2,7 +2,7 @@
   sql_table_name: order_items
   fields:
 
-########## IDs, Foreign Keys, Counts ########## 
+########## IDs, Foreign Keys, Counts ########### 
 
   - dimension: id
     primary_key: true
