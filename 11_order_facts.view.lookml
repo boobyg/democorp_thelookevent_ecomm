@@ -31,10 +31,12 @@
 
   - dimension: order_amount
     type: number
+    value_format_name: usd
     sql: ${TABLE}.order_amount
 
   - dimension: order_cost
     type: number
+    value_format_name: usd
     sql: ${TABLE}.order_cost
 
   - dimension: order_sequence_number

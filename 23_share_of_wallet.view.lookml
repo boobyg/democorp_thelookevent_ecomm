@@ -53,6 +53,7 @@
     type: sum
     hidden: true
     sql: ${order_items.sale_price}
+    value_format_name: usd
     filters:
       order_items_share_of_wallet.item_comparison: '(1)%'
 
@@ -60,6 +61,7 @@
     view_label: 'Share of Wallet (Item Level)'
     type: sum
     hidden: true
+    value_format_name: usd
     sql: ${order_items.sale_price}
     filters:
       order_items_share_of_wallet.item_comparison: '(2)%,(1)%'
@@ -79,13 +81,13 @@
     type: number
     description: 'This item sales over all sales for same brand'
 #     view_label: 'Share of Wallet'
-    value_format: '#.00\%'
+    value_format_name: percent_2
     sql: 100.0 *  ${total_sale_price_this_item}*1.0 / nullif(${total_sale_price_this_brand},0)
    
   - measure: item_share_of_wallet_within_company
     view_label: 'Share of Wallet (Item Level)'
     description: 'This item sales over all sales across website'
-    value_format: '#.00\%'
+    value_format_name: percent_2
 #     view_label: 'Share of Wallet'
     type: number
     sql: 100.0 *  ${total_sale_price_this_item}*1.0 / nullif(${order_items.total_sale_price},0)
@@ -93,7 +95,7 @@
   - measure: brand_share_of_wallet_within_company
     view_label: 'Share of Wallet (Brand Level)'
     description: 'This brand''s sales over all sales across website'
-    value_format: '#.00\%'
+    value_format_name: percent_2
 #     view_label: 'Share of Wallet'
     type: number
     sql: 100.0 *  ${total_sale_price_brand_v2}*1.0 / nullif(${order_items.total_sale_price},0)

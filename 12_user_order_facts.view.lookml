@@ -62,7 +62,7 @@
     
   - measure: average_lifetime_orders
     type: average
-    value_format: '#.##'
+    value_format_name: decimal_2
     sql: ${lifetime_orders}
 
   - dimension: distinct_months_with_orders
@@ -73,6 +73,7 @@
   
   - dimension: lifetime_revenue
     type: number
+    value_format_name: usd
     sql: ${TABLE}.lifetime_revenue
   
   - dimension: lifetime_revenue_tier
@@ -83,6 +84,7 @@
     
   - measure: average_lifetime_revenue
     type: average
+    value_format_name: usd
     sql: ${lifetime_revenue}
     
 

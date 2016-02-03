@@ -81,27 +81,27 @@
     hidden: true
     type: number
     sql: 1.0*${joint_user_freq}/NULLIF((${product_a_freq}+${product_b_freq})-(${joint_user_freq}),0)
-    value_format: '0.00%'
+    value_format_name: percent_2
     
   - dimension: order_affinity
     hidden: true
     type: number
     sql: 1.0*${joint_order_freq}/NULLIF((${product_a_freq}+${product_b_freq})-(${joint_order_freq}),0)
-    value_format: '0.00%'    
+    value_format_name: percent_2 
 
   - measure: avg_user_affinity
     label: 'Affinity Score (by User History)'
     description: Percentage of users that bought both products weighted by how many times each product sold individually
     type: average
     sql: 100.0 * ${user_affinity}
-    value_format: '0.00'
+    value_format_name: decimal_2
     
   - measure: avg_order_affinity
     label: 'Affinity Score (by Order Basket)'
     description: Percentage of orders that contained both products weighted by how many times each product sold individually
     type: average
     sql: 100.0 * ${order_affinity}
-    value_format: '0.00'    
+    value_format_name: decimal_2
     
   - measure: combined_affinity
     type: number
