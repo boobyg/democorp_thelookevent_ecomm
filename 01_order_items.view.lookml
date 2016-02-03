@@ -44,7 +44,7 @@
 
   - dimension_group: returned
     type: time
-    timeframes: [time, date, week, month, raw]
+    timeframes: [time, date, week, month, raw, yesno]
     sql: ${TABLE}.returned_at
     
   - dimension_group: shipped
