@@ -55,7 +55,7 @@
     type: number
     value_format_name: percent_2
     description: 'Percent of events where those events were the bounce page for the session, out of all events'
-    sql: ${count_bounces}*1.0 / nullif(${count}*1.0,0)
+    sql: ${count_bounces}*100.0 / nullif(${count}*1.0,0)
 
   - dimension: full_page_url
     sql: ${TABLE}.uri
