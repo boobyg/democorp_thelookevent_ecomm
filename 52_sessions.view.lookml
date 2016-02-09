@@ -85,7 +85,7 @@
   - measure: percent_bounce_sessions
     type: number
     value_format_name: percent_2
-    sql: 100.0 * ${count_bounce_sessions} / nullif(${count},0)
+    sql: 1.0 * ${count_bounce_sessions} / nullif(${count},0)
     
   
   ####### Session by event types included  ########
