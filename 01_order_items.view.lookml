@@ -111,7 +111,7 @@
   - dimension: item_gross_margin_percentage
     type: number
     value_format_name: percent_2
-    sql: 100.0 * ${gross_margin}/NULLIF(${sale_price},0)
+    sql: 1.0 * ${gross_margin}/NULLIF(${sale_price},0)
 
   - dimension: item_gross_margin_percentage_tier
     type: tier
@@ -145,7 +145,7 @@
   - measure: total_gross_margin_percentage
     type: number
     value_format_name: percent_2
-    sql: 100.0 * ${total_gross_margin}/ NULLIF(${total_sale_price},0)
+    sql: 1.0 * ${total_gross_margin}/ NULLIF(${total_sale_price},0)
   
   - measure: average_spend_per_user
     type: number

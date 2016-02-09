@@ -70,7 +70,7 @@
   - measure: sold_percent
     type: number
     value_format_name: percent_2
-    sql: 100.0 * ${sold_count}/NULLIF(${count},0)
+    sql: 1.0 * ${sold_count}/NULLIF(${count},0)
     
   - measure: total_cost
     type: sum
