@@ -175,7 +175,7 @@
     view_label: 'Repeat Purchase Facts'
     type: number
     value_format_name: percent_1
-    sql: 100.0 * ${count_with_repeat_purchase_within_30d} / NULLIF(${count},0)
+    sql: 1.0 * ${count_with_repeat_purchase_within_30d} / NULLIF(${count},0)
     drill_fields: [products.brand, order_count, count_with_repeat_purchase_within_30d]
 
 ########## Sets ########## 
