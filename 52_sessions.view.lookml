@@ -205,13 +205,13 @@
     view_label: 'Funnel View'
     type: number
     value_format_name: percent_2
-    sql: 100.0 * ${count_purchase} / nullif(${count_cart_or_later},0)
+    sql: 1.0 * ${count_purchase} / nullif(${count_cart_or_later},0)
 
   - measure: overall_conversion
     view_label: 'Funnel View'
     type: number
     value_format_name: percent_2
-    sql: 100.0 * ${count_purchase} / nullif(${count},0)
+    sql: 1.0 * ${count_purchase} / nullif(${count},0)
 
 
 
