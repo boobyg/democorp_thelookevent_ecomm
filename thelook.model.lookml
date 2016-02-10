@@ -165,7 +165,7 @@
     - join: next_order_inventory_items
       from: inventory_items
       relationship: many_to_one
-      sql_on: ${next_order_items.inventory_item_id} = ${inventory_items.id}
+      sql_on: ${next_order_items.inventory_item_id} = ${next_order_inventory_items.id}
     
     - join: next_order_products
       from: products
