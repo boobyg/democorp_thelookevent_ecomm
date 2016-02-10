@@ -168,7 +168,7 @@
     type: count
     filters:
         furthest_funnel_step: |
-          '(2) Browse','(3) View Product','(4) Add to Cart','(5) Purchase'
+          (2) Browse,(3) View Product,(4) Add to Cart,(5) Purchase
     drill_fields: detail*
 
     
@@ -178,7 +178,7 @@
     type: count
     filters:
         furthest_funnel_step: |
-          '(3) View Product','(4) Add to Cart','(5) Purchase'
+          (3) View Product,(4) Add to Cart,(5) Purchase
     drill_fields: detail*
 
     
@@ -188,7 +188,7 @@
     type: count
     filters:
         furthest_funnel_step: |
-          '(4) Add to Cart','(5) Purchase'
+          (4) Add to Cart,(5) Purchase
     drill_fields: detail*
           
     
@@ -198,7 +198,7 @@
     type: count
     filters:
         furthest_funnel_step: |
-         '(5) Purchase'        
+         (5) Purchase        
     drill_fields: detail*  
 
   - measure: cart_to_checkout_conversion
