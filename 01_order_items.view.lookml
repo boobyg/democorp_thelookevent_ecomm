@@ -151,6 +151,7 @@
     type: number
     value_format_name: usd
     sql: 1.0 * ${total_sale_price} / NULLIF(${users.count},0)
+    drill_fields: detail*
 
 
 ########## Repeat Purchase Facts ########## 
