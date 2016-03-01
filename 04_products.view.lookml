@@ -9,16 +9,23 @@
 
   - dimension: category
     sql: TRIM(${TABLE}.category)
-#     html: |
-#       {{ linked_value }}
-#       <a href="/dashboards/thelook/3_category_lookup?category={{ value | encode_uri }}" target="_new">
-#       <img src="/images/qr-graph-line@2x.png" height=20 width=20></a>
+    drill_fields: [item_name]
+
 
   - dimension: item_name
     sql: TRIM(${TABLE}.name)
+    
 
   - dimension: brand
     sql: TRIM(${TABLE}.brand)
+    links: 
+      - label: Website
+        url: http://www.google.com/search?q={{ value | url_encode }}+clothes&btnI
+        icon_url: http://www.google.com/s2/favicons?domain=www.{{ value | url_encode }}.com
+      - label: Facebook
+        url: http://www.google.com/search?q=site:facebook.com+{{ value | url_encode }}+clothes&btnI
+        icon_url: https://static.xx.fbcdn.net/rsrc.php/yl/r/H3nktOa7ZMg.ico
+    drill_fields: [category, item_name]
     html: |
       {{ linked_value }}
       <a href="/dashboards/8?Brand%20Name={{ value | encode_uri }}" target="_new">

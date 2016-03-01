@@ -41,10 +41,12 @@
     html: <img src="{{ value }}" width="220" height="220"/>  
 
   - dimension: email
+    sql: ${TABLE}.email
     html: |
       {{ linked_value }}
       <a href="/dashboards/160?Email={{ value | encode_uri }}" target="_new">
       <img src="/images/qr-graph-line@2x.png" height=20 width=20></a>  
+
 
   - dimension: image_file
     hidden: true
@@ -54,9 +56,11 @@
 
   - dimension: city
     sql: ${TABLE}.city
+    drill_fields: [zip]
 
   - dimension: state
     sql: ${TABLE}.state
+    drill_fields: [city]
 
   - dimension: zip
     type: zipcode
@@ -64,6 +68,7 @@
     
   - dimension: country
     sql: ${TABLE}.country
+    drill_fields: [state, city]
 
   - dimension: location
     type: location
