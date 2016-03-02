@@ -42,11 +42,10 @@
 
   - dimension: email
     sql: ${TABLE}.email
-    html: |
-      {{ linked_value }}
-      <a href="/dashboards/160?Email={{ value | encode_uri }}" target="_new">
-      <img src="/images/qr-graph-line@2x.png" height=20 width=20></a>  
-
+    links:
+      - label: User Lookup Dashboard
+        url: http://demonew.looker.com/dashboards/160?Email={{ value | encode_uri }}
+        icon_url: http://demonew.looker.com/images/qr-graph-line@2x.png
 
   - dimension: image_file
     hidden: true
