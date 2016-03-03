@@ -20,16 +20,15 @@
     sql: TRIM(${TABLE}.brand)
     links: 
       - label: Website
-        url: http://www.google.com/search?q={{ value | url_encode }}+clothes&btnI
-        icon_url: http://www.google.com/s2/favicons?domain=www.{{ value | url_encode }}.com
+        url: http://www.google.com/search?q={{ value | encode_uri }}+clothes&btnI
+        icon_url: http://www.google.com/s2/favicons?domain=www.{{ value | encode_uri }}.com
       - label: Facebook
-        url: http://www.google.com/search?q=site:facebook.com+{{ value | url_encode }}+clothes&btnI
+        url: http://www.google.com/search?q=site:facebook.com+{{ value | encode_uri }}+clothes&btnI
         icon_url: https://static.xx.fbcdn.net/rsrc.php/yl/r/H3nktOa7ZMg.ico
+      - label: Brand Analytics Dashboard
+        url: http://demonew.looker.com/dashboards/8?Brand%20Name={{ value | encode_uri }}
+        icon_url: http://www.looker.com/favicon.ico
     drill_fields: [category, item_name]
-    html: |
-      {{ linked_value }}
-      <a href="/dashboards/8?Brand%20Name={{ value | encode_uri }}" target="_new">
-      <img src="/images/qr-graph-line@2x.png" height=20 width=20></a>
 
   - dimension: retail_price
     type: number
