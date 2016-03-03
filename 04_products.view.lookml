@@ -27,7 +27,7 @@
         icon_url: https://static.xx.fbcdn.net/rsrc.php/yl/r/H3nktOa7ZMg.ico
       - label: Brand Analytics Dashboard
         url: http://demonew.looker.com/dashboards/8?Brand%20Name={{ value | encode_uri }}
-        icon_url: http://demonew.looker.com/images/qr-graph-line@2x.png
+        icon_url: http://www.looker.com/favicon.ico
     drill_fields: [category, item_name]
 
   - dimension: retail_price

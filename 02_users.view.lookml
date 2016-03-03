@@ -45,7 +45,7 @@
     links:
       - label: User Lookup Dashboard
         url: http://demonew.looker.com/dashboards/160?Email={{ value | encode_uri }}
-        icon_url: http://demonew.looker.com/images/qr-graph-line@2x.png
+        icon_url: http://www.looker.com/favicon.ico
 
   - dimension: image_file
     hidden: true
