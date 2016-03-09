@@ -79,7 +79,8 @@
     sql: |
       CASE
         WHEN ${status} = 'Processing' THEN DATEDIFF('day',${created_raw},GETDATE())*1.0
-        WHEN ${status} IN ('Shipped', 'Delivered') THEN DATEDIFF('day',${created_raw},${shipped_raw})*1.0
+        WHEN ${status} IN ('Shipped', 'Complete', 'Returned') THEN DATEDIFF('day',${created_raw},${shipped_raw})*1.0
+        WHEN ${status} = 'Cancelled' THEN NULL
       END
   
   - dimension: shipping_time
