@@ -116,8 +116,9 @@
 
   - dimension: item_gross_margin_percentage_tier
     type: tier
-    sql: ${item_gross_margin_percentage}
+    sql: 100*${item_gross_margin_percentage}
     tiers: [0,10,20,30,40,50,60,70,80,90]
+    style: interval
 
   - measure: total_sale_price
     type: sum
