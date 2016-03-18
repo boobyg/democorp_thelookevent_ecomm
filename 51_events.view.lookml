@@ -91,7 +91,7 @@
   - dimension: location
     type: location
     view_label: Visitors
-    sql_latitude: ${TABLE}.latitue
+    sql_latitude: ${TABLE}.latitude
     sql_longitude: ${TABLE}.longitude
 
   - dimension: approx_location
