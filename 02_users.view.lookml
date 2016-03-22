@@ -105,7 +105,6 @@
   - measure: count_percent_of_total
     label: 'Count (Percent of Total)'
     type: percent_of_total
-    value_format_name: percent_1
     sql: ${count}
     drill_fields: detail*
 
