@@ -59,6 +59,7 @@
 
   - dimension: state
     sql: ${TABLE}.state
+    map_layer: us_states
     drill_fields: [city]
 
   - dimension: zip
@@ -66,8 +67,12 @@
     sql: ${TABLE}.zip
     
   - dimension: country
-    sql: ${TABLE}.country
+    map_layer: countries
     drill_fields: [state, city]
+    sql: |
+          CASE WHEN ${TABLE}.country = 'UK' THEN 'United Kingdom'
+               ELSE ${TABLE}.country
+               END
 
   - dimension: location
     type: location
