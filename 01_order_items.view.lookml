@@ -39,6 +39,7 @@
     sql: ${order_id}
     filters:
       order_facts.is_first_purchase: 'Yes'
+    drill_fields: [user_id, order_id, created_date, users.traffic_source]  
     
 ########## Time Dimensions ########## 
 
