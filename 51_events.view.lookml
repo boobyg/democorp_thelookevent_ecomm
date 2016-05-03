@@ -64,7 +64,7 @@
     type: number
     sql: |
       CASE
-        WHEN ${event_type} = 'Product' THEN right(uri,len(uri)-9)
+        WHEN ${event_type} = 'Product' THEN right(${full_page_url},len(${full_page_url})-9)
       END
     
   - dimension: event_type
