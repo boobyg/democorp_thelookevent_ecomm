@@ -1,6 +1,7 @@
 - view: sessions
   derived_table:
-    indexes: [session_id]
+    sortkeys: [session_id]
+    distkey: session_id
     sql_trigger_value: select max(created_at) from events
     sql: |
       SELECT
