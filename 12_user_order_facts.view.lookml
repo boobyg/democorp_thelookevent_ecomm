@@ -40,8 +40,9 @@
     
   - dimension: days_as_customer_tiered
     type: tier
-    tiers: [0,1,2,3,4,5,6,7,30,60,90,180]
+    tiers: [0,1,7,14, 21, 28,30,60,90,120]
     sql: ${days_as_customer}
+    style: integer
 
 ##### Lifetime Behavior - Order Counts ######
 
