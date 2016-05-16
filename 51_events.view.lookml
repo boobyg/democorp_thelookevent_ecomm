@@ -157,8 +157,8 @@
       - event_id
       - event_time
       - event_type
-      - os
-      - browser
+#       - os
+#       - browser
       - full_page_url
       - user_id
       - funnel_step
