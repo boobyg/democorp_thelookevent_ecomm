@@ -1,6 +1,7 @@
 - view: repeat_purchase_facts
   derived_table:
     sortkeys: [order_id]
+    distkey: order_id
     sql_trigger_value: SELECT MAX(created_at) FROM order_items
     sql: |
       SELECT

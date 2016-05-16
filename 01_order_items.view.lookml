@@ -59,10 +59,25 @@
     sql: ${TABLE}.delivered_at
     
   - dimension_group: created
-    view_label: 'Orders'
+    group_label: 'Order Date'
     type: time
     timeframes: [time, hour, date, week, month, year, hour_of_day, day_of_week, month_num, raw, week_of_year]
     sql: ${TABLE}.created_at
+    
+  - dimension: reporting_period
+    group_label: 'Order Date'
+    sql: |
+      CASE
+        WHEN date_part('year',${created_raw}) = date_part('year',current_date)
+        AND ${created_raw} < CURRENT_DATE 
+        THEN 'This Year to Date'
+      
+        WHEN date_part('year',${created_raw}) + 1 = date_part('year',current_date)
+        AND date_part('dayofyear',${created_raw}) <= date_part('dayofyear',current_date)
+        THEN 'Last Year to Date'
+        
+      END
+
 
   - dimension: months_since_signup
     view_label: 'Orders'
