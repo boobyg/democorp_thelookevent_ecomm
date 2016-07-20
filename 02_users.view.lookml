@@ -60,7 +60,7 @@
   - dimension: state
     sql: ${TABLE}.state
     map_layer: us_states
-    drill_fields: [city]
+    drill_fields: [zip, city]
 
   - dimension: zip
     type: zipcode
