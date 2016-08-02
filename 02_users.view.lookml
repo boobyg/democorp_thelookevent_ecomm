@@ -49,7 +49,7 @@
 
   - dimension: image_file
     hidden: true
-    sql: ('http://www.looker.com/_content/docs/99-hidden/images/'||${gender_short}||'.jpg') 
+    sql: ('http://www.looker.com/_content/docs/images/'||${gender_short}||'.jpg') 
     
 ## Demographics ##
 
