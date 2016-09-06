@@ -19,7 +19,7 @@
 
 <div style="width: 33%; padding: 30px; padding-bottom: 40px; float: left;">
 <img style="height: 200px;" src="https://wwwstatic.lookercdn.com/docs/docs-home/explore_icon_v0001.svg">
-<h2 style="text-transform: uppercase; padding-bottom: 35px; margin-top: 0;">CREATED CONTENT</h2>
+<h2 style="text-transform: uppercase; padding-bottom: 9px; margin-top: 0;">GETTING STARTED WITH CONTENT</h2>
 <a style="padding: 15px 25px; color: #fff; text-transform: uppercase; background-color: #eb8b33; border-radius: 5px;" href="4_dataset.md">GET STARTED</a>
 </div>
 
