@@ -85,7 +85,7 @@
     sql: DATEDIFF('month',${users.created_raw},${created_raw})
     
 
-########## Logistics ##
+########## Logistics ########## 
 
   - dimension: status
     sql: ${TABLE}.status
@@ -197,8 +197,56 @@
     value_format_name: percent_1
     sql: 1.0 * ${count_with_repeat_purchase_within_30d} / NULLIF(${count},0)
     drill_fields: [products.brand, order_count, count_with_repeat_purchase_within_30d]
+    
+########## Dynamic Sales Cohort App ##########
 
-########## Sets ########## 
+  - filter: cohort_by
+    type: string
+    hidden: true
+    suggestions: [Week, Month, Quarter, Year]
+  
+  - filter: metric
+    type: string
+    hidden: true
+    suggestions: [Order Count, Gross Margin, Total Sales, Unique Users]
+  
+  - dimension: first_order_period
+    type: time
+    timeframes: [date]
+    hidden: true
+    sql: |
+      CAST(DATE_TRUNC({% parameter cohort_by %}, ${user_order_facts.first_order_date}) AS DATE)
+  
+  - dimension: periods_as_customer
+    type: number
+    hidden: true
+    sql: |
+      DATEDIFF({% parameter cohort_by %}, ${user_order_facts.first_order_date}, ${user_order_facts.latest_order_date})
+  
+  - measure: cohort_values_0
+    type: count_distinct
+    hidden: true
+    sql: |
+      CASE WHEN {% parameter metric %} = 'Order Count' THEN ${id}
+        WHEN {% parameter metric %} = 'Unique Users' THEN ${users.id}
+        ELSE null
+      END
+      
+  - measure: cohort_values_1
+    type: sum
+    hidden: true
+    sql: |
+      CASE WHEN {% parameter metric %} = 'Gross Margin' THEN ${gross_margin}
+        WHEN {% parameter metric %} = 'Total Sales' THEN ${sale_price}
+        ELSE 0
+      END
+      
+  - measure: values
+    type: number
+    hidden: true
+    sql: ${cohort_values_0} + ${cohort_values_1}
+
+########## Sets ##########
 
   sets:
     detail:
