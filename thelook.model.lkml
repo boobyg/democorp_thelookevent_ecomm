@@ -1,5 +1,3 @@
-# SE asked us not to use this connection, commenting out for now (Brett Sauve, 2016-12-08)
-
 connection: "demonew_events_ecommerce"
 persist_for: "1 hour" # cache all query results for one hour
 label: "eCommerce with Event Data"
