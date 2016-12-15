@@ -104,9 +104,21 @@ view: inventory_items {
   }
 
   measure: number_on_hand {
-    type: number
-    sql: ${count} - ${sold_count} ;;
+    type: count
     drill_fields: [detail*]
+
+    filters: {
+      field: is_sold
+      value: "No"
+    }
+  }
+
+  measure: stock_coverage_ratio {
+    type:  number
+    description: "Stock on Hand vs Trailing 28d Sales Ratio"
+    sql:  1.0 * ${number_on_hand} / nullif(${order_items.count_last_28d},0) ;;
+    value_format_name: decimal_2
+    html: <p style="color: black; background-color: rgba({{ value | times: -100.0 | round | plus: 250 }},{{value | times: 100.0 | round | plus: 100}},100,80); font-size:100%; text-align:center">{{ rendered_value }}</p> ;;
   }
 
   set: detail {

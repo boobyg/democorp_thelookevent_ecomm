@@ -37,6 +37,14 @@ view: order_items {
     sql: ${order_id} ;;
   }
 
+  measure: count_last_28d {
+    label: "Count Sold in Trailing 28 Days"
+    type: count
+    filters:
+    {field:created_date
+      value: "28 days"
+    }}
+
   measure: first_purchase_count {
     view_label: "Orders"
     type: count_distinct
@@ -92,204 +100,209 @@ view: order_items {
        ;;
   }
 
-  dimension: months_since_signup {
-    view_label: "Orders"
-    type: number
-    sql: DATEDIFF('month',${users.created_raw},${created_raw}) ;;
-  }
+  dimension: days_since_sold {
+#     hidden: yes
+  sql: datediff('day',${created_raw},CURRENT_DATE) ;;
+}
 
-  ########## Logistics ##########
+dimension: months_since_signup {
+  view_label: "Orders"
+  type: number
+  sql: DATEDIFF('month',${users.created_raw},${created_raw}) ;;
+}
 
-  dimension: status {
-    sql: ${TABLE}.status ;;
-  }
+########## Logistics ##########
 
-  dimension: days_to_process {
-    type: number
-    sql: CASE
+dimension: status {
+  sql: ${TABLE}.status ;;
+}
+
+dimension: days_to_process {
+  type: number
+  sql: CASE
         WHEN ${status} = 'Processing' THEN DATEDIFF('day',${created_raw},GETDATE())*1.0
         WHEN ${status} IN ('Shipped', 'Complete', 'Returned') THEN DATEDIFF('day',${created_raw},${shipped_raw})*1.0
         WHEN ${status} = 'Cancelled' THEN NULL
       END
        ;;
+}
+
+dimension: shipping_time {
+  type: number
+  sql: datediff('day',${shipped_raw},${delivered_raw})*1.0 ;;
+}
+
+measure: average_days_to_process {
+  type: average
+  value_format_name: decimal_4
+  sql: ${days_to_process} ;;
+}
+
+measure: average_shipping_time {
+  type: average
+  value_format_name: decimal_4
+  sql: ${shipping_time} ;;
+}
+
+########## Financial Information ##########
+
+dimension: sale_price {
+  type: number
+  value_format_name: usd
+  sql: ${TABLE}.sale_price ;;
+}
+
+dimension: gross_margin {
+  type: number
+  value_format_name: usd
+  sql: ${sale_price} - ${inventory_items.cost} ;;
+}
+
+dimension: item_gross_margin_percentage {
+  type: number
+  value_format_name: percent_2
+  sql: 1.0 * ${gross_margin}/NULLIF(${sale_price},0) ;;
+}
+
+dimension: item_gross_margin_percentage_tier {
+  type: tier
+  sql: 100*${item_gross_margin_percentage} ;;
+  tiers: [0, 10, 20, 30, 40, 50, 60, 70, 80, 90]
+  style: interval
+}
+
+measure: total_sale_price {
+  type: sum
+  value_format_name: usd
+  sql: ${sale_price} ;;
+  drill_fields: [detail*]
+}
+
+measure: total_gross_margin {
+  type: sum
+  value_format_name: usd
+  sql: ${gross_margin} ;;
+  drill_fields: [detail*]
+}
+
+measure: average_sale_price {
+  type: average
+  value_format_name: usd
+  sql: ${sale_price} ;;
+  drill_fields: [detail*]
+}
+
+measure: average_gross_margin {
+  type: average
+  value_format_name: usd
+  sql: ${gross_margin} ;;
+  drill_fields: [detail*]
+}
+
+measure: total_gross_margin_percentage {
+  type: number
+  value_format_name: percent_2
+  sql: 1.0 * ${total_gross_margin}/ NULLIF(${total_sale_price},0) ;;
+}
+
+measure: average_spend_per_user {
+  type: number
+  value_format_name: usd
+  sql: 1.0 * ${total_sale_price} / NULLIF(${users.count},0) ;;
+  drill_fields: [detail*]
+}
+
+########## Repeat Purchase Facts ##########
+
+dimension: days_until_next_order {
+  type: number
+  view_label: "Repeat Purchase Facts"
+  sql: DATEDIFF('day',${created_raw},${repeat_purchase_facts.next_order_raw}) ;;
+}
+
+dimension: repeat_orders_within_30d {
+  type: yesno
+  view_label: "Repeat Purchase Facts"
+  sql: ${days_until_next_order} <= 30 ;;
+}
+
+measure: count_with_repeat_purchase_within_30d {
+  type: count
+  view_label: "Repeat Purchase Facts"
+
+  filters: {
+    field: repeat_orders_within_30d
+    value: "Yes"
   }
+}
 
-  dimension: shipping_time {
-    type: number
-    sql: datediff('day',${shipped_raw},${delivered_raw})*1.0 ;;
-  }
+measure: 30_day_repeat_purchase_rate {
+  description: "The percentage of customers who purchase again within 30 days"
+  view_label: "Repeat Purchase Facts"
+  type: number
+  value_format_name: percent_1
+  sql: 1.0 * ${count_with_repeat_purchase_within_30d} / NULLIF(${count},0) ;;
+  drill_fields: [products.brand, order_count, count_with_repeat_purchase_within_30d]
+}
 
-  measure: average_days_to_process {
-    type: average
-    value_format_name: decimal_4
-    sql: ${days_to_process} ;;
-  }
+########## Dynamic Sales Cohort App ##########
 
-  measure: average_shipping_time {
-    type: average
-    value_format_name: decimal_4
-    sql: ${shipping_time} ;;
-  }
+filter: cohort_by {
+  type: string
+  hidden: yes
+  suggestions: ["Week", "Month", "Quarter", "Year"]
+}
 
-  ########## Financial Information ##########
+filter: metric {
+  type: string
+  hidden: yes
+  suggestions: ["Order Count", "Gross Margin", "Total Sales", "Unique Users"]
+}
 
-  dimension: sale_price {
-    type: number
-    value_format_name: usd
-    sql: ${TABLE}.sale_price ;;
-  }
+dimension_group: first_order_period {
+  type: time
+  timeframes: [date]
+  hidden: yes
+  sql: CAST(DATE_TRUNC({% parameter cohort_by %}, ${user_order_facts.first_order_date}) AS DATE)
+    ;;
+}
 
-  dimension: gross_margin {
-    type: number
-    value_format_name: usd
-    sql: ${sale_price} - ${inventory_items.cost} ;;
-  }
+dimension: periods_as_customer {
+  type: number
+  hidden: yes
+  sql: DATEDIFF({% parameter cohort_by %}, ${user_order_facts.first_order_date}, ${user_order_facts.latest_order_date})
+    ;;
+}
 
-  dimension: item_gross_margin_percentage {
-    type: number
-    value_format_name: percent_2
-    sql: 1.0 * ${gross_margin}/NULLIF(${sale_price},0) ;;
-  }
-
-  dimension: item_gross_margin_percentage_tier {
-    type: tier
-    sql: 100*${item_gross_margin_percentage} ;;
-    tiers: [0, 10, 20, 30, 40, 50, 60, 70, 80, 90]
-    style: interval
-  }
-
-  measure: total_sale_price {
-    type: sum
-    value_format_name: usd
-    sql: ${sale_price} ;;
-    drill_fields: [detail*]
-  }
-
-  measure: total_gross_margin {
-    type: sum
-    value_format_name: usd
-    sql: ${gross_margin} ;;
-    drill_fields: [detail*]
-  }
-
-  measure: average_sale_price {
-    type: average
-    value_format_name: usd
-    sql: ${sale_price} ;;
-    drill_fields: [detail*]
-  }
-
-  measure: average_gross_margin {
-    type: average
-    value_format_name: usd
-    sql: ${gross_margin} ;;
-    drill_fields: [detail*]
-  }
-
-  measure: total_gross_margin_percentage {
-    type: number
-    value_format_name: percent_2
-    sql: 1.0 * ${total_gross_margin}/ NULLIF(${total_sale_price},0) ;;
-  }
-
-  measure: average_spend_per_user {
-    type: number
-    value_format_name: usd
-    sql: 1.0 * ${total_sale_price} / NULLIF(${users.count},0) ;;
-    drill_fields: [detail*]
-  }
-
-  ########## Repeat Purchase Facts ##########
-
-  dimension: days_until_next_order {
-    type: number
-    view_label: "Repeat Purchase Facts"
-    sql: DATEDIFF('day',${created_raw},${repeat_purchase_facts.next_order_raw}) ;;
-  }
-
-  dimension: repeat_orders_within_30d {
-    type: yesno
-    view_label: "Repeat Purchase Facts"
-    sql: ${days_until_next_order} <= 30 ;;
-  }
-
-  measure: count_with_repeat_purchase_within_30d {
-    type: count
-    view_label: "Repeat Purchase Facts"
-
-    filters: {
-      field: repeat_orders_within_30d
-      value: "Yes"
-    }
-  }
-
-  measure: 30_day_repeat_purchase_rate {
-    description: "The percentage of customers who purchase again within 30 days"
-    view_label: "Repeat Purchase Facts"
-    type: number
-    value_format_name: percent_1
-    sql: 1.0 * ${count_with_repeat_purchase_within_30d} / NULLIF(${count},0) ;;
-    drill_fields: [products.brand, order_count, count_with_repeat_purchase_within_30d]
-  }
-
-  ########## Dynamic Sales Cohort App ##########
-
-  filter: cohort_by {
-    type: string
-    hidden: yes
-    suggestions: ["Week", "Month", "Quarter", "Year"]
-  }
-
-  filter: metric {
-    type: string
-    hidden: yes
-    suggestions: ["Order Count", "Gross Margin", "Total Sales", "Unique Users"]
-  }
-
-  dimension_group: first_order_period {
-    type: time
-    timeframes: [date]
-    hidden: yes
-    sql: CAST(DATE_TRUNC({% parameter cohort_by %}, ${user_order_facts.first_order_date}) AS DATE)
-      ;;
-  }
-
-  dimension: periods_as_customer {
-    type: number
-    hidden: yes
-    sql: DATEDIFF({% parameter cohort_by %}, ${user_order_facts.first_order_date}, ${user_order_facts.latest_order_date})
-      ;;
-  }
-
-  measure: cohort_values_0 {
-    type: count_distinct
-    hidden: yes
-    sql: CASE WHEN {% parameter metric %} = 'Order Count' THEN ${id}
+measure: cohort_values_0 {
+  type: count_distinct
+  hidden: yes
+  sql: CASE WHEN {% parameter metric %} = 'Order Count' THEN ${id}
         WHEN {% parameter metric %} = 'Unique Users' THEN ${users.id}
         ELSE null
       END
        ;;
-  }
+}
 
-  measure: cohort_values_1 {
-    type: sum
-    hidden: yes
-    sql: CASE WHEN {% parameter metric %} = 'Gross Margin' THEN ${gross_margin}
+measure: cohort_values_1 {
+  type: sum
+  hidden: yes
+  sql: CASE WHEN {% parameter metric %} = 'Gross Margin' THEN ${gross_margin}
         WHEN {% parameter metric %} = 'Total Sales' THEN ${sale_price}
         ELSE 0
       END
        ;;
-  }
+}
 
-  measure: values {
-    type: number
-    hidden: yes
-    sql: ${cohort_values_0} + ${cohort_values_1} ;;
-  }
+measure: values {
+  type: number
+  hidden: yes
+  sql: ${cohort_values_0} + ${cohort_values_1} ;;
+}
 
-  ########## Sets ##########
+########## Sets ##########
 
-  set: detail {
-    fields: [id, order_id, status, created_date, sale_price, products.brand, products.item_name, users.portrait, users.name, users.email]
-  }
+set: detail {
+  fields: [id, order_id, status, created_date, sale_price, products.brand, products.item_name, users.portrait, users.name, users.email]
+}
 }
