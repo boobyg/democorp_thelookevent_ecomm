@@ -40,6 +40,7 @@ view: order_items {
   measure: count_last_28d {
     label: "Count Sold in Trailing 28 Days"
     type: count
+    hidden: yes
     filters:
     {field:created_date
       value: "28 days"
@@ -101,7 +102,7 @@ view: order_items {
   }
 
   dimension: days_since_sold {
-#     hidden: yes
+    hidden: yes
   sql: datediff('day',${created_raw},CURRENT_DATE) ;;
 }
 
