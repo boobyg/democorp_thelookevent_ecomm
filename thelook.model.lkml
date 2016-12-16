@@ -252,6 +252,45 @@ explore: inventory_items{
   }
 }
 
+explore: inventory_snapshot {
+  label: "(8) Historical Stock Snapshot Analysis"
+  join: trailing_sales_snapshot {
+    sql_on: ${inventory_snapshot.product_id}=${trailing_sales_snapshot.product_id}
+    AND ${inventory_snapshot.snapshot_date}=${trailing_sales_snapshot.snapshot_date};;
+    type: left_outer
+    relationship: one_to_one
+  }
+
+  join: products {
+    sql_on: ${inventory_snapshot.product_id} = ${products.id} ;;
+    relationship: many_to_one
+  }
+
+  join: distribution_centers {
+    sql_on: ${products.distribution_center_id}=${distribution_centers.id} ;;
+    relationship: many_to_one
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 explore: kitten_order_items {
