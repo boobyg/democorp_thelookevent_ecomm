@@ -17,6 +17,57 @@ view: order_items {
   dimension: order_id {
     type: number
     sql: ${TABLE}.order_id ;;
+
+
+    action: {
+      label: "Send this to slack channel"
+      url: "https://hooks.zapier.com/hooks/catch/1662138/tvc3zj/"
+
+      param: {
+        name: "user_dash_link"
+        value: "https://demonew.looker.com/dashboards/160?Email={{ users.email._value}}"
+      }
+
+      form_param: {
+        name: "Message"
+        type: textarea
+      }
+
+      form_param: {
+        name: "Recipient"
+        type: select
+        default: "zevl"
+        option: {
+          name: "zevl"
+          label: "Zev"
+        }
+        option: {
+          name: "slackdemo"
+          label: "Slack Demo User"
+        }
+
+      }
+
+      form_param: {
+        name: "Channel"
+        type: select
+        default: "cs"
+        option: {
+          name: "cs"
+          label: "Customer Support"
+        }
+        option: {
+          name: "general"
+          label: "General"
+        }
+
+      }
+
+
+    }
+
+
+
   }
 
   dimension: user_id {
