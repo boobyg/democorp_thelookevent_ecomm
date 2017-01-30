@@ -7,7 +7,7 @@ include: "*.view" # include all the views
 include: "*.dashboard" # include all the dashboards
 
 
-############ Base Explores #############  ####
+############ Base Explores #############  ####  ####
 
 explore: order_items {
   label: "(1) Orders, Items and Users"
