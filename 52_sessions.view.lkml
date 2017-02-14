@@ -47,7 +47,7 @@ view: sessions {
 
   dimension_group: session_start {
     type: time
-    timeframes: [time, date, week, month, hour_of_day, day_of_week]
+#     timeframes: [time, date, week, month, hour_of_day, day_of_week]
     sql: ${TABLE}.session_start ;;
   }
 
