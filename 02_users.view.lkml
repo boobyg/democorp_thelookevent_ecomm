@@ -107,9 +107,10 @@ view: users {
     sql: ${TABLE}.zip ;;
   }
 
-  dimension: concat {
-    type: string
-    sql:  ${zip} || ${state} ;;
+  dimension: uk_postcode {
+    label: "UK Postcode"
+    sql: CASE WHEN ${TABLE}.country = 'UK' THEN TRANSLATE(LEFT(${zip},2),'0123456789','') END ;;
+    map_layer_name: uk_postcode_areas
   }
 
   dimension: country {
