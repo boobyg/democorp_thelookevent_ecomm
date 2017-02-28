@@ -111,7 +111,7 @@ view: users {
     label: "UK Postcode"
     sql: CASE WHEN ${TABLE}.country = 'UK' THEN TRANSLATE(LEFT(${zip},2),'0123456789','') END ;;
     map_layer_name: uk_postcode_areas
-    drill_fields: [city]
+    drill_fields: [city, zip]
   }
 
   dimension: country {
