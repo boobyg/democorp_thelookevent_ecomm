@@ -65,7 +65,7 @@ view: order_items {
 
       param: {
         name: "user_dash_link"
-        value: "https://demonew.looker.com/dashboards/160?Email={{ users.email._value}}"
+        value: "https://demo.looker.com/dashboards/160?Email={{ users.email._value}}"
       }
 
       form_param: {
