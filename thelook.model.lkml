@@ -3,7 +3,6 @@ persist_for: "1 hour" # cache all query results for one hour
 label: "eCommerce with Event Data"
 
 
-
 include: "*.view" # include all the views
 include: "*.dashboard" # include all the dashboards
 
