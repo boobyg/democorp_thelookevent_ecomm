@@ -186,13 +186,13 @@ view: order_items {
 
   measure: average_days_to_process {
     type: average
-    value_format_name: decimal_4
+    value_format_name: decimal_2
     sql: ${days_to_process} ;;
   }
 
   measure: average_shipping_time {
     type: average
-    value_format_name: decimal_4
+    value_format_name: decimal_2
     sql: ${shipping_time} ;;
   }
 
