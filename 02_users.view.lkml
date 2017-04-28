@@ -131,6 +131,7 @@ view: users {
 
   dimension: approx_location {
     type: location
+    drill_fields: [location]
     sql_latitude: round(${TABLE}.latitude,1) ;;
     sql_longitude: round(${TABLE}.longitude,1) ;;
   }
