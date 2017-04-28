@@ -154,6 +154,30 @@ view: users {
     sql: ${TABLE}.traffic_source ;;
   }
 
+  dimension: ssn {
+    # dummy field used in next dim
+    hidden: yes
+    type: string
+    sql: ${TABLE}.last_name ;;
+  }
+
+  dimension: ssn_last_4 {
+    label: "SSN Last 4"
+    description: "Only users with sufficient permissions will see this data"
+    type: string
+    sql:
+          CASE  WHEN '{{_user_attributes["can_see_sensitive_data"]}}' = 'yes'
+                THEN ${ssn}
+                ELSE MD5(${ssn}||'salt')
+          END;;
+    html:
+          {% if _user_attributes["can_see_sensitive_data"]  == 'yes' %}
+          {{ value }}
+          {% else %}
+            ####
+          {% endif %}  ;;
+  }
+
   ## MEASURES ##
 
   measure: count {
