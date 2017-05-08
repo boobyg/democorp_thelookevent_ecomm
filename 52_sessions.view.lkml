@@ -53,14 +53,14 @@ view: sessions {
 
   dimension_group: session_end {
     type: time
-    timeframes: [time, date, week, month]
+    timeframes: [raw, time, date, week, month]
     sql: ${TABLE}.session_end ;;
   }
 
   dimension: duration {
     label: "Duration (sec)"
     type: number
-    sql: DATEDIFF('second', ${TABLE}.session_start, ${TABLE}.session_end) ;;
+    sql: DATEDIFF('second', ${session_start_raw}, ${session_end_raw}) ;;
   }
 
   measure: average_duration {
