@@ -21,7 +21,8 @@ view: order_items {
   }
 
   measure: count {
-    type: count
+    type: count_distinct
+    sql: ${id} ;;
     drill_fields: [detail*]
   }
 
@@ -34,7 +35,8 @@ view: order_items {
 
   measure: count_last_28d {
     label: "Count Sold in Trailing 28 Days"
-    type: count
+    type: count_distinct
+    sql: ${id} ;;
     hidden: yes
     filters:
     {field:created_date
@@ -279,7 +281,8 @@ view: order_items {
   }
 
   measure: count_with_repeat_purchase_within_30d {
-    type: count
+    type: count_distinct
+    sql: ${id} ;;
     view_label: "Repeat Purchase Facts"
 
     filters: {
