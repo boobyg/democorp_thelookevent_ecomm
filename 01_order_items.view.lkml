@@ -21,7 +21,8 @@ view: order_items {
   }
 
   measure: count {
-    type: count
+    type: count_distinct
+    sql: ${id} ;;
     drill_fields: [detail*]
   }
 
@@ -34,7 +35,8 @@ view: order_items {
 
   measure: count_last_28d {
     label: "Count Sold in Trailing 28 Days"
-    type: count
+    type: count_distinct
+    sql: ${id} ;;
     hidden: yes
     filters:
     {field:created_date
@@ -271,6 +273,40 @@ view: order_items {
     drill_fields: [detail*]
   }
 
+########## Return Information ##########
+
+  dimension: is_returned {
+    type: yesno
+    sql: ${returned_raw} IS NOT NULL ;;
+  }
+
+  measure: returned_count {
+    type: count_distinct
+    sql: ${id} ;;
+    filters: {
+      field: is_returned
+      value: "yes"
+    }
+    drill_fields: [detail*]
+  }
+
+  measure: returned_total_sale_price {
+    type: sum
+    value_format_name: usd
+    sql: ${sale_price} ;;
+    filters: {
+      field: is_returned
+      value: "yes"
+    }
+  }
+
+  measure: return_rate {
+    type: number
+    value_format_name: percent_2
+    sql: 1.0 * ${returned_count} / nullif(${count},0) ;;
+  }
+
+
 ########## Repeat Purchase Facts ##########
 
   dimension: days_until_next_order {
@@ -286,7 +322,8 @@ view: order_items {
   }
 
   measure: count_with_repeat_purchase_within_30d {
-    type: count
+    type: count_distinct
+    sql: ${id} ;;
     view_label: "Repeat Purchase Facts"
 
     filters: {
@@ -363,5 +400,8 @@ view: order_items {
 
   set: detail {
     fields: [id, order_id, status, created_date, sale_price, products.brand, products.item_name, users.portrait, users.name, users.email]
+  }
+  set: return_detail {
+      fields: [id, order_id, status, created_date, returned_date, sale_price, products.brand, products.item_name, users.portrait, users.name, users.email]
   }
 }
