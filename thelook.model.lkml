@@ -209,6 +209,7 @@ explore: journey_mapping {
 
 explore: inventory_items{
   label: "(7) Stock Analysis"
+  fields: [ALL_FIELDS*,-order_items.median_sale_price]
 
   join: order_facts {
     view_label: "Orders"

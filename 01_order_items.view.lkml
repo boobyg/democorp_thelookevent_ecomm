@@ -246,6 +246,13 @@ view: order_items {
     drill_fields: [detail*]
   }
 
+    measure: median_sale_price {
+      type: median
+      value_format_name: usd
+      sql: ${sale_price} ;;
+      drill_fields: [detail*]
+    }
+
   measure: average_gross_margin {
     type: average
     value_format_name: usd
