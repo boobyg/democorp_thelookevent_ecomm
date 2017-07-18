@@ -1,6 +1,6 @@
 connection: "demonew_events_ecommerce"
 persist_for: "1 hour"  # cache all query results for one hour
-label: "eCommerce with Event Data"
+label: "1) eCommerce with Event Data"
 
 
 include: "*.view" # include all the views
