@@ -159,8 +159,8 @@ view: users {
   dimension: ssn {
     # dummy field used in next dim
     hidden: yes
-    type: string
-    sql: ${TABLE}.last_name ;;
+    type: number
+    sql: lpad(cast(round(random() * 10000, 0) as char(4)), 4, '0') ;;
   }
 
   dimension: ssn_last_4 {
