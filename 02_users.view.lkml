@@ -6,6 +6,7 @@ view: users {
     primary_key: yes
     type: number
     sql: ${TABLE}.id ;;
+    tags: ["user_id"]
   }
 
   dimension: first_name {
@@ -49,6 +50,7 @@ view: users {
 
   dimension: email {
     sql: ${TABLE}.email ;;
+    tags: ["email"]
 
     link: {
       label: "User Lookup Dashboard"
