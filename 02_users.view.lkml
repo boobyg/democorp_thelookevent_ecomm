@@ -88,7 +88,7 @@ view: users {
 
   dimension: image_file {
     hidden: yes
-    sql: ('http://www.looker.com/assets/docs/images/'||${gender_short}||'.jpg') ;;
+    sql: ('https://docs.looker.com/assets/images/'||${gender_short}||'.jpg') ;;
   }
 
   ## Demographics ##
