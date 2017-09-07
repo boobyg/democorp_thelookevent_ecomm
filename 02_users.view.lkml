@@ -163,22 +163,22 @@ view: users {
     sql: lpad(cast(round(random() * 10000, 0) as char(4)), 4, '0') ;;
   }
 
-  dimension: ssn_last_4 {
-    label: "SSN Last 4"
-    description: "Only users with sufficient permissions will see this data"
-    type: string
-    sql:
-          CASE  WHEN '{{_user_attributes["can_see_sensitive_data"]}}' = 'yes'
-                THEN ${ssn}
-                ELSE MD5(${ssn}||'salt')
-          END;;
-    html:
-          {% if _user_attributes["can_see_sensitive_data"]  == 'yes' %}
-          {{ value }}
-          {% else %}
-            ####
-          {% endif %}  ;;
-  }
+#   dimension: ssn_last_4 {
+#     label: "SSN Last 4"
+#     description: "Only users with sufficient permissions will see this data"
+#     type: string
+#     sql:
+#           CASE  WHEN '{{_user_attributes["can_see_sensitive_data"]}}' = 'yes'
+#                 THEN ${ssn}
+#                 ELSE MD5(${ssn}||'salt')
+#           END;;
+#     html:
+#           {% if _user_attributes["can_see_sensitive_data"]  == 'yes' %}
+#           {{ value }}
+#           {% else %}
+#             ####
+#           {% endif %}  ;;
+#   }
 
   ## MEASURES ##
 
