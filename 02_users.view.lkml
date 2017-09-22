@@ -180,6 +180,16 @@ view: users {
 #           {% endif %}  ;;
 #   }
 
+  parameter: row_window {
+    type: unquoted
+  }
+
+    measure: row_count_windowed {
+      description: "Requires row window and will order descending"
+      sql:
+      ROW_NUMBER() OVER (ORDER BY {% parameter row_window %} DESC) ;;
+    }
+
   ## MEASURES ##
 
   measure: count {
