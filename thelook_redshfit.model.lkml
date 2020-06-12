@@ -276,7 +276,7 @@ explore: inventory_snapshot {
 
 
 
-
+explore: big_list {}
 
 
 
