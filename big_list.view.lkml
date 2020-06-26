@@ -1,4 +1,5 @@
 view: big_list {
+  sql_table_name: users ;;
   dimension: price_1 {
     type: string
     label: "Dim Stuff Name1"
