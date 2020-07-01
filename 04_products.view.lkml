@@ -8,6 +8,7 @@ view: products {
   }
 
   dimension: category {
+    description: "the category for the product"
     sql: TRIM(${TABLE}.category) ;;
     drill_fields: [item_name]
   }
