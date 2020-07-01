@@ -14,10 +14,13 @@ view: products {
   }
 
   dimension: item_name {
+    group_label: "Item Details"
     sql: TRIM(${TABLE}.name) ;;
   }
 
   dimension: brand {
+    label: "Labelled Brand"
+    group_label: "Item Details"
     sql: TRIM(${TABLE}.brand) ;;
 
     link: {
