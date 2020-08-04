@@ -53,6 +53,19 @@ explore: order_items {
     sql_on: ${distribution_centers.id} = ${inventory_items.product_distribution_center_id} ;;
     relationship: many_to_one
   }
+
+  query: order_items_by_created_date {
+    dimensions: [ order_items.created_date]
+    measures: [ order_items.count]
+    sort: {field:order_items.count desc:yes}
+    description: "time series of orders by date"
+  }
+
+  query: orders_by_department {
+    dimensions: [products.department]
+    measures: [ order_items.count]
+    description: "which departement has more orders?!! can you see me....?"
+  }
 }
 
 
