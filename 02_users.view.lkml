@@ -1,5 +1,5 @@
 view: users {
-  view_label: "_Users"
+  view_label: " Users"
   sql_table_name: users ;;
   ## Demographics ##
 
