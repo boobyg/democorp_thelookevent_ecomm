@@ -12,6 +12,7 @@ include: "*.dashboard" # include all the dashboards
 explore: order_items {
   label: "(1) Orders, Items and Users"
   view_name: order_items
+  description: "Explore data about Orders"
 
   join: order_facts {
     view_label: "Orders"
