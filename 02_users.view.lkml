@@ -1,5 +1,5 @@
 view: users {
-  view_label: " Users"
+  view_label: " Users with space"
   sql_table_name: users ;;
   ## Demographics ##
 
