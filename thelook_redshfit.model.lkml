@@ -67,7 +67,7 @@ explore: order_items {
     dimensions: [ order_items.created_date]
     measures: [order_items.count]
     sort: {field:order_items.count desc:yes}
-    description: "Items ordered by date, for the current calendar year"
+    description: "Limit to current calendar year"
   }
 
   query: orders_by_department {
