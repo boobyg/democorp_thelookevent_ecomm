@@ -57,15 +57,23 @@ explore: order_items {
 
   query: order_items_by_created_date {
     dimensions: [ order_items.created_date]
-    measures: [ order_items.count]
+    measures: [order_items.count]
     sort: {field:order_items.count desc:yes}
-    description: "time series of orders by date"
+    description: "For time series analysis of items ordered by date"
+  }
+
+  query: order_items_by_created_date_ytd {
+    label: "Order Items by Created Date (YTD)"
+    dimensions: [ order_items.created_date]
+    measures: [order_items.count]
+    sort: {field:order_items.count desc:yes}
+    description: "Items ordered by date, for the current calendar year"
   }
 
   query: orders_by_department {
     dimensions: [products.department]
-    measures: [ order_items.count]
-    description: "which departement has more orders?!! can you see me....?"
+    measures: [order_items.count]
+    description: "Department-level analysis of orders (Clothing, Kitchen, Furniture, etc."
   }
 }
 
