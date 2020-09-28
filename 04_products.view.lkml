@@ -15,6 +15,8 @@ view: products {
 
   dimension: item_name {
     group_label: "Item Details"
+    group_item_label: "Name of Item"
+    description: "This is using a group item label 'Name of Item'. The original field name was 'Item Name'."
     sql: TRIM(${TABLE}.name) ;;
   }
 
