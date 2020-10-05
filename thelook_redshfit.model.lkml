@@ -82,6 +82,9 @@ explore: order_items {
 
 explore: events {
   label: "(2) Web Event Data"
+  always_filter: {
+    filters: [event_date: "7 days"]
+  }
 
   join: sessions {
     sql_on: ${events.session_id} =  ${sessions.session_id} ;;
