@@ -121,6 +121,11 @@ explore: events {
     relationship: one_to_one
     view_label: "Users"
   }
+
+  query: event_count_by_type {
+    dimensions: [events.event_type]
+    measures: [events.count]
+  }
 }
 
 explore: sessions {
