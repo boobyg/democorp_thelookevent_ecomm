@@ -7,6 +7,7 @@ include: "/views/**/*.view" # include all the views
 
 datagroup: ecommerce_etl {
  sql_trigger: SELECT max(created_at) FROM ecomm.events ;;
+#  sql_trigger:  SELECT 1 FROM ecomm.events ;;
   max_cache_age: "240 hours"
 }
 

@@ -10,6 +10,7 @@ view: total_items_stats {
       column: sale_price {}
       column: std_dev_sale_price { field: order_items.std_dev_sale_price }
     }
+    partition_keys: ["created_raw"]
     datagroup_trigger: ecommerce_etl
   }
 
