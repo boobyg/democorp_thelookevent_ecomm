@@ -224,7 +224,6 @@ view: order_items {
     sql: TIMESTAMP_DIFF(${delivered_raw}, ${shipped_raw}, DAY)*1.0 ;;
   }
 
-
   measure: average_days_to_process {
     type: average
     value_format_name: decimal_2
@@ -279,15 +278,22 @@ view: order_items {
   }
 
   measure: average_sale_price {
-    type: average
-    value_format_name: usd
-    sql: ${sale_price} ;;
+    type: number
+    value_format_name: eur
+    sql: AVG(${sale_price}) over ();;
     drill_fields: [detail*]
   }
 
+  measure: std_dev_sale_price {
+    type: number
+    hidden:   no
+    sql: STDDEV(${sale_price})    over () - 49.3;;
+  }
+#--
+
   measure: median_sale_price {
     type: median
-    value_format_name: usd
+    value_format_name: eur
     sql: ${sale_price} ;;
     drill_fields: [detail*]
   }
@@ -346,6 +352,7 @@ view: order_items {
   }
 
 
+
 ########## Repeat Purchase Facts ##########
 
   dimension: days_until_next_order {
@@ -375,7 +382,6 @@ view: order_items {
       value: "Yes"
     }
   }
-
   measure: 30_day_repeat_purchase_rate {
     description: "The percentage of customers who purchase again within 30 days"
     view_label: "Repeat Purchase Facts"

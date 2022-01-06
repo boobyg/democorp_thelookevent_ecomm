@@ -1,5 +1,6 @@
-connection: "looker-private-demo"
-label: " eCommerce"
+connection: "ecomm"
+#connection: "looker-private-demo"
+label: " Bel"
 include: "queries*.view" # includes all queries refinements
 include: "/views/**/*.view" # include all the views
 include: "/dashboards/*.dashboard.lookml" # include all the views
@@ -62,6 +63,11 @@ explore: order_items {
     type: left_outer
     sql_on: ${distribution_centers.id} = ${inventory_items.product_distribution_center_id} ;;
     relationship: many_to_one
+  }
+  join:     total_items_stats {
+    type: left_outer
+    relationship: many_to_one
+    sql_on: ${order_items.created_raw} = CAST (${total_items_stats.created_raw} AS TIMESTAMP) ;;
   }
 }
 
@@ -237,7 +243,7 @@ explore: inventory_snapshot {
   label: "(7) Historical Stock Snapshot Analysis"
   join: trailing_sales_snapshot {
     sql_on: ${inventory_snapshot.product_id}=${trailing_sales_snapshot.product_id}
-    AND ${inventory_snapshot.snapshot_date}=${trailing_sales_snapshot.snapshot_date};;
+      AND ${inventory_snapshot.snapshot_date}=${trailing_sales_snapshot.snapshot_date};;
     type: left_outer
     relationship: one_to_one
   }
