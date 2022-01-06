@@ -6,8 +6,8 @@ include: "/views/**/*.view" # include all the views
 ############ Model Configuration #############
 
 datagroup: ecommerce_etl {
-  sql_trigger: SELECT max(created_at) FROM ecomm.events ;;
-  max_cache_age: "24 hours"
+# sql_trigger: SELECT max(created_at) FROM ecomm.events ;;
+  max_cache_age: "240 hours"
 }
 
 persist_with: ecommerce_etl

@@ -10,7 +10,9 @@ view: total_items_stats {
       column: sale_price {}
       column: std_dev_sale_price { field: order_items.std_dev_sale_price }
     }
+    datagroup_trigger: ecommerce_etl
   }
+
   dimension: primary_key {
     #--sql:      row_number()     --OVER(ORDER BY ${created_raw})    ;;
     sql:  CONCAT (CAST(${created_raw} AS STRING),CAST(${sale_price} AS STRING), CAST (${average_days_to_process} AS STRING))  ;;
