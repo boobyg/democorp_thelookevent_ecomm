@@ -1,7 +1,6 @@
 connection: "ecomm"
 #connection: "looker-private-demo"
 label: " Bel"
-include: "queries*.view" # includes all queries refinements
 include: "/views/**/*.view" # include all the views
 
 ############ Model Configuration #############
