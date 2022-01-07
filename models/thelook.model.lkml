@@ -14,6 +14,11 @@ datagroup: ecommerce_etl {
 persist_with: ecommerce_etl
 ############ Base Explores #############
 
+explore:  total_items_stats {
+  label: "Bel"
+}
+
+
 explore: order_items {
   label: "(1) Orders, Items and Users"
   view_name: order_items
@@ -61,11 +66,6 @@ explore: order_items {
     type: left_outer
     sql_on: ${distribution_centers.id} = ${inventory_items.product_distribution_center_id} ;;
     relationship: many_to_one
-  }
-  join:     total_items_stats {
-    type: left_outer
-    relationship: many_to_one
-    sql_on: ${order_items.created_raw} = CAST (${total_items_stats.created_raw} AS TIMESTAMP) ;;
   }
 }
 
