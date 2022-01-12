@@ -14,13 +14,13 @@ view: total_items_stats {
     datagroup_trigger: ecommerce_etl
   }
 
-  dimension: primary_key {
-    #--sql:      row_number()     --OVER(ORDER BY ${created_raw})    ;;
-    sql:  CONCAT (CAST(${created_raw} AS STRING),CAST(${sale_price} AS STRING), CAST (${average_days_to_process} AS STRING))  ;;
-    type:  string
-    primary_key: yes
-    hidden: yes
-  }
+  # dimension: primary_key {
+  #   #--sql:      row_number()     --OVER(ORDER BY ${created_raw})    ;;
+  #   sql:  CONCAT (CAST(${created_raw} AS STRING),CAST(${sale_price} AS STRING), CAST (${average_days_to_process} AS STRING))  ;;
+  #   type:  string
+  #   primary_key: yes
+  #   hidden: yes
+  # }
 
   dimension: std_dev_sale_price {
     type: number
@@ -129,7 +129,7 @@ view: total_items_stats {
     #   sql: "four_or_five_batches" ;;
     # }
 
-    parameter: four_or_five_batches_p {
+    parameter: reference {
       type: string
       allowed_value: {
         label: "5"
@@ -143,10 +143,10 @@ view: total_items_stats {
     dimension: four_or_five_batches {
       type: string
       sql:
-           {% if four_or_five_batches_p._parameter_value == "'4'" %}   '4'
+           {% if reference._parameter_value == "'4'" %}   '4'
             {% else %}  '5'
             {% endif %};;
-      #    --${TABLE}.{% parameter four_or_five_batches_p %} ;;
+      #    --${TABLE}.{% parameter reference %} ;;
       }
 
       measure: exceeds_stddev_plus {
