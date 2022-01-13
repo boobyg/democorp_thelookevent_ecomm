@@ -280,14 +280,18 @@ view: order_items {
   measure: average_sale_price {
     type: number
     value_format_name: eur
-    sql: AVG(${sale_price}) over ();;
+    sql: AVG(${sale_price})
+  --over ()
+    ;;
     drill_fields: [detail*]
   }
 
   measure: std_dev_sale_price {
     type: number
     hidden:   no
-    sql: STDDEV(${sale_price})    over () - 49.3;;
+    sql: STDDEV(${sale_price})
+  --#over ()
+  - 49.3;;
   }
 #--
 

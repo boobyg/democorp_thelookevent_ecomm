@@ -16,6 +16,19 @@ persist_with: ecommerce_etl
 
 explore:  total_items_stats {
   label: "Bel"
+  view_label: "Bel"
+  join: reference_items_stats {
+    view_label: "Reference"
+      relationship: many_to_one
+      sql_on: 1=1 ;;
+
+  }
+  # fields: [reference_items_stats*, total_items_stats*,
+  #   -inventory_items.average_cost, -inventory_items.count,
+  #   -inventory_items.number_on_hand, -inventory_items.sold_count,
+  #   -inventory_items.sold_percent, -inventory_items.product_id,
+  #   ]
+#    -total_items_stats.sale_price, total_items_stats.id, total_items_stats.inventory_item_id, total_items_stats.created_date_group_date, total_items_stats.sale_price_m
 }
 
 
