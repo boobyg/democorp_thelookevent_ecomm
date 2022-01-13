@@ -41,8 +41,7 @@ view: reference_items_stats {
     type: number
     hidden:  no
     value_format_name: decimal_2
-    sql:
-    ${average_sale_price}) + ${std_dev_sale_price}   ;;  #to force exception
+    sql:    ${average_sale_price} + ${std_dev_sale_price}   ;;  #to force exception
   #    (AVG(weight_pounds) + STDDEV(weight_pounds) * 4)
   }
 
@@ -51,7 +50,7 @@ view: reference_items_stats {
     hidden:  no
     type: number
     value_format_name: decimal_2
-    sql: (${average_sale_price}) - ${std_dev_sale_price}   ;;
+    sql: ${average_sale_price} - ${std_dev_sale_price}   ;;
   }
 
   measure: a_plus_2sd_sales_price{
@@ -59,7 +58,7 @@ view: reference_items_stats {
     hidden:  no
     type: number
     value_format_name: decimal_2
-    sql: (${average_sale_price}) + ${std_dev_sale_price} * 2   ;;
+    sql: ${average_sale_price} + ${std_dev_sale_price} * 2   ;;
   }
 
   measure: a_minus_2sd_sales_price{
@@ -67,14 +66,14 @@ view: reference_items_stats {
     hidden:  no
     type: number
     value_format_name: decimal_2
-    sql: (${average_sale_price}) -${std_dev_sale_price} * 2    ;;
+    sql: ${average_sale_price} -${std_dev_sale_price} * 2    ;;
   }
   measure: a_plus_3sd_sales_price{
     label: "A+3SD"
     hidden:  no
     type: number
     value_format_name: decimal_2
-    sql: (${average_sale_price}) + ${std_dev_sale_price} * 3  ;;
+    sql: ${average_sale_price} + ${std_dev_sale_price} * 3  ;;
   }
 
   measure: a_minus_3sd_sales_price{
@@ -82,7 +81,7 @@ view: reference_items_stats {
     hidden:  no
     type: number
     value_format_name: decimal_2
-    sql: (${average_sale_price}) -${std_dev_sale_price} * 3   ;;
+    sql: ${average_sale_price} -${std_dev_sale_price} * 3   ;;
   }
   # dimension: four_or_five_batches {
   #   label: "4 or 5 batches"
@@ -92,25 +91,25 @@ view: reference_items_stats {
   #   sql: "four_or_five_batches" ;;
   # }
 
-  parameter: reference {
-    type: string
-    allowed_value: {
-      label: "5"
-      value: "5"
-    }
-    allowed_value: {
-      label: "4"
-      value: "4"
-    }
-  }
-  dimension: four_or_five_batches {
-    type: string
-    sql:
-        {% if reference._parameter_value == "'4'" %}   '4'
-          {% else %}  '5'
-          {% endif %};;
-    #    --${TABLE}.{% parameter reference %} ;;
-    }
+  # parameter: reference {
+  #   type: string
+  #   allowed_value: {
+  #     label: "5"
+  #     value: "5"
+  #   }
+  #   allowed_value: {
+  #     label: "4"
+  #     value: "4"
+  #   }
+  # }
+  # dimension: four_or_five_batches {
+  #   type: string
+  #   sql:
+  #       {% if reference._parameter_value == "'4'" %}   '4'
+  #         {% else %}  '5'
+  #         {% endif %};;
+  #   #    --${TABLE}.{% parameter reference %} ;;
+  #   }
 
     measure: exceeds_stddev_plus {
       type: number

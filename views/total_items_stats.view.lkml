@@ -18,6 +18,7 @@ view: total_items_stats {
     primary_key: yes
   }
   dimension: inventory_item_id {
+    label: "Batch ID"
     type: number
   }
   dimension: created_raw {
@@ -33,6 +34,7 @@ view: total_items_stats {
   }
 
   dimension: days_to_process {
+    label: "Paste Code"
     type: number
   }
   dimension: sale_price {
