@@ -42,7 +42,6 @@ view: total_items_stats {
     hidden: yes
   }
 
-
   measure: average_sale_price {
     type: average
     sql: ${sale_price} ;;
