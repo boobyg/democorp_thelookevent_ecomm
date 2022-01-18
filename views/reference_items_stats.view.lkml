@@ -113,30 +113,30 @@ view: reference_items_stats {
 
     measure: exceeds_stddev_plus {
       type: number
-      sql:    if(${average_sale_price}>${a_plus_sd_sales_price},1,0)    ;;
+      sql:    if(${total_items_stats.average_sale_price}>${a_plus_sd_sales_price},1,0)    ;;
     }
 
     measure: exceeds_stddev_minus {
       type: number
-      sql:    if(${average_sale_price}<${a_minus_sd_sales_price} AND ${average_sale_price}<=${a_plus_sd_sales_price}     ,-1,0)    ;;    # plus takes precedence
+      sql:    if(${total_items_stats.average_sale_price}<${a_minus_sd_sales_price} AND ${total_items_stats.average_sale_price}<=${a_plus_sd_sales_price}     ,-1,0)    ;;    # plus takes precedence
     }
     measure: exceeds_2stddev_plus {
       type: number
-      sql:    if(${average_sale_price}>${a_plus_2sd_sales_price},1,0)    ;;
+      sql:    if(${total_items_stats.average_sale_price}>${a_plus_2sd_sales_price},1,0)    ;;
     }
 
     measure: exceeds_2stddev_minus {
       type: number
-      sql:    if(${average_sale_price}<${a_minus_2sd_sales_price} AND ${average_sale_price}<=${a_plus_2sd_sales_price}     ,-1,0)    ;;    # plus takes precedence
+      sql:    if(${total_items_stats.average_sale_price}<${a_minus_2sd_sales_price} AND ${total_items_stats.average_sale_price}<=${a_plus_2sd_sales_price}     ,-1,0)    ;;    # plus takes precedence
     }
     measure: exceeds_3stddev_plus {
       type: number
-      sql:    if(${average_sale_price}>${a_plus_3sd_sales_price},1,0)    ;;
+      sql:    if(${total_items_stats.average_sale_price}>${a_plus_3sd_sales_price},1,0)    ;;
     }
 
     measure: exceeds_3stddev_minus {
       type: number
-      sql:    if(${average_sale_price}<${a_minus_3sd_sales_price} AND ${average_sale_price}<=${a_plus_3sd_sales_price}     ,-1,0)    ;;    # plus takes precedence
+      sql:    if(${total_items_stats.average_sale_price}<${a_minus_3sd_sales_price} AND ${total_items_stats.average_sale_price}<=${a_plus_3sd_sales_price}     ,-1,0)    ;;    # plus takes precedence
     }
 
 

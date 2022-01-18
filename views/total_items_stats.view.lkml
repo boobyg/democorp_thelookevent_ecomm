@@ -43,15 +43,23 @@ view: total_items_stats {
   }
 
   measure: average_sale_price {
+    label: "Sale Price"
     type: average
     sql: ${sale_price} ;;
     value_format_name: eur
-  }
+    link: {
+      label: "Warnings Dashboard"
+      url: "/dashboards/8?created_date_group_date={{ _filters['total_items_stats.created_date_group_date'] | url_encode }}"
+      icon_url: "http://www.looker.com/favicon.ico"
+    }
+    }
+#     std_dev_sale_price={{std_dev_sale_price}}&created_date_date={{_filters['created_date_group_raw']}}&average_sale_price={{ value | encode_uri }}
+#     url: "/dashboards/69?Agent={{ _filters['agent_customer_demographics.Agent'] | url_encode }}&date={{ _filters.['agent_customer_demographics.application_date'] | url_encode }}&Gender={{ value }}&Age={{ _filters.['agent_customer_demographics.Age'] | url_encode }}&Location={{ _filters.['agent_customer_demographics.Location'] | url_encode }}"
 
   measure: std_dev_sale_price {
     type: number
-    sql: STDDEV(${sale_price}) ;;
-    value_format_name: eur
+    sql: STDDEV(${sale_price}) - 49 ;;
+    value_format_name: decimal_2
     hidden: yes
   }
 
