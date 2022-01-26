@@ -20,17 +20,37 @@ view: reference_items_stats {
     hidden: yes
   }
 
-  dimension: std_dev_sale_price_dim {
-    sql: ${TABLE}.std_dev_sale_price ;;
+  parameter:  std_dev_sale_price_stat{
+    type: number
+  }
+
+  dimension: std_dev_sale_price_dim {   #has to be fixed on the previous screen
+#    sql: ${TABLE}.std_dev_sale_price ;;
+    sql:  {% if std_dev_sale_price_stat._parameter_value  != "NULL"%}
+      {{std_dev_sale_price_stat._parameter_value }} *.6
+    {% else %}
+      ${TABLE}.std_dev_sale_price *.6
+   {%endif%};;
     type: number
     hidden: yes
   }
 
   measure: average_sale_price {
     type: average
-    sql: ${average_sale_price_dim} ;;
+#    sql: ${average_sale_price_dim} ;;
+    sql:  {% if average_sale_price_stat._parameter_value  != "NULL"%}
+    {{average_sale_price_stat._parameter_value}}
+    {% else %}
+    ${average_sale_price_dim}
+    {%endif%};;
+    link: {
+      label: "Warnings Dashboard"
+      url: "/dashboards/8?Created+Date+Date={{_filters['total_items_stats.created_date_group_date'] | encode_uri }}&Paste+Code={{_filters['total_items_stats.days_to_process']}}&Batch+ID={{_filters['total_items_stats.inventory_item_id']}}&Average+Sale+Price+Stat={{value}}&Std+Dev+Sale+Price+Stat={{reference_items_stats.std_dev_sale_price._value}}"
+    }
   }
-
+  parameter:  average_sale_price_stat{
+    type: number
+  }
   measure: std_dev_sale_price {
     type: average
     sql: ${std_dev_sale_price_dim} ;;
@@ -41,8 +61,7 @@ view: reference_items_stats {
     type: number
     hidden:  no
     value_format_name: decimal_2
-    sql:    ${average_sale_price} + ${std_dev_sale_price}   ;;  #to force exception
-  #    (AVG(weight_pounds) + STDDEV(weight_pounds) * 4)
+    sql:    ${average_sale_price} + ${std_dev_sale_price}   ;;
   }
 
   measure: a_minus_sd_sales_price{

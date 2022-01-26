@@ -10,8 +10,8 @@ view: total_items_stats {
       column: created_raw{}
       column: days_to_process {}
     }
-    partition_keys: ["created_raw"]
-    datagroup_trigger: ecommerce_etl
+#    partition_keys: ["created_raw"]
+#    datagroup_trigger: ecommerce_etl
   }
   dimension: id {
     type: number
@@ -36,24 +36,41 @@ view: total_items_stats {
   dimension: days_to_process {
     label: "Paste Code"
     type: number
-  }
+   }
   dimension: sale_price {
     type:  number
     hidden: yes
   }
+#   measure: average_sale_price_calc {
+#   type: average
+#   hidden: no
+#     link: {
+#       label: "Warnings Dashboard"
+#       url: "/dashboards/8?Created+Date+Date={{_filters['total_items_stats.created_date_group_date'] | encode_uri }}&Paste+Code={{_filters['days_to_process']}}&Batch+ID={{_filters['inventory_item_id']}}&
+#       f[average_sale_price_calc]={{value}}"
+#       icon_url: "http://www.looker.com/favicon.ico"
+#     }
+
+# }
+
+  # parameter: average_sale_price_stat{
+  #   type: number
+  # }
 
   measure: average_sale_price {
     label: "Sale Price"
     type: average
-    sql: ${sale_price} ;;
+    sql:  ${sale_price} ;;
     value_format_name: eur
-    link: {
-      label: "Warnings Dashboard"
-      url: "/dashboards/8?created_date_group_date={{ _filters['total_items_stats.created_date_group_date'] | url_encode }}"
-      icon_url: "http://www.looker.com/favicon.ico"
     }
-    }
-#     std_dev_sale_price={{std_dev_sale_price}}&created_date_date={{_filters['created_date_group_raw']}}&average_sale_price={{ value | encode_uri }}
+  #   link: {
+  #     label: "Warnings Dashboard"
+  #     url: "/dashboards/8?Created+Date+Date={{_filters['total_items_stats.created_date_group_date'] | encode_uri }}&days_to_process={{_filters['days_to_process']}}&inventory_item_id={{_filters['inventory_item_id']}}&f[average_sale_price_calc]={{total_items_stats.average_sale_price_stat }}"
+  #     icon_url: "http://www.looker.com/favicon.ico"
+  #   }
+  # #  }
+  # works" url: "/dashboards/8?Created+Date+Date={{_filters['created_date_group_date'] | encode_uri }}"
+  #     std_dev_sale_price={{std_dev_sale_price}}&created_date_date={{_filters['created_date_group_raw']}}&average_sale_price={{ value | encode_uri }}
 #     url: "/dashboards/69?Agent={{ _filters['agent_customer_demographics.Agent'] | url_encode }}&date={{ _filters.['agent_customer_demographics.application_date'] | url_encode }}&Gender={{ value }}&Age={{ _filters.['agent_customer_demographics.Age'] | url_encode }}&Location={{ _filters.['agent_customer_demographics.Location'] | url_encode }}"
 
   measure: std_dev_sale_price {
@@ -63,6 +80,16 @@ view: total_items_stats {
     hidden: yes
   }
 
+#   measure: navig_to_warnings{
+#     hidden: no
+#     type: string
+# #--     CONCAT( 'Factory ', ${site_translated_value}, ', Department ',${dept_translated_value}, ', Workshop ', ${workshop_translated_value}, ', Line (dernière)', ${line_translated_value} );;
+#     sql: "" ;;
+#     html:
+#     <a href=/dashboards/8?Created+Date+Date={{_filters['total_items_stats.created_date_group_date'] | encode_uri }}&days_to_process={{_filters['total_items_stats.days_to_process']}}&inventory_item_id={{_filters['total_items_stats.inventory_item_id']}}&average_sale_price_calc={{['average_sale_price_stat']}}">
+#       <button  style="background-color=#4CAF50;  color: red;  border: 2px solid #008CBA; ">Warnings Dashboard</button></a>
+#       ;;
+#   }
 
 
 
