@@ -36,7 +36,7 @@ view: total_items_stats {
   dimension: days_to_process {
     label: "Paste Code"
     type: number
-  }
+   }
   dimension: sale_price {
     type:  number
     hidden: yes
@@ -62,7 +62,7 @@ view: total_items_stats {
     type: average
     sql:  ${sale_price} ;;
     value_format_name: eur
-  }
+    }
   #   link: {
   #     label: "Warnings Dashboard"
   #     url: "/dashboards/8?Created+Date+Date={{_filters['total_items_stats.created_date_group_date'] | encode_uri }}&days_to_process={{_filters['days_to_process']}}&inventory_item_id={{_filters['inventory_item_id']}}&f[average_sale_price_calc]={{total_items_stats.average_sale_price_stat }}"
@@ -227,9 +227,9 @@ view: total_items_stats {
   # {% else %}
   #   <p><img src="http://findicons.com/files/icons/719/crystal_clear_actions/64/cancel.png" height=20 width=20>{{ rendered_value }}</p>
 
-  drill_fields:  [drills*]
-  set: drills {
-    # fields: [created_date_group_date, a_minus_sd_sales_price,a_minus_2sd_sales_price,a_plus_sd_sales_price,a_plus_2sd_sales_price, exceeds_stddev_plus, exceeds_stddev_minus]
-    fields: [created_date_group_date]
-  }
-}
+      drill_fields:  [drills*]
+      set: drills {
+        # fields: [created_date_group_date, a_minus_sd_sales_price,a_minus_2sd_sales_price,a_plus_sd_sales_price,a_plus_2sd_sales_price, exceeds_stddev_plus, exceeds_stddev_minus]
+        fields: [created_date_group_date]
+      }
+    }
