@@ -15,7 +15,7 @@ persist_with: ecommerce_etl
 ############ Base Explores #############
 
 explore:  total_items_stats {
-  label: "Bel"
+  hidden: yes
   view_label: "Bel"
   join: reference_items_stats {
     view_label: "Reference"
@@ -210,7 +210,12 @@ explore: affinity {
 explore: orders_with_share_of_wallet_application {
   label: "(5) Share of Wallet Analysis"
   extends: [order_items]
-  view_name: order_items
+  view_name: "order_items"
+  fields: [ALL_FIELDS*]
+  group_label: "Sephora"
+  view_label: "test"
+  hidden: no
+# from: order_items
 
   join: order_items_share_of_wallet {
     view_label: "Share of Wallet"
