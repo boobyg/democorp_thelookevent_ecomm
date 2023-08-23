@@ -94,7 +94,7 @@ view: users {
   }
 
   dimension: image_file {
-    hidden: yes
+    hidden: no
     sql: concat('https://docs.looker.com/assets/images/',${gender_short},'.jpg') ;;
   }
 
